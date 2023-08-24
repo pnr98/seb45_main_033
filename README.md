@@ -1,9 +1,78 @@
-# 아이디어 허브
+<img src="https://capsule-render.vercel.app/api?type=Waving&color=auto&height=250&section=header&text=Main%20Project&fontSize=60" />
 
-## 팀원 소개
-**FE: 전용호(부팀장), 박나래, 윤선문, 김한샘**
+## 📃 Introduction
+🔸 **팀명** : 🪖33양호 (33조)
 
-**BE: 김제경(팀장), 노시형, 김태형**
+🔸 **프로젝트 명** : 
+
+🔸 **프로젝트 기간** : 2023.08.24-2023.09.19
+
+🔸 **배포링크** :
+
+
+</br>
+
+## ✨ Preview
+
+</br>
+
+## 🧑‍💻 Member
+
+### 🔒 Back-End
+
+| [김제경](https://github.com/ehdals0405)(BE 팀장) | [김태형](https://github.com/spirit998) | [노시형](https://github.com/RohSiHyung) |
+| :---: | :---: | :---: |
+| <div style="display: flex; align-items: flex-start;"></div> | <div style="display: flex; align-items: flex-start;"></div> | <div style="display: flex; align-items: flex-start;"></div> |
+
+
+### 🖥️ Front-End
+| [전용호](https://github.com/JYH54)(FE 부팀장) | [김한샘](https://github.com/haaansaaaem) | [박나래](https://github.com/pnr98) | [윤선문](https://github.com/ysm990926) |
+| :---: | :---: | :---: | :---: |
+| <div style="display: flex; align-items: flex-start;"></div> | <div style="display: flex; align-items: flex-start;"></div> | <div style="display: flex; align-items: flex-start;"></div> |
+
+</br>
+
+## 🛠️ Tech Stack
+
+### 🔒 Back-end
+|   Java   |   Spring   |   Spring Boot   |   Spring Security   |   MySQL   | 
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------:  |
+| <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/java-icon.svg" alt="icon" width="65" height="65" /></div> | <img alt="spring logo" src="https://www.vectorlogo.zone/logos/springio/springio-icon.svg" height="50" width="50" > | <img alt="spring-boot logo" src="https://t1.daumcdn.net/cfile/tistory/27034D4F58E660F616" width="65" height="65" > |  <img alt="spring-security logo" width="60px" src="https://camo.githubusercontent.com/923e99a57f8a456fdade5f65b35ada254be277612ddc991afb702d8dfd880d4f/68747470733a2f2f63646e2e73696d706c6569636f6e732e6f72672f737072696e677365637572697479" width="85" height=auto > | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/aws-icon.svg" alt="icon" width="65" height="65" /></div> |
+
+### 🖥️ Front-end
+
+| HTML5  | CSS3 | Java Script | React | Redux |  styled-components |  React-quill |
+| :---: | :---:  | :---: | :---: | :----------------------------------------------------------: | :---: | :----------------------------------------------------------: |
+| <div style="display: flex; align-items: flex-start;"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/800px-HTML5_logo_and_wordmark.svg.png" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/js-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img alt="prettier logo" src="https://ko.redux.js.org/img/redux.svg" width="65" height="65" > | <img alt="styled-components logo" src="https://www.styled-components.com/atom.png" width="65" height="65" ></div> | <img alt="eslint logo" src="https://png.pngtree.com/templates/sm/20180621/sm_5b2bb635f22a3.jpg" height="50" width="50"></div> |
+
+</br>
+
+## 📂 Project Docs
+<details>
+  <summary><strong>요구사항 정의서</strong></summary>
+</details>
+
+<details>
+<summary><strong>ERD</strong></summary>
+
+</details>
+
+<details>
+<summary><strong>테이블 구성</strong></summary>
+
+</details>
+
+<details>
+<summary><strong>API 명세서</strong></summary>
+  
+</details>
+
+<details>
+<summary><strong>Figma 화면설계서</strong></summary>
+  
+</details>
+
+</br>
 
 ## branch 규칙
 - `main` : 이 브랜치는 항상 안정된 코드만을 가지고 있어야 합니다. 직접적인 변경은 최소화하고, 주로 프로덕션 릴리스에 사용됩니다.
