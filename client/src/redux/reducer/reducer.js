@@ -2,7 +2,7 @@ const initialState = {
   isLogin: false,
   productList: [],
   position: { x: 0, y: 0 },
-  isHover: false,
+  isHover: false
 };
 
 const rootReducer = (state = initialState, action) => {
