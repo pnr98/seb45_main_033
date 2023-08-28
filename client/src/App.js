@@ -26,7 +26,7 @@ import { setMousePosition } from './redux/action/action';
 // `
 const MouseStalker = styled.div`
 
-  width: 41px;
+  width: 40px;
   height: 40px;
   border-radius: 50%;
   background-color: hsla(0, 0%, 75%, 0.2);
