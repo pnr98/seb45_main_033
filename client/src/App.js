@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
-import { useDispatch,useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import { styled } from 'styled-components';
 import { setMousePosition } from './redux/action/action';
+import { Route, Routes } from 'react-router-dom';
+import SignUp from './pages/SignUp/SignUp';
 // const StalkerLing = styled.div`
 // @keyframes ani {
 //   from {
@@ -25,7 +27,6 @@ import { setMousePosition } from './redux/action/action';
 // animation : ani 1.5s ease-out infinite;
 // `
 const MouseStalker = styled.div`
-
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -35,13 +36,12 @@ const MouseStalker = styled.div`
   top: ${(props) => props.position.y - 20}px;
   pointer-events: none;
   border: 1px solid #aaa;
-  
 `;
 
 function App() {
-  const position = useSelector((state)=> state.position) 
-  const isHover = useSelector((state)=>state.isHover)
-  const dispatch = useDispatch()
+  const position = useSelector((state) => state.position);
+  const isHover = useSelector((state) => state.isHover);
+  const dispatch = useDispatch();
   useEffect(() => {
     const handleMouseMove = (event) => {
       dispatch(setMousePosition({ x: event.clientX, y: event.clientY }));
@@ -55,6 +55,9 @@ function App() {
   });
   return (
     <div className="App">
+      <Routes>
+        <Route path="sign-up" element={<SignUp />} />
+      </Routes>
       <MouseStalker position={position} isHover={isHover} />
       {/* <StalkerLing position={position} isHover={isHover} /> */}
     </div>
