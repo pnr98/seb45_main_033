@@ -1,7 +1,13 @@
 import { useState } from 'react';
-import { ErrText, SuccecsText } from './SignUpStyle';
+import {
+  ErrText,
+  SuccecsText,
+  BodyContainer,
+  FormContainer,
+} from './SignUpStyle';
 const SignUp = () => {
   const [name, setName] = useState('');
+  const [nameText, setNameText] = useState('');
   const [email, setEmail] = useState('');
   const [emailText, setEmailText] = useState('');
   const [pw, setPw] = useState('');
@@ -52,13 +58,15 @@ const SignUp = () => {
     }
     if (type === 'verifyPw') {
       setVerifyPw(e.target.value);
-      setSuccecsPw(false);
+      setSuccecsSamePw(false);
     }
   };
   const duplicateNameHandle = () => {
+    setNameText('');
     if (name.length >= 2 && name.length <= 12) {
       setNameErr(false);
-      setDupicateName(!duplicateName);
+      setSuccecsName(!succecsName);
+      setDupicateName(!duplicateName); // 여기 바뀌어야 함
     } else {
       setNameErr(true);
     }
@@ -87,44 +95,66 @@ const SignUp = () => {
   };
   return (
     <div>
-      <div>
-        닉네임
-        <input value={name} onChange={(e) => onChange('name', e)} />
-        <button onClick={duplicateNameHandle}>중복 확인</button>
-        {nameErr && (
-          <ErrText>닉네임은 2글자이상 12글자 이하여야 합니다.</ErrText>
-        )}
-        {duplicateName && <ErrText>이미 존재하는 닉네임 입니다.</ErrText>}
-      </div>
-      <div>
-        이메일
-        <input value={email} onChange={(e) => onChange('email', e)} />
-        <button onClick={duplicateEmailHandle}>중복 확인</button>
-        {emailErr && <ErrText>{emailText}</ErrText>}
-        {duplicateEmail && <ErrText>{emailText}</ErrText>}
-        {!emailErr && !duplicateEmail && <SuccecsText>{emailText}</SuccecsText>}
-      </div>
-      <div>
-        비밀번호
-        <input value={pw} type="password" onChange={(e) => onChange('pw', e)} />
-        {pwErr && (
-          <ErrText>
-            비밀번호는 7글자이상 20글자 이하이며 영문자,숫자,특수문자가 각각
-            1개이상 포함되어야 합니다.
-          </ErrText>
-        )}
-      </div>
-      <div>
-        비밀번호 확인
-        <input
-          value={verifyPw}
-          type="password"
-          onChange={(e) => onChange('verifyPw', e)}
-        />
-        <button onClick={samePwHandle}>비밀번호 확인</button>
-        {verifyPwErr && <ErrText>비밀번호를 확인해주세요</ErrText>}
-      </div>
-      <button onClick={submitHandle}>회원가입</button>
+      <BodyContainer>
+        <FormContainer>
+          <div>
+            닉네임
+            <input
+              value={name}
+              onChange={(e) => onChange('name', e)}
+              placeholder="닉네임을 입력하세요"
+            />
+            <button onClick={duplicateNameHandle}>중복 확인</button>
+            {nameErr && (
+              <ErrText>닉네임은 2글자이상 12글자 이하여야 합니다.</ErrText>
+            )}
+            {duplicateName && <ErrText>이미 존재하는 닉네임 입니다.</ErrText>}
+            {!nameErr && !duplicateName && (
+              <SuccecsText>{nameText}</SuccecsText>
+            )}
+          </div>
+          <div>
+            이메일
+            <input
+              value={email}
+              onChange={(e) => onChange('email', e)}
+              placeholder="이메일을 입력하세요.(아이디)"
+            />
+            <button onClick={duplicateEmailHandle}>중복 확인</button>
+            {emailErr && <ErrText>{emailText}</ErrText>}
+            {duplicateEmail && <ErrText>{emailText}</ErrText>}
+            {!emailErr && !duplicateEmail && (
+              <SuccecsText>{emailText}</SuccecsText>
+            )}
+          </div>
+          <div>
+            비밀번호
+            <input
+              value={pw}
+              type="password"
+              onChange={(e) => onChange('pw', e)}
+              placeholder="비밀번호를 입력하세요."
+            />
+            {pwErr && (
+              <ErrText>
+                비밀번호는 7글자이상 20글자 이하이며 영문자,숫자,특수문자가 각각
+                1개이상 포함되어야 합니다.
+              </ErrText>
+            )}
+          </div>
+          <div>
+            비밀번호 확인
+            <input
+              value={verifyPw}
+              type="password"
+              onChange={(e) => onChange('verifyPw', e)}
+            />
+            <button onClick={samePwHandle}>비밀번호 확인</button>
+            {verifyPwErr && <ErrText>비밀번호를 확인해주세요</ErrText>}
+          </div>
+          <button onClick={submitHandle}>회원가입</button>
+        </FormContainer>
+      </BodyContainer>
     </div>
   );
 };
