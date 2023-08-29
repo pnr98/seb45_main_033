@@ -1,66 +1,22 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import './App.css';
-import { styled } from 'styled-components';
-import { setMousePosition } from './redux/action/action';
-import { Route, Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { AppContainer } from './style/App.styled';
+import Header from './components/Header/Header';
+import Main from './pages/Main/Main';
+import Login from './pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
-// const StalkerLing = styled.div`
-// @keyframes ani {
-//   from {
-//     width: 40px;
-//     height : 40px;
-//     left: ${(props) => props.position.x - 20}px;
-//     top: ${(props) => props.position.y - 20}px;
-//   }
-
-//   to {
-//     width: 60px;
-//     height : 60px;
-//     left: ${(props) => props.position.x - 30}px;
-//     top: ${(props) => props.position.y - 30}px;
-//   }
-// };
-//   border-radius: 50%;
-//   position: fixed;
-// border: 1px solid #aaa;
-// animation : ani 1.5s ease-out infinite;
-// `
-const MouseStalker = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: hsla(0, 0%, 75%, 0.2);
-  position: fixed;
-  left: ${(props) => props.position.x - 20}px;
-  top: ${(props) => props.position.y - 20}px;
-  pointer-events: none;
-  border: 1px solid #aaa;
-`;
+import MyPage from './pages/MyPage/MyPage';
 
 function App() {
-  const position = useSelector((state) => state.position);
-  const isHover = useSelector((state) => state.isHover);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      dispatch(setMousePosition({ x: event.clientX, y: event.clientY }));
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  });
   return (
-    <div className="App">
+    <AppContainer>
+      <Header />
       <Routes>
-        <Route path="sign-up" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/" element={<Main />} />
+        <Route path="/my-page" element={<MyPage />} />
       </Routes>
-      <MouseStalker position={position} isHover={isHover} />
-      {/* <StalkerLing position={position} isHover={isHover} /> */}
-    </div>
+    </AppContainer>
   );
 }
 

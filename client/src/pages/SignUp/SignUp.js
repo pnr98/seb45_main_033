@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ErrText, SuccecsText } from './SignUpStyle';
+import { ErrText, SuccecsText } from './SignUp.Styled';
 const SignUp = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
