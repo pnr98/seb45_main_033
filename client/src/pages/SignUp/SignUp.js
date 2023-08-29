@@ -5,7 +5,9 @@ import {
   BodyContainer,
   FormContainer,
   InputContainer,
-  InputStyle
+  InputStyle,
+  SignBtn,
+  SignBtnContainer
 } from './SignUp.Styled'
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -118,7 +120,6 @@ const SignUp = () => {
             )}
           </div>
           <div>
-            이메일
             <InputContainer>
             <InputStyle
               value={email}
@@ -133,8 +134,7 @@ const SignUp = () => {
               <SuccecsText>{emailText}</SuccecsText>
             )}
           </div>
-          <div>
-            비밀번호
+          <div> 
             <InputContainer>
             <InputStyle
               value={pw}
@@ -151,8 +151,8 @@ const SignUp = () => {
             )}
           </div>
           <div>
-            비밀번호 확인
             <InputContainer>
+            비밀번호 확인
             <InputStyle
               value={verifyPw}
               type="password"
@@ -162,7 +162,9 @@ const SignUp = () => {
             </InputContainer>
             {verifyPwErr && <ErrText>비밀번호를 확인해주세요</ErrText>}
           </div>
-          <button onClick={submitHandle}>회원가입</button>
+          <SignBtnContainer>
+          <SignBtn onClick={submitHandle}>회원가입</SignBtn>
+          </SignBtnContainer>
         </FormContainer>
       </BodyContainer>
     </div>

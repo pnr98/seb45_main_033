@@ -36,5 +36,19 @@ export const InputContainer = styled.section`
 `
 
 export const InputStyle = styled.input`
- width: 300px;
+ width: 350px;
+ height: 50px;
+`
+
+export const SignBtn = styled.button`
+width: 350px;
+height: 50px;
+background-color: #759EB8;
+border-radius: 8px;
+color: white;
+`
+
+export const SignBtnContainer = styled.section`
+display: flex;
+ justify-content: center;
 `
