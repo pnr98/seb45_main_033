@@ -4,7 +4,7 @@ import {
   SuccecsText,
   BodyContainer,
   FormContainer,
-} from './SignUpStyle';
+} from './SignUp.Styled'
 const SignUp = () => {
   const [name, setName] = useState('');
   const [nameText, setNameText] = useState('');

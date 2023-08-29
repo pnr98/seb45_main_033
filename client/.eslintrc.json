@@ -1,5 +1,6 @@
 {
     "env": {
+      "node": true,
       "browser": true,
       "es2021": true
     },
@@ -7,8 +8,7 @@
       "eslint:recommended",
       "plugin:react/recommended",
       "plugin:import/recommended",
-      "plugin:jsx-a11y/recommended",
-      "plugin:prettier/recommended"
+      "plugin:jsx-a11y/recommended"
     ],
     "parserOptions": {
       "ecmaFeatures": {
@@ -19,6 +19,9 @@
     },
     "rules": {
       "react/react-in-jsx-scope": 0,
-      "react/jsx-uses-react": 0
+      "react/jsx-uses-react": 0,
+      "comma-dangle": 0,
+      "react/prop-types": 0,
+      "no-unused-vars": "off"
     }
   }

@@ -1,5 +1,4 @@
-// eslint-disable-next-line
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 export const ErrText = styled.span`
   color: red;
