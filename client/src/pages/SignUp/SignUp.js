@@ -4,6 +4,10 @@ import {
   SuccecsText,
   BodyContainer,
   FormContainer,
+  InputContainer,
+  InputStyle,
+  SignBtn,
+  SignBtnContainer
 } from './SignUp.Styled'
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -98,13 +102,15 @@ const SignUp = () => {
       <BodyContainer>
         <FormContainer>
           <div>
-            닉네임
-            <input
+            <InputContainer>
+            <InputStyle
               value={name}
               onChange={(e) => onChange('name', e)}
               placeholder="닉네임을 입력하세요"
             />
             <button onClick={duplicateNameHandle}>중복 확인</button>
+            
+            </InputContainer>
             {nameErr && (
               <ErrText>닉네임은 2글자이상 12글자 이하여야 합니다.</ErrText>
             )}
@@ -114,27 +120,29 @@ const SignUp = () => {
             )}
           </div>
           <div>
-            이메일
-            <input
+            <InputContainer>
+            <InputStyle
               value={email}
               onChange={(e) => onChange('email', e)}
               placeholder="이메일을 입력하세요.(아이디)"
             />
             <button onClick={duplicateEmailHandle}>중복 확인</button>
+            </InputContainer>
             {emailErr && <ErrText>{emailText}</ErrText>}
             {duplicateEmail && <ErrText>{emailText}</ErrText>}
             {!emailErr && !duplicateEmail && (
               <SuccecsText>{emailText}</SuccecsText>
             )}
           </div>
-          <div>
-            비밀번호
-            <input
+          <div> 
+            <InputContainer>
+            <InputStyle
               value={pw}
               type="password"
               onChange={(e) => onChange('pw', e)}
               placeholder="비밀번호를 입력하세요."
             />
+            </InputContainer>
             {pwErr && (
               <ErrText>
                 비밀번호는 7글자이상 20글자 이하이며 영문자,숫자,특수문자가 각각
@@ -143,16 +151,20 @@ const SignUp = () => {
             )}
           </div>
           <div>
+            <InputContainer>
             비밀번호 확인
-            <input
+            <InputStyle
               value={verifyPw}
               type="password"
               onChange={(e) => onChange('verifyPw', e)}
             />
             <button onClick={samePwHandle}>비밀번호 확인</button>
+            </InputContainer>
             {verifyPwErr && <ErrText>비밀번호를 확인해주세요</ErrText>}
           </div>
-          <button onClick={submitHandle}>회원가입</button>
+          <SignBtnContainer>
+          <SignBtn onClick={submitHandle}>회원가입</SignBtn>
+          </SignBtnContainer>
         </FormContainer>
       </BodyContainer>
     </div>
