@@ -11,7 +11,7 @@ const Header = () =>{
         <Link to='/sign-up'>
             <button>회원가입</button>
         </Link>
-        <Link to='/mypage'>
+        <Link to='/my-page'>
             <button>내 정보</button>
         </Link>
     </div>
