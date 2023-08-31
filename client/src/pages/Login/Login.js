@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from 'axios'
 import { ErrText, InputStyle,BodyContainer,FormContainer,InputContainer,SignBtn,SignBtnContainer } from "../SignUp/SignUp.Styled";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { setLoginStatus } from "../../redux/action/action";
 export default function Login() {
   const [email,setemail] = useState('')
   const [emailErr,setEmailErr] = useState(false)
@@ -9,6 +11,7 @@ export default function Login() {
   const [loginErr,setLoginErr] = useState(false)
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const navi = useNavigate()
+  const dispatch = useDispatch()
   const onChange = (type,e) =>{
     if(type === 'email'){
      setemail(e.target.value)
@@ -37,6 +40,7 @@ export default function Login() {
       axios.post('/auth/login',data).then((res)=>{
         if(res.status===200){
           sessionStorage.setItem('token',res.data.token)
+          dispatch(setLoginStatus(true))
           navi('/')
         }
       }).catch((res)=>{setLoginErr(true)})

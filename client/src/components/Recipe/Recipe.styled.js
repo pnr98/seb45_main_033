@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 
-export const ScrollingContainer = styled.div`
-  display: inline-block;
+export const ScrollingContainer = styled.span`
 `
 
 export const TagBox = styled.span`
