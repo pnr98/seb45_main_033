@@ -52,3 +52,8 @@ export const SignBtnContainer = styled.section`
 display: flex;
  justify-content: center;
 `
+
+export const Emoji = styled.span`
+display: flex;
+align-items: center;
+`

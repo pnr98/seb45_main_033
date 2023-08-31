@@ -6,6 +6,7 @@ export default function Login() {
   const [email,setemail] = useState('')
   const [emailErr,setEmailErr] = useState(false)
   const [pw,setPw] = useState('')
+  const [loginErr,setLoginErr] = useState(false)
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const navi = useNavigate()
   const onChange = (type,e) =>{
@@ -29,6 +30,16 @@ export default function Login() {
   }
   const submitHandle = () => {
     if(!isErr(emailErr,pw)){
+      const data = {
+        email:email,
+        password:pw
+      }
+      axios.post('/auth/login',data).then((res)=>{
+        if(res.status===200){
+          sessionStorage.setItem('token',res.data.token)
+          navi('/')
+        }
+      }).catch((res)=>{setLoginErr(true)})
       console.log('보냄')
     }  //로그인 버튼 클릭시 요청 보내고 로그인 성공 응답일 경우 데이터를 받아서 세션에 담음
   }
@@ -47,6 +58,7 @@ export default function Login() {
     <InputContainer>
     <InputStyle value={pw} onChange={(e)=>onChange('pw',e)} type="password" placeholder="비밀번호를 입력해 주세요."></InputStyle>
     </InputContainer>
+    {loginErr && <ErrText>이메일,비밀번호를 확인해 주세요.</ErrText>}
     <SignBtnContainer>
     <SignBtn onClick={submitHandle}>로그인</SignBtn>
     </SignBtnContainer>

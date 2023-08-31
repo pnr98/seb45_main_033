@@ -7,8 +7,11 @@ import {
   InputContainer,
   InputStyle,
   SignBtn,
-  SignBtnContainer
+  SignBtnContainer,
+  Emoji
 } from './SignUp.Styled'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const SignUp = () => {
   const [name, setName] = useState('');
   const [nameText, setNameText] = useState('');
@@ -29,7 +32,7 @@ const SignUp = () => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const passwordRegex =
     /^(?=.*[A-Za-z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z@$!%*?&\d]{7,20}$/i;
-
+  const navi = useNavigate()
   const onChange = (type, e) => {
     if (type === 'name') {
       setName(e.target.value);
@@ -69,7 +72,7 @@ const SignUp = () => {
     setNameText('');
     if (name.length >= 2 && name.length <= 12) {
       setNameErr(false);
-      setSuccecsName(!succecsName);
+      setSuccecsName(!succecsName); // 이미 해당 이름이 존재하는지 요청을 보낸뒤 받아와야함
       setDupicateName(!duplicateName); // 여기 바뀌어야 함
     } else {
       setNameErr(true);
@@ -94,7 +97,17 @@ const SignUp = () => {
     console.log(name, email, pw, verifyPw);
     console.log(succecsName, duplicateEmail, succecsPw, succecsSamePw);
     if (succecsName && !duplicateEmail && succecsPw && succecsSamePw) {
-      console.log('회원가입 성공');
+      const data = {
+        username:name,
+        email:email,
+        password:pw
+      }
+      axios.post('/auth/signup',data).then((res)=>{
+        if(res.status === 201){
+          navi('/login')
+          console.log('회원가입 성공');
+        }
+      }).catch((res)=>console.log(res))
     }
   };
   return (
@@ -159,6 +172,7 @@ const SignUp = () => {
               onChange={(e) => onChange('verifyPw', e)}
             />
             <button onClick={samePwHandle}>비밀번호 확인</button>
+            {succecsSamePw && <Emoji>✔️</Emoji>}
             </InputContainer>
             {verifyPwErr && <ErrText>비밀번호를 확인해주세요</ErrText>}
           </div>
