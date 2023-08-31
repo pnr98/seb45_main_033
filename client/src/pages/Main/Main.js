@@ -41,6 +41,7 @@ export default function Main() {
   const [list,setList] = useState(recipeList)
   return <div>
     <div>아기 상급어 뚜루루뚜루</div>
-    <ScrollMenu LeftArrow={<button>Left</button>} RightArrow={<button>Right</button>} translate={0} >{list.map((el)=>{return <Recipe info={el} key={el.id}/>})}</ScrollMenu></div>;
+    <ScrollMenu LeftArrow={<button>Left</button>} RightArrow={<button>Right</button>} translate={0} >{list.map((el)=>{return <Recipe info={el} key={el.id}/>})}</ScrollMenu>
+    </div>;
 }
 
