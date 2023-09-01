@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 
 export const MypageContainer=styled.section`
+overflow: auto;
 display: flex;
 gap: 25vh;
 `
