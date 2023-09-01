@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, TagBox } from "./Recipe.styled";
+import { Container } from "./Recipe.styled";
 import Tag from "../Tag/Tag";
 
 const Recipe = ({ info }) => {
