@@ -8,7 +8,8 @@ import {
   InputStyle,
   SignBtn,
   SignBtnContainer,
-  Emoji
+  Emoji,
+  Postionbtn
 } from './SignUp.Styled'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -94,6 +95,9 @@ const SignUp = () => {
           setNameText('이미 존재하는 유저네임 입니다.')
         }
       }))
+    }else{
+      setNameErr(true);
+      setNameText('유저네임은 2글자 이상 12글자 이하여야 합니다.')
     }
   };
   const duplicateEmailHandle = () => {
@@ -153,7 +157,7 @@ const SignUp = () => {
               onChange={(e) => onChange('name', e)}
               placeholder="유저네임을 입력하세요"
             />
-            <button onClick={duplicateNameHandle}>중복 확인</button>
+            <Postionbtn onClick={duplicateNameHandle}>중복 확인</Postionbtn>
             
             </InputContainer>
             {nameErr && (
@@ -170,7 +174,7 @@ const SignUp = () => {
               onChange={(e) => onChange('email', e)}
               placeholder="이메일을 입력하세요.(아이디)"
             />
-            <button onClick={duplicateEmailHandle}>중복 확인</button>
+            <Postionbtn onClick={duplicateEmailHandle}>중복 확인</Postionbtn>
             </InputContainer>
             {emailErr && <ErrText>{emailText}</ErrText>}
             {!emailErr && duplicateEmail && (
@@ -195,13 +199,12 @@ const SignUp = () => {
           </div>
           <div>
             <InputContainer>
-            비밀번호 확인
             <InputStyle
               value={verifyPw}
               type="password"
               onChange={(e) => onChange('verifyPw', e)}
             />
-            <button onClick={samePwHandle}>비밀번호 확인</button>
+            <Postionbtn onClick={samePwHandle}>비밀번호 확인</Postionbtn>
             {succecsSamePw && <Emoji>✔️</Emoji>}
             </InputContainer>
             {verifyPwErr && <ErrText>비밀번호를 확인해주세요</ErrText>}
