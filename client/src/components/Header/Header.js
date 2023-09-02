@@ -14,9 +14,6 @@ const Header = () => {
                 <ButtonLink to="/login">
                     <button>로그인</button>
                 </ButtonLink>
-                <ButtonLink to="/sign-up">
-                    <button>회원가입</button>
-                </ButtonLink>
             </div>
         </HeaderWrapper>
     );
