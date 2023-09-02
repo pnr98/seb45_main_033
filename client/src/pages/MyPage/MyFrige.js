@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { IngredientContainer, LikeTagBox , LikeContainer,LikeInput , ButtonContainer,
      CancelBtn, WriteBtn, DisLikeContainer, DisLikeTagBox,DisLikeInput, AllergyContainer, AllergyTagBox, AllergyInput, BtnLineContainer, ErrText} from "./MyFrige.Styled"
-import { TagBox } from "../../components/Recipe/Recipe.styled"
+import { TagBox } from "../../components/Tag/Tag.styled"
 import axios from "axios"
 const dummyData = {
     preferredIngredients : ["김치","소고기","당근","미역","피망"],
