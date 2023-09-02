@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { AppContainer } from './style/App.styled';
 import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
@@ -17,6 +18,7 @@ function App() {
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/recipe/:recipe_id" element={<RecipeDetail />} />
       </Routes>
+      <Footer />
     </AppContainer>
   );
 }
