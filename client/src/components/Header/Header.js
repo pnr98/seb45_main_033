@@ -1,20 +1,22 @@
-import { Link } from "react-router-dom"
+import {
+    HeaderWrapper,
+    Logo,
+    IconLink,
+    ButtonLink,
+} from "./Header.styled";
 
-const Header = () =>{
-    return <div>
-        <Link to='/'>
-            <button>홈</button>
-        </Link>
-        <Link to='/login'>
-            <button>로그인</button>
-        </Link>
-        <Link to='/sign-up'>
-            <button>회원가입</button>
-        </Link>
-        <Link to='/my-page'>
-            <button>내 정보</button>
-        </Link>
-    </div>
+const Header = () => {
+    return (
+        <HeaderWrapper>
+            <Logo>로고</Logo>
+            <div>
+                <IconLink to="/search">🔍</IconLink>
+                <ButtonLink to="/login">
+                    <button>로그인</button>
+                </ButtonLink>
+            </div>
+        </HeaderWrapper>
+    );
 }
 
-export default Header
+export default Header;

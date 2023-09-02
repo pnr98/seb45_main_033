@@ -21,6 +21,8 @@ export const BodyContainer = styled.div`
   justify-content: center;
 `;
 
+
+
 export const FormContainer = styled.section`
   background-color: #FFFFFF;
   justify-content: center;
@@ -56,4 +58,13 @@ display: flex;
 export const Emoji = styled.span`
 display: flex;
 align-items: center;
+position: absolute;
+margin-top: 15px;
+margin-left: 380px;
+`
+
+export const Postionbtn = styled.button`
+margin-top: 15px;
+margin-left: 500px;
+position: absolute;
 `

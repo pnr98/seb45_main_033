@@ -8,7 +8,8 @@ import {
   InputStyle,
   SignBtn,
   SignBtnContainer,
-  Emoji
+  Emoji,
+  Postionbtn
 } from './SignUp.Styled'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -72,16 +73,51 @@ const SignUp = () => {
     setNameText('');
     if (name.length >= 2 && name.length <= 12) {
       setNameErr(false);
-      setSuccecsName(!succecsName); // 이미 해당 이름이 존재하는지 요청을 보낸뒤 받아와야함
-      setDupicateName(!duplicateName); // 여기 바뀌어야 함
-    } else {
+      const data = {
+        userName: name
+      }
+      axios.get(`/auth/checkname`,data).then((res)=>{
+        if(res.status===200){
+          setSuccecsName(true); 
+          setDupicateName(false); 
+          setNameText('사용가능한 유저네임 입니다.')
+        } 
+      }).catch(((res)=>{
+        if(res.status===409){
+          setSuccecsName(false)
+          setDupicateName(true)
+          setNameErr(true)
+          setNameText('이미 존재하는 유저네임 입니다.')
+        }else{
+          setSuccecsName(false)
+          setDupicateName(true)
+          setNameErr(true)
+          setNameText('이미 존재하는 유저네임 입니다.')
+        }
+      }))
+    }else{
       setNameErr(true);
+      setNameText('유저네임은 2글자 이상 12글자 이하여야 합니다.')
     }
   };
   const duplicateEmailHandle = () => {
     if (succecsEmail) {
-      setEmailText('이미 사용중인 이메일입니다.');
-      setDuplacteEmail(!duplicateEmail); // 여기 바뀌어야 함
+      const data = {
+        email:email
+      }
+      axios.get(`/auth/checkemail`,data).then((res)=>{
+        if(res.status === 200){
+          setDuplacteEmail(true)
+          setEmailText('사용가능한 이메일 입니다.')
+          setEmailErr(false)
+        }
+      }).catch((res)=>{
+        if(res.status===409){
+          setDuplacteEmail(false)
+          setEmailText('이미 사용중인 이메일입니다.')
+          setEmailErr(true)
+        }
+      })
     }
   };
   const samePwHandle = () => {
@@ -96,7 +132,7 @@ const SignUp = () => {
   const submitHandle = () => {
     console.log(name, email, pw, verifyPw);
     console.log(succecsName, duplicateEmail, succecsPw, succecsSamePw);
-    if (succecsName && !duplicateEmail && succecsPw && succecsSamePw) {
+    if (succecsName && duplicateEmail && succecsPw && succecsSamePw) {
       const data = {
         username:name,
         email:email,
@@ -119,15 +155,14 @@ const SignUp = () => {
             <InputStyle
               value={name}
               onChange={(e) => onChange('name', e)}
-              placeholder="닉네임을 입력하세요"
+              placeholder="유저네임을 입력하세요"
             />
-            <button onClick={duplicateNameHandle}>중복 확인</button>
+            <Postionbtn onClick={duplicateNameHandle}>중복 확인</Postionbtn>
             
             </InputContainer>
             {nameErr && (
-              <ErrText>닉네임은 2글자이상 12글자 이하여야 합니다.</ErrText>
+              <ErrText>{nameText}</ErrText>
             )}
-            {duplicateName && <ErrText>이미 존재하는 닉네임 입니다.</ErrText>}
             {!nameErr && !duplicateName && (
               <SuccecsText>{nameText}</SuccecsText>
             )}
@@ -139,11 +174,10 @@ const SignUp = () => {
               onChange={(e) => onChange('email', e)}
               placeholder="이메일을 입력하세요.(아이디)"
             />
-            <button onClick={duplicateEmailHandle}>중복 확인</button>
+            <Postionbtn onClick={duplicateEmailHandle}>중복 확인</Postionbtn>
             </InputContainer>
             {emailErr && <ErrText>{emailText}</ErrText>}
-            {duplicateEmail && <ErrText>{emailText}</ErrText>}
-            {!emailErr && !duplicateEmail && (
+            {!emailErr && duplicateEmail && (
               <SuccecsText>{emailText}</SuccecsText>
             )}
           </div>
@@ -165,13 +199,12 @@ const SignUp = () => {
           </div>
           <div>
             <InputContainer>
-            비밀번호 확인
             <InputStyle
               value={verifyPw}
               type="password"
               onChange={(e) => onChange('verifyPw', e)}
             />
-            <button onClick={samePwHandle}>비밀번호 확인</button>
+            <Postionbtn onClick={samePwHandle}>비밀번호 확인</Postionbtn>
             {succecsSamePw && <Emoji>✔️</Emoji>}
             </InputContainer>
             {verifyPwErr && <ErrText>비밀번호를 확인해주세요</ErrText>}
