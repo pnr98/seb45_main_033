@@ -5,6 +5,20 @@ export const GlobalStyle = createGlobalStyle`
         --main-width: 1264px;
         --main-height: calc(100vh);
         --orange : #EA862B;
+        --grey: #636F7E;
+        --light-grey: #A5B0BD;
+        --font-size-12: 0.75rem; /* 12px */
+        --font-size-14: 0.875rem; /* 14px */
+        --font-size-16: 1rem;    /* 16px, base */
+        --font-size-20: 1.25rem; /* 20px */
+        --font-size-24: 1.5rem;  /* 24px */
+        --font-size-28: 1.75rem; /* 28px */
+        --font-size-32: 2rem;    /* 32px */
+        --font-size-36: 2.25rem; /* 36px */
+        --font-size-48: 3rem; /* 48px */
+        --font-size-64: 4rem; /* 64px */
+        --font-size-80: 5rem; /* 80px */
+
     }
 
 * {
