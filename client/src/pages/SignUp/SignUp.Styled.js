@@ -45,7 +45,7 @@ export const InputStyle = styled.input`
 export const SignBtn = styled.button`
 width: 350px;
 height: 50px;
-background-color: #759EB8;
+background-color: #E2990B;
 border-radius: 8px;
 color: white;
 `
@@ -67,4 +67,10 @@ export const Postionbtn = styled.button`
 margin-top: 15px;
 margin-left: 500px;
 position: absolute;
+`
+
+export const SignLink = styled.div`
+display: flex;
+justify-content: center;
+gap: 10px;
 `
