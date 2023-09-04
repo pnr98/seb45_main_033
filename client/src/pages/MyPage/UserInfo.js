@@ -57,9 +57,11 @@ export default function UserInfo() {
   const pwChangeHandle = () =>{
    if(!passwordRegex.test(userPassWord)){
     setPwErr(true)
+    setChangeErr(false)
    }else{
     setPwErr(false)
     setPwChange(false)
+    setChangeErr(false)
    }
   }
   const cancelChange = () =>{
@@ -106,6 +108,7 @@ export default function UserInfo() {
       }    
     }else{
       setChangeErr(true)
+      setPwErr(false)
     }
   }
   return <div>
@@ -136,12 +139,12 @@ export default function UserInfo() {
         {pwChange ? <PassWordText disabled={false} type={showPassword ? 'text' : 'password'} value={userPassWord} onChange={(e)=>pwHandle(e)}/>:<PassWordText disabled={true} type="password" value={userPassWord ? userPassWord : '********'} />}
         { pwChange ? <ChangeBtn onClick={pwChangeHandle}> 확인 </ChangeBtn> : <ChangeBtn onClick={()=>setPwChange(!pwChange)}> 비밀번호변경 </ChangeBtn> }
         {pwChange && <ChangeBtn onClick={()=>setShowPassword(!showPassword)}>{showPassword ? '숨기기' :'보기'}</ChangeBtn>}
-        {pwChange && <ChangeBtn onClick={cancelChange}>초기화</ChangeBtn>}
-        {pwErr && <PwErrText>비밀번호는 7글자이상 20글자 이하이며 영문자,숫자,특수문자가 각각
-                1개이상 포함되어야 합니다.</PwErrText>}        
+        {pwChange && <ChangeBtn onClick={cancelChange}>초기화</ChangeBtn>}        
       </PassWordBox>
       <button onClick={submitHandle}>수정완료</button>
       {changeErr && <PwErrText>모든 수정을 완료해 주세요.</PwErrText>}
+      {pwErr && <PwErrText>비밀번호는 7글자이상 20글자 이하이며 영문자,숫자,특수문자가 각각
+                1개이상 포함되어야 합니다.</PwErrText>}
     </BodyContainer>}
   </div>;
 }

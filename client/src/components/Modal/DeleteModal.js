@@ -1,11 +1,27 @@
 import axios from "axios"
 import { ModalBody, ModalBtn, ModalBtnContainer, ModalText,ModalBtnBox } from "./DeleteModal.styled"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 
 const DeleteModal = ({type,data}) => {
+  const navi = useNavigate()
+  const token = useSelector(state=>state.access_Token)
+  const header = {
+    Headers : {
+      Authorization: `Bearer {access_token}`
+    }
+  }
   const axiosData = () => {
     if(type==='Delete'){
       console.log(data)
+      axios.delete('/recipes/{recipe-id}','',header).then((res)=>{
+        if(res.status === 204){
+          navi('/')
+        }
+      }).catch((res)=>{
+        console.log(res)
+      })
     }
     if(type==='Comment'){
       console.log(data)
@@ -23,7 +39,7 @@ const DeleteModal = ({type,data}) => {
     <ModalBtnContainer>
       <ModalBtnBox>
       <ModalBtn>취소</ModalBtn>
-      <ModalBtn>삭제</ModalBtn>
+      <ModalBtn onClick={()=>axiosData}>삭제</ModalBtn>
       </ModalBtnBox>
     </ModalBtnContainer>
  </ModalBody>

@@ -19,6 +19,10 @@ export const ImageBox = styled.div`
    display: flex;
    gap: 30px;
    box-shadow: 0px 1px 5px #00000033;
+   overflow: hidden;
+   >div{
+    white-space: nowrap;
+   }
 `
 
 export const Image = styled.img`
