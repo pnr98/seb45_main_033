@@ -1,9 +1,9 @@
 import { useState } from "react";
 import axios from 'axios'
-import { ErrText, InputStyle,BodyContainer,FormContainer,InputContainer,SignBtn,SignBtnContainer } from "../SignUp/SignUp.Styled";
-import { useNavigate } from "react-router-dom";
+import { ErrText, InputStyle,BodyContainer,FormContainer,InputContainer,SignBtn,SignBtnContainer,SignLink } from "../SignUp/SignUp.Styled";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
-import { setLoginStatus } from "../../redux/action/action";
+import { setLoginStatus,setAccessToken } from "../../redux/action/action";
 export default function Login() {
   const [email,setemail] = useState('')
   const [emailErr,setEmailErr] = useState(false)
@@ -39,7 +39,7 @@ export default function Login() {
       }
       axios.post('/auth/login',data).then((res)=>{
         if(res.status===200){
-          sessionStorage.setItem('token',res.data.token)
+          dispatch(setAccessToken(res.data.token))
           dispatch(setLoginStatus(true))
           navi('/')
         }
@@ -69,7 +69,9 @@ export default function Login() {
     <SignBtnContainer>
     <SignBtn onClick={guestLogin}>Guest Login</SignBtn>
     </SignBtnContainer>
-    
+    <SignLink>계정이 없으신가요?
+      <Link to='/sign-up'>가입하기</Link>
+    </SignLink>
     </FormContainer>
     </BodyContainer>
   </div>;

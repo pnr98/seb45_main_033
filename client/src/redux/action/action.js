@@ -12,3 +12,9 @@ export const setMousePosition = ({ x, y }) => {
     payload: { x: x, y: y }
   };
 };
+export const setAccessToken = (token) => {
+  return {
+    type: 'SET_ACCESS_TOKEN',
+    payload: token
+  }
+}

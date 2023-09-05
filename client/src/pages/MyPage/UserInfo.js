@@ -51,21 +51,28 @@ export default function UserInfo() {
   const nameHandle = (e) =>{
     setUserName(e.target.value)
   }
+  const nameChangeHandle = () => {
+    setNameChange(!nameChange)
+    setChangeErr(false)
+  }
   const pwHandle = (e) =>{
     setUserPassWord(e.target.value)
   }
   const pwChangeHandle = () =>{
    if(!passwordRegex.test(userPassWord)){
     setPwErr(true)
+    setChangeErr(false)
    }else{
     setPwErr(false)
     setPwChange(false)
+    setChangeErr(false)
    }
   }
   const cancelChange = () =>{
     setPwChange(false)
     setUserPassWord('')
     setPwErr(false)
+    setChangeErr(false)
   }
   const axiosPatchData = (data,header) =>{
     axios.patch(`/profile/{user-id}`,data,header).then((res)=>{
@@ -106,6 +113,7 @@ export default function UserInfo() {
       }    
     }else{
       setChangeErr(true)
+      setPwErr(false)
     }
   }
   return <div>
@@ -125,7 +133,7 @@ export default function UserInfo() {
       <NickNameBox> {/* 닉네임 닫는 층 시작 */}
       <Text>닉네임</Text>
       <NickNameText value={userName} disabled={nameChange ? false : true} onChange={(e)=>nameHandle(e)}/>
-      <ChangeBtn onClick={()=>setNameChange(!nameChange)}>{nameChange ? "확인" : "닉네임 변경"}</ChangeBtn>
+      <ChangeBtn onClick={nameChangeHandle}>{nameChange ? "확인" : "닉네임 변경"}</ChangeBtn>
       </NickNameBox>
       <EmailBox> {/* 이메일 담는 층 시작 */}
       <Text>이메일</Text>
@@ -136,12 +144,12 @@ export default function UserInfo() {
         {pwChange ? <PassWordText disabled={false} type={showPassword ? 'text' : 'password'} value={userPassWord} onChange={(e)=>pwHandle(e)}/>:<PassWordText disabled={true} type="password" value={userPassWord ? userPassWord : '********'} />}
         { pwChange ? <ChangeBtn onClick={pwChangeHandle}> 확인 </ChangeBtn> : <ChangeBtn onClick={()=>setPwChange(!pwChange)}> 비밀번호변경 </ChangeBtn> }
         {pwChange && <ChangeBtn onClick={()=>setShowPassword(!showPassword)}>{showPassword ? '숨기기' :'보기'}</ChangeBtn>}
-        {pwChange && <ChangeBtn onClick={cancelChange}>초기화</ChangeBtn>}
-        {pwErr && <PwErrText>비밀번호는 7글자이상 20글자 이하이며 영문자,숫자,특수문자가 각각
-                1개이상 포함되어야 합니다.</PwErrText>}        
+        {pwChange && <ChangeBtn onClick={cancelChange}>초기화</ChangeBtn>}        
       </PassWordBox>
       <button onClick={submitHandle}>수정완료</button>
       {changeErr && <PwErrText>모든 수정을 완료해 주세요.</PwErrText>}
+      {pwErr && <PwErrText>비밀번호는 7글자이상 20글자 이하이며 영문자,숫자,특수문자가 각각
+                1개이상 포함되어야 합니다.</PwErrText>}
     </BodyContainer>}
   </div>;
 }

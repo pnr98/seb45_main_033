@@ -9,10 +9,11 @@ import {
   SignBtn,
   SignBtnContainer,
   Emoji,
-  Postionbtn
+  Postionbtn,
+  SignLink
 } from './SignUp.Styled'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const SignUp = () => {
   const [name, setName] = useState('');
   const [nameText, setNameText] = useState('');
@@ -212,6 +213,9 @@ const SignUp = () => {
           <SignBtnContainer>
           <SignBtn onClick={submitHandle}>회원가입</SignBtn>
           </SignBtnContainer>
+          <SignLink>계정이 있으신가요?
+            <Link to='/login'>로그인</Link>
+          </SignLink>
         </FormContainer>
       </BodyContainer>
     </div>
