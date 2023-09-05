@@ -15,6 +15,7 @@ export const HeaderWrapper = styled.div`
   padding-left: 100px; 
   padding-right: 100px;
   box-sizing: border-box;
+  flex-direction: row;
 `;
 
 export const LogoLink = styled(Link)`
@@ -24,46 +25,51 @@ export const LogoLink = styled(Link)`
 export const IconLink = styled(Link)`
   font-size: 20px;
   margin-left: 80px;
+  visibility: visible;
   cursor: pointer;
 
   @media (max-width: 710px) {
-    visibility: ${props => (props.showHamburger ? 'visible' : 'hidden')};
+    visibility: visible;
     margin-left: 0px;
+
   }
 `;
 
 export const ButtonLink = styled(Link)`
   margin-left: 50px;
   text-decoration: none;
+  visibility: visible;
 
   @media (max-width: 710px) {
-    visibility: ${props => (props.showHamburger ? 'visible' : 'hidden')};
+    visibility: visible;
     margin-left: 0px;
     border-top: 1px solid lightgray;
   }
 `;
 
 export const HamburgerBar = styled.div`
-  display: none;
   cursor: pointer;
   font-size: 24px;
-  
+  display: none;
+
   @media (max-width: 710px) {
     display: block;
   }
 `;
 
 export const DropdownMenu = styled.div`
-  display: ${props => (props.show ? 'block' : 'none')};
-  position: absolute;
-  top: 60px;
-  right: 100px;
-  background-color: white;
-  border: 1px solid #ccc;
-  
-  @media (min-width: 711px) {
-    display: none;
+  display: flex;
+  position: static;
+
+  @media (max-width: 710px) {
+    position: absolute;
+    top: 60px;
+    right: 100px;
+    background-color: white;
+    border: 1px solid #ccc;
+    display: ${props => (props.show ? 'block' : 'none')};
   }
+
   a, div {
     padding: 12px 12px;
     display: block;
@@ -72,4 +78,3 @@ export const DropdownMenu = styled.div`
     background-color: #f1f1f1;
   }
 `;
-
