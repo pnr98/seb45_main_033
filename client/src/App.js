@@ -7,6 +7,7 @@ import Login from './pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
 import MyPage from './pages/MyPage/MyPage';
 import RecipeDetailPage from './pages/RecipeDetailPage/RecipeDetailPage';
+import RecipeSearchPage from './pages/RecipeSearchPage/RecipeSearchPage';
 function App() {
   return (
     <AppContainer>
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/recipe/:recipe_id" element={<RecipeDetailPage />} />
+        <Route path="/search" element={<RecipeSearchPage />} />
       </Routes>
       <Footer />
     </AppContainer>

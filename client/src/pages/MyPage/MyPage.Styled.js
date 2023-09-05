@@ -5,6 +5,7 @@ margin-top: 100px;
 overflow: auto;
 display: flex;
 gap: 25vh;
+margin-top: 100px;
 `
 
 export const TapContainer = styled.div`

@@ -1,3 +1,5 @@
+import { SET_LOGIN_STATUS } from '../action/action';
+
 const initialState = {
   isLogin: false,
   userInfo: {},
