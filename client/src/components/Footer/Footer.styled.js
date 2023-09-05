@@ -56,28 +56,28 @@ export const FooterSection = styled.div`
   justify-content: space-between;
 
   @media (max-width: 1700px) {
-      padding: 15px 450px; /* Add right padding */
+      padding: 15px 450px;
   }  
   @media (max-width: 1600px) {
-      padding: 15px 400px; /* Add right padding */
+      padding: 15px 400px;
   }  
   @media (max-width: 1500px) {
-      padding: 15px 350px; /* Add right padding */
+      padding: 15px 350px;
   }
   @media (max-width: 1400px) {
-      padding: 15px 300px; /* Add right padding */
+      padding: 15px 300px;
   }          
   @media (max-width: 1300px) {
-      padding: 15px 250px; /* Add right padding */
+      padding: 15px 250px;
   }
   @media (max-width: 1200px) {
-      padding: 15px 200px; /* Add right padding */
+      padding: 15px 200px;
   }
   @media (max-width: 1100px) {
-      padding: 15px 150px; /* Add right padding */
+      padding: 15px 150px;
   } 
   @media (max-width: 1000px) {
-      padding: 15px 100px; /* Add right padding */
+      padding: 15px 100px;
   }    
   @media (max-width: 900px) {
     padding: 15px 80px; 
