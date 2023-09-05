@@ -1,5 +1,5 @@
 import Recipe from '../../components/Recipe/Recipe';
-import { SearchContainer, SearchInput , CategoryButton, RecipesContainer , PaginationContainer} from "./RecipeSearchPage.Styled"
+import { SearchContainer, SearchInput, RecipesContainer , PaginationContainer} from "./RecipeSearchPage.Styled"
 
 const RecipeSearchPage = () => {
 
@@ -23,6 +23,7 @@ const RecipeSearchPage = () => {
             </RecipesContainer>
 
             <PaginationContainer>
+                {/* 페이지네이션 컴포넌트 넣기 */}
             </PaginationContainer>
           </SearchContainer>
 
