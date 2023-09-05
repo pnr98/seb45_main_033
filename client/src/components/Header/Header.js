@@ -43,9 +43,9 @@ const Header = () => {
       <HamburgerBar onClick={Hamburger}>☰</HamburgerBar>
         <DropdownMenu show={showHamburger}>
           <IconLink to="/search" onClick={closeDropdown} showHamburger={showHamburger}>🔍</IconLink>
+          <ButtonLink onClick={closeDropdown} showHamburger={showHamburger}>레시피 작성</ButtonLink>  
               {isLogin ? (
                 <>
-                  <ButtonLink onClick={closeDropdown} showHamburger={showHamburger}>글 작성</ButtonLink>
                   <ButtonLink to="/my-page" onClick={closeDropdown} showHamburger={showHamburger}>마이페이지</ButtonLink>
                   <ButtonLink onClick={handleLogout} showHamburger={showHamburger}>로그아웃</ButtonLink>
                 </>
