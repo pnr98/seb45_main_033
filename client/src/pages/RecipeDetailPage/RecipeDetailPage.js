@@ -8,7 +8,7 @@ import {
   RecipeStepWrap,
   Button
 } from './RecipeDetailPage.styled'
-import usePostButton from '../../hooks/usePostButton'
+import HorizontalScroll from '../../components/HorizontalScroll/HorizontalScroll'
 import Tag from '../../components/Tag/Tag'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -84,8 +84,6 @@ export default function RecipeDetailPage() {
       }
     })
     console.log(seperatedIngredients)
-
-    // const postButton = usePostButton();
     
     return (
         <Container>
@@ -148,13 +146,12 @@ export default function RecipeDetailPage() {
                   </ul>
                 </RecipeStepWrap>
                 <Button>
-                  {/* <button onClick={postButton.setCancel}>삭제</button>
-                  <button onClick={postButton.serEdit}>수정</button> */}
                 </Button>
+                <RelatedRecipe>
+                  <HorizontalScroll />
+                </RelatedRecipe>
             </RecipeWrap>
-            <RelatedRecipe>
-              
-            </RelatedRecipe>
+
         </Container>
     )
 }

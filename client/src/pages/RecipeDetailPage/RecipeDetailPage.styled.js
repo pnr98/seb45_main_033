@@ -12,7 +12,7 @@ export const Container = styled.div`
 export const RecipeWrap = styled.div`
     display: flex;
     flex-direction: column;
-    width: 43rem;
+    width: 50rem;
     font-size: 0.875rem;
     font-weight: 500;
     .discription-title {
@@ -30,8 +30,8 @@ export const RecipeInfoContainer = styled.section`
 
     .image-wrap{
         img {
-            width: 43rem;
-            height: 33.375rem;
+            width: 100%;
+            height: auto;
             border-radius: 1.25rem;
         }
     }
@@ -111,4 +111,5 @@ export const RecipeLike = styled.div`
 
 export const RelatedRecipe = styled.div`
     display: flex;
+    justify-content: center;
 `
