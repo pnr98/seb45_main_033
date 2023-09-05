@@ -51,6 +51,10 @@ export default function UserInfo() {
   const nameHandle = (e) =>{
     setUserName(e.target.value)
   }
+  const nameChangeHandle = () => {
+    setNameChange(!nameChange)
+    setChangeErr(false)
+  }
   const pwHandle = (e) =>{
     setUserPassWord(e.target.value)
   }
@@ -68,6 +72,7 @@ export default function UserInfo() {
     setPwChange(false)
     setUserPassWord('')
     setPwErr(false)
+    setChangeErr(false)
   }
   const axiosPatchData = (data,header) =>{
     axios.patch(`/profile/{user-id}`,data,header).then((res)=>{
@@ -128,7 +133,7 @@ export default function UserInfo() {
       <NickNameBox> {/* 닉네임 닫는 층 시작 */}
       <Text>닉네임</Text>
       <NickNameText value={userName} disabled={nameChange ? false : true} onChange={(e)=>nameHandle(e)}/>
-      <ChangeBtn onClick={()=>setNameChange(!nameChange)}>{nameChange ? "확인" : "닉네임 변경"}</ChangeBtn>
+      <ChangeBtn onClick={nameChangeHandle}>{nameChange ? "확인" : "닉네임 변경"}</ChangeBtn>
       </NickNameBox>
       <EmailBox> {/* 이메일 담는 층 시작 */}
       <Text>이메일</Text>

@@ -1,7 +1,7 @@
 const initialState = {
   isLogin: false,
   userInfo: {},
-  access_Token: '',
+  access_token: '',
   productList: [],
   position: { x: 0, y: 0 },
   isHover: false
@@ -14,7 +14,7 @@ const rootReducer = (state = initialState, action) => {
     case 'SET_MOUSE_POSITION':
       return { ...state, position: action.payload };
     case 'SET_ACCESS_TOKEN':
-      return {...state, access_Token:action.payload};
+      return {...state, access_token:action.payload};
     default:
       return state;
   }

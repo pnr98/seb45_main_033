@@ -30,7 +30,8 @@ export const ModalBtnBox = styled.div`
 width: 140px;
 height: 40px;
 display: flex;
-justify-content: center;
+margin-right: 10px;
+justify-content: end;
 align-items: center;
 gap: 10px;
 `
