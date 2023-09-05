@@ -15,25 +15,7 @@ const RecipeSearchPage = () => {
 
     return (
           <SearchContainer>
-                <SearchInput type="text" placeholder="레시피 검색" />
-
-            <div>
-                <CategoryButton>전체</CategoryButton>
-                <CategoryButton>한식</CategoryButton>
-                <CategoryButton>양식</CategoryButton>
-                <CategoryButton>일식</CategoryButton>
-                <CategoryButton>중식</CategoryButton>
-                <CategoryButton>디저트</CategoryButton>
-                <CategoryButton>다이어트</CategoryButton>
-            </div>
-
-            <div>
-                <CategoryButton>최신순</CategoryButton>
-                <CategoryButton>추천순</CategoryButton>
-                <CategoryButton>조리시간순</CategoryButton>
-                <CategoryButton>코멘트순</CategoryButton>
-            </div>
-
+              <SearchInput type="text" placeholder="레시피 검색" />
             <RecipesContainer>
               {Array(25).fill().map((_, idx) => (
                 <Recipe key={idx} info={dummy} />
