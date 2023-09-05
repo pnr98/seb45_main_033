@@ -22,10 +22,12 @@ const Footer = () => {
           <MemberName>박나래</MemberName>
           <MemberName>윤선문</MemberName>
         </FE>
-        <TeamRepo>
-          <GithubIcon />
-          <p>Team Repository</p>
-        </TeamRepo>
+        <a href="https://github.com/codestates-seb/seb45_main_033" target="_blank" rel="noopener noreferrer">
+          <TeamRepo>
+            <GithubIcon />
+            <p>Team Repository</p>
+          </TeamRepo>
+        </a>
       </FooterSection>
       <Copyright>Copyright  2023  33양호 Inc. All Rights Reserved   E-mail: codestates@gmail.com</Copyright>
     </FooterWrapper>
