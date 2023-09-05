@@ -20,15 +20,21 @@ const Header = () => {
   const handleLogin = () => {
     localStorage.setItem('isLogin', 'true');
     setIsLogin(true);
+    closeDropdown();
   };
 
   const handleLogout = () => {
     localStorage.setItem('isLogin', 'false');
     setIsLogin(false);
+    closeDropdown();
   };
 
   const Hamburger = () => {
     setShowHamburger(!showHamburger);
+  };
+
+  const closeDropdown = () => {
+    setShowHamburger(false);
   };
 
   return (
@@ -36,11 +42,11 @@ const Header = () => {
       <LogoLink to="/">로고</LogoLink>
       <HamburgerBar onClick={Hamburger}>☰</HamburgerBar>
         <DropdownMenu show={showHamburger}>
-          <IconLink to="/search" showHamburger={showHamburger}>🔍</IconLink>
+          <IconLink to="/search" onClick={closeDropdown} showHamburger={showHamburger}>🔍</IconLink>
               {isLogin ? (
                 <>
-                  <ButtonLink showHamburger={showHamburger}>글 작성</ButtonLink>
-                  <ButtonLink to="/my-page" showHamburger={showHamburger}>마이페이지</ButtonLink>
+                  <ButtonLink onClick={closeDropdown} showHamburger={showHamburger}>글 작성</ButtonLink>
+                  <ButtonLink to="/my-page" onClick={closeDropdown} showHamburger={showHamburger}>마이페이지</ButtonLink>
                   <ButtonLink onClick={handleLogout} showHamburger={showHamburger}>로그아웃</ButtonLink>
                 </>
               ) : (
