@@ -55,7 +55,7 @@ const Header = () => {
       <LogoLink to="/">로고</LogoLink>
       <HamburgerBar onClick={Hamburger}>☰</HamburgerBar>
         <DropdownMenu show={showHamburger}>
-          <IconLink to="/search" onClick={closeDropdown} showHamburger={showHamburger}>🔍</IconLink>
+          <IconLink to="/search" onClick={closeDropdown} showHamburger={showHamburger}></IconLink>
           <ButtonLink onClick={handleRecipeCreation} showHamburger={showHamburger}>레시피 작성</ButtonLink>
           {showModal && <Modal type="LoginPlz" func={() => setShowModal(false)} />}
 
