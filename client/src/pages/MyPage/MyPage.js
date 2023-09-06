@@ -15,9 +15,9 @@ export default function MyPage() {
     setCurrentTap(type)
   }
   return <MypageContainer>
-    <TapContainer stroke={currentTap==='냉장고' ? true : ''}>
-    <Tap onClick={()=>TapEvent('냉장고')} >나만의 냉장고</Tap>
-    <Tap onClick={()=>TapEvent('회원정보')}>회원정보 수정</Tap>
+    <TapContainer>
+    <Tap stroke={currentTap==='냉장고' && true} onClick={()=>TapEvent('냉장고')} >나만의 냉장고</Tap>
+    <Tap stroke={currentTap!=='냉장고' && true} onClick={()=>TapEvent('회원정보')}>회원정보 수정</Tap>
     </TapContainer>
     {currentTap==='냉장고' ? <MyFrige /> : <UserInfo />}
   </MypageContainer>;

@@ -37,10 +37,10 @@ export const InputContainer = styled.section`
  justify-content: center;
 `
 
-export const IDInput = styled.div`
+export const TextInput = styled.div`
  display: flex;
  flex-direction: column;
- gap:10px
+ gap:10px;
 `
 
 export const InputStyle = styled.input`
@@ -97,4 +97,13 @@ export const FormInput = styled.section`
 display: flex;
 flex-direction: column;
 gap:40px;
+`
+
+export const AutoLoginContainer = styled.div`
+width: 350px;
+`
+
+export const Addition = styled.section`
+display: flex;
+justify-content: center;
 `

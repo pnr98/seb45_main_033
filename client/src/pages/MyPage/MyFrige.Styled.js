@@ -79,3 +79,7 @@ export const AllergyTagBox = styled(LikeTagBox)`
 export const AllergyInput = styled(LikeInput)`
 
 `
+
+export const Box = styled.div`
+width: 800px;
+`
