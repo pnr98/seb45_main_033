@@ -27,7 +27,6 @@ export const BannerImg = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
-  margin-bottom: 10px;
   background-image: url(${footerImg});
   margin-left: 10px;
 `;
