@@ -2,6 +2,7 @@ package com.main33.server.recipe.entity;
 
 
 import com.main33.server.member.entity.Member;
+import com.main33.server.recipe.domain.RecipeFoodType;
 import com.main33.server.recipe_step.entity.RecipeStep;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,7 @@ public class Recipe {
     private String recipeName;
 
     @Enumerated(EnumType.STRING)
-    private FoodType foodType;
+    private RecipeFoodType recipeFoodType;
 
     @Column(nullable = false)
     private Integer cookingTime;
@@ -44,8 +45,7 @@ public class Recipe {
     private String recipeDescription;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipe")
-    @Column(name="recipe_step", nullable = false)
-    private List<RecipeStep> recipeStep = new ArrayList<>();;
+    private List<RecipeStep> recipeStep = new ArrayList<>();
 
     @ElementCollection
     private List<String> ingredients;
@@ -64,9 +64,4 @@ public class Recipe {
 
     @UpdateTimestamp
     private Timestamp modifiedAt;
-
-
-    public enum FoodType {
-        KOREAN, JAPANESE, CHINESE, WESTERN, ETC
-    }
 }
