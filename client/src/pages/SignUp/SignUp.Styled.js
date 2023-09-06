@@ -17,7 +17,7 @@ export const SuccecsText = styled.div`
 export const BodyContainer = styled.div`
   display: flex;
   background-color: #D8E1E9;
-  height: 1000px;
+  height: 800px;
   justify-content: center;
 `;
 
@@ -35,6 +35,12 @@ export const FormContainer = styled.section`
 export const InputContainer = styled.section`
  display: flex;
  justify-content: center;
+`
+
+export const IDInput = styled.div`
+ display: flex;
+ flex-direction: column;
+ gap:10px
 `
 
 export const InputStyle = styled.input`
@@ -73,4 +79,22 @@ export const SignLink = styled.div`
 display: flex;
 justify-content: center;
 gap: 10px;
+`
+
+export const FormTop = styled.section`
+display: flex;
+flex-direction: column;
+gap:10px;
+`
+
+export const FormBottom = styled.section`
+display: flex;
+flex-direction: column;
+gap:40px;
+`
+
+export const FormInput = styled.section`
+display: flex;
+flex-direction: column;
+gap:40px;
 `

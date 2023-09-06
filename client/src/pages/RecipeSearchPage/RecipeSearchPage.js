@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import Recipe from '../../components/Recipe/Recipe';
 import { SearchContainer, SearchInput , CategoryButton, RecipesContainer , PaginationContainer} from "./RecipeSearchPage.Styled"
-
+import { useNavigate } from 'react-router-dom';
 const RecipeSearchPage = () => {
-
+  const [searchValue,setSearchValue] = useState('')
+  const navi = useNavigate()
   const dummy = {
     recipeId: 1,
     thumbnailUrl: 'https://example.com/image.jpg',
@@ -12,10 +14,22 @@ const RecipeSearchPage = () => {
     cook_time: '30분',
     nutritions: null
 };
+const searchHandle = (e) => {
+  setSearchValue(e.target.value)
+}
 
+
+const searchNaviHandle = (serach) => {
+  navi(`/search/${serach}`)
+}
+const enterHandle = (e) => {
+  if (e.key === 'Enter') {
+    searchNaviHandle(searchValue);
+  }
+};
     return (
           <SearchContainer>
-                <SearchInput type="text" placeholder="레시피 검색" />
+                <SearchInput type="text" placeholder="레시피 검색" onChange={(e)=>searchHandle(e)} onKeyUp={enterHandle}/>
 
             <div>
                 <CategoryButton>전체</CategoryButton>
