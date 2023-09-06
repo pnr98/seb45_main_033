@@ -26,7 +26,7 @@ export const LogoLink = styled(Link)`
 
 export const IconLink = styled(Link)`
   font-size: 20px;
-  margin: 5px 0 5px 0;
+  margin: 5px 5px 5px 0;
   visibility: visible;
   cursor: pointer;
   background-image: url(${searchIcon1});
