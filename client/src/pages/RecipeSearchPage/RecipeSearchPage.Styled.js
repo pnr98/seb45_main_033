@@ -16,21 +16,6 @@ export const SearchInput = styled.input`
     margin-bottom: 20px;
 `;
 
-export const CategoryButton = styled.button`
-    padding: 5px 10px;
-    margin-right: 10px;
-    font-size: var(--font-size-14);
-    background-color: var(--orange);
-    color: white;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-
-    &:hover {
-        background-color: white;
-        color: black;
-    }
-`;
-
 export const RecipesContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(5, 1fr);

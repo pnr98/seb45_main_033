@@ -62,7 +62,7 @@ const Header = () => {
               {isLogin ? (
                 <>
                   <ButtonLink to="/my-page" onClick={closeDropdown} showHamburger={showHamburger}>마이페이지</ButtonLink>
-                  <ButtonLink onClick={handleLogout} showHamburger={showHamburger}>로그아웃</ButtonLink>
+                  {/* <ButtonLink onClick={handleLogout} showHamburger={showHamburger}>로그아웃</ButtonLink> */}
                 </>
               ) : (
                 <ButtonLink to="/login" onClick={handleLogin} showHamburger={showHamburger}>로그인</ButtonLink>
