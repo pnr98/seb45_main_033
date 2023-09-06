@@ -25,11 +25,10 @@ export const BannerImg = styled.div`
   height: 6vw;
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: top;
   background-image: url(${footerImg});
   margin-left: 10px;
 
-  @media (max-width: 1035px){
+  @media (max-width: 1100px){
     width: 14vw;
     height: 10vw;
   }
@@ -37,10 +36,10 @@ export const BannerImg = styled.div`
 
 export const BannerFont = styled.span`
   font-size: 1.3vw;
-  margin-right: 1rem;
+  margin-right: 2rem;
   font-weight: bold;
 
-  @media (max-width: 1035px){
+  @media (max-width: 1100px){
     font-size: 2.5vw;
   }
 `;
@@ -53,7 +52,7 @@ export const FooterSection = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  @media (max-width: 1035px){
+  @media (max-width: 1100px){
     flex-direction: column;
     margin: 0;
     flex-wrap: wrap;
@@ -68,7 +67,7 @@ export const TeamInfo = styled.div`
   justify-content: space-around;
   font-size: 0.9rem;
 
-  @media (max-width: 1035px) {
+  @media (max-width: 1100px) {
     flex-direction: column;
     align-items: flex-start; 
     flex-wrap: wrap;
@@ -78,9 +77,9 @@ export const TeamInfo = styled.div`
 export const TeamName = styled.p`
   font-size: 2rem;
   font-weight: bold;
-  margin-right: 1rem;
+  margin-right: 5rem;
 
-  @media (max-width: 1035px) {
+  @media (max-width: 1100px) {
     margin-bottom: 10px;
   }
   `;
@@ -89,7 +88,7 @@ export const TeamMembers = styled.div`
   display: flex;
   align-items: top;
 
-  @media (max-width: 1035px){
+  @media (max-width: 1100px){
     flex-direction: column;
     margin: 0;
     flex-wrap: wrap;
@@ -104,7 +103,7 @@ export const BE = styled.div`
   margin-left: 1rem;
   margin-right: 2rem;
 
-  @media (max-width: 1035px){
+  @media (max-width: 1100px){
     flex-direction: row;
     margin: 0;
     flex-wrap: wrap;
@@ -119,7 +118,7 @@ export const BEMem = styled.div`
   font-weight: bold;
   color: #ffffff;
 
-  @media (max-width: 1035px){
+  @media (max-width: 1100px){
     margin-right: 10px;
   }
 `;
@@ -129,7 +128,7 @@ export const FE = styled.div`
   flex-direction: column;
   margin-left: 1rem;
 
-  @media (max-width: 1035px){
+  @media (max-width: 1100px){
     flex-direction: row;
     margin: 0;
     flex-wrap: wrap;
@@ -144,7 +143,7 @@ export const FEMem = styled.div`
   font-weight: bold;
   color: #ffffff;
 
-  @media (max-width: 1035px){
+  @media (max-width: 1100px){
     margin-right: 10px;
   }
 `;
@@ -155,7 +154,7 @@ export const TeamRepoLink = styled.div`
   align-items: center; 
   margin-left: auto;
   
-  @media (max-width: 1035px){
+  @media (max-width: 1100px){
     margin: 0;
   }
 `;
@@ -166,7 +165,7 @@ export const TeamRepo = styled.div`
   flex-direction: column;
   font-size: 0.9rem;
 
-  @media (max-width: 1035px){
+  @media (max-width: 1100px){
     flex-direction: row;
   }
 `;
