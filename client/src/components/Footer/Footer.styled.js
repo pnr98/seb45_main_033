@@ -21,8 +21,8 @@ export const BannerLink = styled.div`
 `;
 
 export const BannerImg = styled.div`
-  width: 12vw;
-  height: 8vw;
+  width: 10vw;
+  height: 6vw;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
@@ -30,8 +30,8 @@ export const BannerImg = styled.div`
   margin-left: 10px;
 
   @media (max-width: 1035px){
-    width: 16vw;
-    height: 12vw;
+    width: 14vw;
+    height: 10vw;
   }
 `;
 
