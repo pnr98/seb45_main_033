@@ -20,6 +20,7 @@ const Footer = () => {
         <BannerImg />
       </BannerLink>
       <FooterSection>
+
         <TeamInfo>
           <TeamName>33양호</TeamName>
           <TeamMembers>
@@ -38,6 +39,7 @@ const Footer = () => {
             </FE>
           </TeamMembers>
         </TeamInfo>
+
         <TeamRepoLink>
           <a href="https://github.com/codestates-seb/seb45_main_033" target="_blank" rel="noopener noreferrer">
             <TeamRepo>
@@ -46,6 +48,7 @@ const Footer = () => {
             </TeamRepo>
           </a>
         </TeamRepoLink>
+        
       </FooterSection>
       <Copyright>Copyright  2023  33양호 Inc. All Rights Reserved   E-mail: codestates@gmail.com</Copyright>
     </FooterWrapper>

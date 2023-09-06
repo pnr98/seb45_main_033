@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ModalBody, ModalBtn, ModalText,ModalBtnBox } from "./Modal.styled"
+import { ModalBody, ModalBtn, ModalText, ModalBtnBox } from "./Modal.styled"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
