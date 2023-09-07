@@ -1,4 +1,16 @@
-import { FooterWrapper, BannerLink, BannerImg, BannerFont, FooterSection, TeamName, TeamRepo, BE, FE, BEMem, FEMem, MemberName, GithubIcon, Copyright } from './Footer.styled';
+import { 
+  FooterWrapper, BannerLink, BannerImg, BannerFont, 
+  FooterSection, 
+  TeamInfo,
+  TeamName, 
+  TeamMembers,
+  BE, BEMem, 
+  FE, FEMem, 
+  TeamRepoLink,
+  TeamRepo, 
+  GithubIcon, 
+  Copyright 
+} from './Footer.styled';
 
 const Footer = () => {
   return (
@@ -8,24 +20,35 @@ const Footer = () => {
         <BannerImg />
       </BannerLink>
       <FooterSection>
+
+        <TeamInfo>
           <TeamName>33양호</TeamName>
-        <BE>
-          <BEMem>BE</BEMem>
-          <MemberName>김제경 (팀장)</MemberName>
-          <MemberName>김태형</MemberName>
-          <MemberName>노시형</MemberName>
-        </BE>
-        <FE>
-          <FEMem>FE</FEMem>
-          <MemberName>전용호 (부팀장)</MemberName>
-          <MemberName>김한샘</MemberName>
-          <MemberName>박나래</MemberName>
-          <MemberName>윤선문</MemberName>
-        </FE>
-        <TeamRepo>
-          <GithubIcon />
-          <p>Team Repository</p>
-        </TeamRepo>
+          <TeamMembers>
+            <BE>
+              <BEMem>BE</BEMem>
+              <div>김제경 (팀장)</div>
+              <div>김태형</div>
+              <div>노시형</div>
+            </BE>
+            <FE>
+              <FEMem>FE</FEMem>
+              <div>전용호 (부팀장)</div>
+              <div>김한샘</div>
+              <div>박나래</div>
+              <div>윤선문</div>
+            </FE>
+          </TeamMembers>
+        </TeamInfo>
+
+        <TeamRepoLink>
+          <a href="https://github.com/codestates-seb/seb45_main_033" target="_blank" rel="noopener noreferrer">
+            <TeamRepo>
+              <GithubIcon />
+              <p>Team Repository</p>
+            </TeamRepo>
+          </a>
+        </TeamRepoLink>
+        
       </FooterSection>
       <Copyright>Copyright  2023  33양호 Inc. All Rights Reserved   E-mail: codestates@gmail.com</Copyright>
     </FooterWrapper>

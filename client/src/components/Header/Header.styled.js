@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
+import searchIcon1 from '../../common/image/search1.png';
+import searchIcon2 from '../../common/image/search2.png';
 
 export const HeaderWrapper = styled.div`
   background-color: white;
@@ -11,7 +13,7 @@ export const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
+  padding: 10px 20px;
   padding-left: 100px; 
   padding-right: 100px;
   box-sizing: border-box;
@@ -24,9 +26,14 @@ export const LogoLink = styled(Link)`
 
 export const IconLink = styled(Link)`
   font-size: 20px;
-  margin-left: 80px;
+  margin: 5px 5px 5px 0;
   visibility: visible;
   cursor: pointer;
+  background-image: url(${searchIcon1});
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
 
   @media (max-width: 710px) {
     visibility: visible;
