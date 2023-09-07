@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Modal from '../Modal/Modal';
+
 import {
     HeaderWrapper,
     LogoLink,
@@ -11,6 +13,7 @@ import {
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [showHamburger, setShowHamburger] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
       const loginStatus = localStorage.getItem('isLogin') === 'true';
@@ -29,6 +32,16 @@ const Header = () => {
     closeDropdown();
   };
 
+  const handleRecipeCreation = () => {
+    if (!isLogin) {
+      setShowModal(true);
+    } else {
+      //레시피 작성 페이지로 이동
+    }
+    closeDropdown();
+  };
+
+  
   const Hamburger = () => {
     setShowHamburger(!showHamburger);
   };
@@ -42,8 +55,10 @@ const Header = () => {
       <LogoLink to="/">로고</LogoLink>
       <HamburgerBar onClick={Hamburger}>☰</HamburgerBar>
         <DropdownMenu show={showHamburger}>
-          <IconLink to="/search" onClick={closeDropdown} showHamburger={showHamburger}>🔍</IconLink>
-          <ButtonLink onClick={closeDropdown} showHamburger={showHamburger}>레시피 작성</ButtonLink>  
+          <IconLink to="/search" onClick={closeDropdown} showHamburger={showHamburger}></IconLink>
+          <ButtonLink onClick={handleRecipeCreation} showHamburger={showHamburger}>레시피 작성</ButtonLink>
+          {showModal && <Modal type="LoginPlz" func={() => setShowModal(false)} />}
+
               {isLogin ? (
                 <>
                   <ButtonLink to="/my-page" onClick={closeDropdown} showHamburger={showHamburger}>마이페이지</ButtonLink>

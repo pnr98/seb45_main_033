@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ModalBody, ModalBtn, ModalBtnContainer, ModalText,ModalBtnBox } from "./Modal.styled"
+import { ModalBody, ModalBtn, ModalText, ModalBtnBox } from "./Modal.styled"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
@@ -39,6 +39,7 @@ const Modal = ({type,func, recipe_id}) => {
     }
     if(type==='LoginPlz'){
       navi('/login')
+      func();
     }
     if(type==='Create' || type==='Welcome'){
       navi('/')
@@ -56,7 +57,6 @@ const Modal = ({type,func, recipe_id}) => {
       {type==='Create' && '레시피 등록을 완료했습니다.'}
       {type==='Update' && '레시피 수정을 완료했습니다.'}
       </ModalText>
-    <ModalBtnContainer>
       <ModalBtnBox>
         {(type==='Delete' || type==='Guest') && <ModalBtn onClick={()=>setStateHandle}>취소</ModalBtn>}
       <ModalBtn onClick={ModalHandle}>
@@ -66,7 +66,6 @@ const Modal = ({type,func, recipe_id}) => {
         {(type === 'Welcome' || type === 'Create' || type==='Update') && '닫기'}
         </ModalBtn>
       </ModalBtnBox>
-    </ModalBtnContainer>
  </ModalBody>
 }
 
