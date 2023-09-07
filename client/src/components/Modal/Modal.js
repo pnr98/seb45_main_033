@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ModalBody, ModalBtn, ModalText, ModalBtnBox } from "./Modal.styled"
+import { ModalBody, ModalBtn, ModalText, ModalBtnBox, ModalBackground } from "./Modal.styled"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
@@ -48,7 +48,8 @@ const Modal = ({type,func, recipe_id}) => {
       navi(`/recipe/${recipe_id}`)
     }
   }
- return <ModalBody>
+ return <ModalBackground>
+ <ModalBody>
     <ModalText>
       {type==='Delete' && '삭제하시겠습니까?'}
       {type==='Guest' && '게스트로 로그인 하시겠습니까?'}
@@ -67,6 +68,7 @@ const Modal = ({type,func, recipe_id}) => {
         </ModalBtn>
       </ModalBtnBox>
  </ModalBody>
+ </ModalBackground>
 }
 
 

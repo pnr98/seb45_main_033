@@ -24,8 +24,9 @@ export default function MyPage() {
     dispatch(setLoginStatus(false))
     sessionStorage.removeItem('Token')
     Cookies.remove('Token')
+    useNavigate('/')
   }
-  return <MypageContainer>\
+  return <MypageContainer>
     <TapContainer>
     <Tap stroke={currentTap==='냉장고' && true} onClick={()=>TapEvent('냉장고')} >나만의 냉장고</Tap>
     <Tap stroke={currentTap!=='냉장고' && true} onClick={()=>TapEvent('회원정보')}>회원정보 수정</Tap>

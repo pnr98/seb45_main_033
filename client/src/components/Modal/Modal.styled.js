@@ -1,5 +1,14 @@
 import { styled } from "styled-components";
 
+export const ModalBackground = styled.section`
+width: 100%;
+height: 100%;
+position: fixed;
+left: 0;
+top: 0;
+background: rgba(0, 0, 0, 0.5);
+`
+
 export const ModalBody = styled.section`
   position: fixed;
   padding: 20px;
