@@ -1,8 +1,6 @@
-package com.main33.server.recipe_comment.entity;
+package com.main33.server.recipe.recipe_image.entity;
 
-
-import com.main33.server.member.entity.Member;
-import com.main33.server.recipe.entity.Recipe;
+import com.main33.server.recipe.recipe.entity.Recipe;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,26 +11,21 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "recipe_comment")
+@Table(name = "recipe_image")
 @Getter
 @Setter
 @NoArgsConstructor
-public class RecipeComment {
-
+public class RecipeImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long commentId;
-
-    @ManyToOne
-    @JoinColumn(name="member_id", nullable = false)
-    private Member member;
+    private Long imageId;
 
     @ManyToOne
     @JoinColumn(name="recipe_id", nullable = false)
     private Recipe recipe;
 
-    @Column(nullable = false)
-    private String commentBody;
+    @Column
+    private String imageUrl;
 
     @CreationTimestamp
     private Timestamp createdAt;
