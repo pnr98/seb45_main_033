@@ -1,6 +1,6 @@
-package com.main33.server.recipe.dto;
+package com.main33.server.recipe.recipe.dto;
 
-import com.main33.server.recipe.domain.RecipeFoodType;
+import com.main33.server.recipe.recipe.domain.RecipeFoodType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -76,5 +76,5 @@ public class RecipeDto {
         private List<String> ingredients;
     }
 
-    // For DELETE /recipes/{recipe-id} (No additional fields needed for DTO)
+    // For DELETE /recipes/{recipe-id} (DTO에 추가할 필요가 없음)
 }

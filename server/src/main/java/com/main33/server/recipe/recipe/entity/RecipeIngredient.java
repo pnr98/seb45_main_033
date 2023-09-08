@@ -1,4 +1,4 @@
-package com.main33.server.recipe.entity;
+package com.main33.server.recipe.recipe.entity;
 
 import com.main33.server.ingredient.entity.Ingredient;
 import lombok.Getter;

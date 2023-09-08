@@ -1,9 +1,9 @@
-package com.main33.server.recipe.entity;
+package com.main33.server.recipe.recipe.entity;
 
 
 import com.main33.server.member.entity.Member;
-import com.main33.server.recipe.domain.RecipeFoodType;
-import com.main33.server.recipe_step.entity.RecipeStep;
+import com.main33.server.recipe.recipe.domain.RecipeFoodType;
+import com.main33.server.recipe.recipe_step.entity.RecipeStep;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
