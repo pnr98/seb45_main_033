@@ -18,9 +18,12 @@ const dropHandle = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if(file) {
-        const imageUrl = URL.createObjectURL(file);
-        console.log(imageUrl)
-        setThumbnail(imageUrl)
+        if(file.type === 'image/png' || file.type === 'image/jpeg'){
+            const imageUrl = URL.createObjectURL(file);
+            setThumbnail(imageUrl)
+        }else{
+            setOnModal(true)
+        }
     }
 }
 
