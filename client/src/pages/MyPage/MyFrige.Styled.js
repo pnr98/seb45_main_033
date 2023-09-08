@@ -3,16 +3,23 @@ import { styled } from 'styled-components';
 export const IngredientContainer = styled.div`
 width: 47.3vw;
 height: 531px;
-background-color: aliceblue;
 display: flex;
 flex-direction: column;
 gap: 15px;
 `
+
+export const FrigeContainer = styled.section`
+display: flex;
+flex-direction: column;
+gap: 44px;
+`
+
 export const LikeContainer = styled.section`
 display: flex;
 flex-direction: column;
 gap: 8px;
 `
+
 export const LikeTagBox = styled.div`
 width: 47.3vw;
 height: 30px;
@@ -78,4 +85,16 @@ export const AllergyTagBox = styled(LikeTagBox)`
 
 export const AllergyInput = styled(LikeInput)`
 
+`
+
+export const Box = styled.div`
+width: 800px;
+`
+
+export const FrigeTitle = styled.h1`
+font-size: 24px;
+`
+
+export const RecipeTitle = styled.h1`
+font-size: 20px;
 `
