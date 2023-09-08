@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { IngredientContainer, LikeTagBox , LikeContainer,LikeInput , ButtonContainer,
-     CancelBtn, WriteBtn, DisLikeContainer, DisLikeTagBox,DisLikeInput, AllergyContainer, AllergyTagBox, AllergyInput, BtnLineContainer, ErrText,Box} from "./MyFrige.Styled"
+     CancelBtn, WriteBtn, DisLikeContainer, DisLikeTagBox,DisLikeInput, AllergyContainer, AllergyTagBox, AllergyInput,
+    BtnLineContainer, ErrText,Box, FrigeTitle, FrigeContainer, RecipeTitle} from "./MyFrige.Styled"
 import { TagBox } from "../../components/Tag/Tag.styled"
 import axios from "axios"
 import HorizontalScroll from '../../components/HorizontalScroll/HorizontalScroll'
@@ -207,8 +208,8 @@ const MyFrige = () => {
         }
         
     }
-    return <div>
-        <h1>나만의 냉장고</h1>
+    return <FrigeContainer>
+        <FrigeTitle>나만의 냉장고</FrigeTitle>
     <IngredientContainer>
         <LikeContainer>
         <div>선호하는 재료</div>
@@ -253,15 +254,15 @@ const MyFrige = () => {
         </BtnLineContainer>
         </AllergyContainer>
     </IngredientContainer>
-    <div>내가 좋아하는 레시피</div>
+    <RecipeTitle>내가 좋아하는 레시피</RecipeTitle>
     <Box>
     <HorizontalScroll data={likedRecipe} />
     </Box>
-    <div>내가 작성한 레시피</div>
+    <RecipeTitle>내가 작성한 레시피</RecipeTitle>
     <Box>
     <HorizontalScroll data={myRecipe} />
     </Box>
-    </div>
+    </FrigeContainer>
 }
 
 export default MyFrige

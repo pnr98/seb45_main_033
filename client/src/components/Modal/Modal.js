@@ -47,6 +47,9 @@ const Modal = ({type,func, recipe_id}) => {
     if(type==='Update'){
       navi(`/recipe/${recipe_id}`)
     }
+    if(type==='Badextension'){
+      func();
+    }
   }
  return <ModalBackground>
  <ModalBody>
@@ -57,13 +60,14 @@ const Modal = ({type,func, recipe_id}) => {
       {type==='Welcome' && `환영합니다.`}
       {type==='Create' && '레시피 등록을 완료했습니다.'}
       {type==='Update' && '레시피 수정을 완료했습니다.'}
+      {type==='Badextension' && 'jpg/png 파일만 업로드 가능합니다.'}
       </ModalText>
       <ModalBtnBox>
         {(type==='Delete' || type==='Guest') && <ModalBtn onClick={()=>setStateHandle}>취소</ModalBtn>}
       <ModalBtn onClick={ModalHandle}>
         {type === 'Delete' && '삭제'}
         {type === 'Guest' && '수락'}
-        {type === 'LoginPlz' && '확인'}
+        {(type === 'LoginPlz' || type === 'Badextension') && '확인'}
         {(type === 'Welcome' || type === 'Create' || type==='Update') && '닫기'}
         </ModalBtn>
       </ModalBtnBox>
