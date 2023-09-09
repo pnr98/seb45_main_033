@@ -23,5 +23,5 @@ height: 50px;
 display: flex;
 align-items: center;
 justify-content: center;
-border-right: ${(props)=>props.stroke ? "5px solid #E2990B" : "5px solid #DBDBDB"};
+border-right: ${(props) => props.stroke ? "5px solid #E2990B" : "5px solid #DBDBDB"};
 `

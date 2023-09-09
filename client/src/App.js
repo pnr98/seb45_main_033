@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp/SignUp';
 import MyPage from './pages/MyPage/MyPage';
 import RecipeDetailPage from './pages/RecipeDetailPage/RecipeDetailPage';
 import RecipeSearchPage from './pages/RecipeSearchPage/RecipeSearchPage';
+import CreateRecipe from './pages/CreateRecipe/CreateRecipe';
 function App() {
   return (
     <AppContainer>
@@ -19,6 +20,7 @@ function App() {
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/recipe/:recipe_id" element={<RecipeDetailPage />} />
         <Route path="/search" element={<RecipeSearchPage />} />
+        <Route path="/create-recipe" element={<CreateRecipe />} />
       </Routes>
       <Footer />
     </AppContainer>
