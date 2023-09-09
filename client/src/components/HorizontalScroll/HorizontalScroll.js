@@ -1,11 +1,10 @@
 /* eslint-disable import/no-unresolved */
-import { Navigation, EffectFade } from 'swiper';
+import { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.min.css';
 
 import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/effect-fade';
+// import 'swiper/css/navigation';
 import { useRef , useState , useEffect } from 'react';
 import { Container, Wrap, ArrowBtn } from './HorizontalScroll.styled';
 import Recipe from '../Recipe/Recipe'
@@ -16,12 +15,12 @@ export default function HorizontalScroll() {
     const [ list, setList ] = useState(data)
     const prevRef = useRef(null);
     const nextRef = useRef(null);
+    const [ swiperSetting, setSwiperSetting ] = useState(null)
 
     const settings = {
-        spaceBetween: 0,
+        spaceBetween: 10,
         slidesPerView: 5,
         // loop: true,
-        // effect: 'fade',
         navigation: {
             nextEl: prevRef.current,
             prevEl: nextRef.current,
@@ -30,31 +29,30 @@ export default function HorizontalScroll() {
             swiper.params.navigation.prevEl = prevRef.current;
             swiper.params.navigation.nextEl = nextRef.current;
             swiper.navigation.update();
-        }
+        },
     }
 
-    // const [ swiperSetting, setSwiperSetting ] = useState(null)
-    // useEffect(() => {
-    //     if(!swiperSetting) {
+    useEffect(() => {
+        if(!swiperSetting) {
             
-    //         setSwiperSetting(settings)
-    //     }
-    // }, [swiperSetting])
+            setSwiperSetting(settings)
+        }
+    }, [swiperSetting])
     
-
     return (
         <Container>
             <Wrap>
                 <ArrowBtn ref={prevRef}><img src={ArrowIcon} alt='' className='pre'></img></ArrowBtn>
-                <Swiper 
+                {swiperSetting && (
+                    <Swiper 
                     modules={[Navigation]}
-                    {...settings}
                     navigation
-                    onSwiper={(swiper) => console.log(swiper)}
+                    {...settings}
                     onSlideChange={() => console.log('slide change')}
                 >
                     {list.map((el) => {return <SwiperSlide key={el.id}> <Recipe info={el} /> </SwiperSlide>})}
                 </Swiper>
+                )}
                 <ArrowBtn ref={nextRef}><img src={ArrowIcon} alt='' className='next'></img></ArrowBtn>
             </Wrap>
         </Container>
