@@ -1,10 +1,10 @@
 import { styled } from "styled-components";
 
 export const Container = styled.div`
-    padding-top: 58.89px;
     display: flex;
     justify-content: center;
     align-items: center;
+
     > div {
         gap: var(--font-size-32);
     }
@@ -15,10 +15,11 @@ export const RecipeWrap = styled.div`
     width: 50rem;
     font-size: 0.875rem;
     font-weight: 500;
+    padding: 2rem 0rem 7rem 0rem;
     .discription-title {
-        border-top: 2px solid #888;
-        padding-top: var(--font-size-24);
-        padding-bottom: var(--font-size-14);
+        border-top: 2px solid #553904;
+        padding-top: var(--font-size-16);
+        padding-bottom: var(--font-size-24);
         font-size: var(--font-size-20);
         font-weight: 700;
         color: #313D4B;
@@ -27,29 +28,40 @@ export const RecipeWrap = styled.div`
 
 
 export const RecipeInfoContainer = styled.section`
-
     .image-wrap{
         img {
             width: 100%;
             height: auto;
             border-radius: 1.25rem;
+            background-size: contain;
         }
     }
     .header {
+        display: flex;
+        margin: 1rem 0rem 0.5rem 0rem;
         word-wrap: break-word;
         font-size: var(--font-size-24);
         font-weight: 700;
+        justify-content: space-between;
+        align-items: center;
+        .like-button{ 
+        }
     }
+    .tag{
+        font-weight: 400;
+    }
+
     .recipe-info {
-        margin-top: var(--font-size-20);;
+        margin-top: var(--font-size-14);;
         display: inline-grid;
         grid-template-columns: auto auto auto;
         column-gap: var(--font-size-36);
-        font-size: var(--font-size-12);
+        font-size: var(--font-size-14);
         .detail {
             display: inline-grid;
             grid-template-columns: auto auto;
             column-gap: var(--font-size-12);
+            color: #414141;
             :first-child {
                 font-weight: 600;
             }
@@ -81,35 +93,81 @@ export const IngredientsContainer = styled.div`
         }
         .name{
             text-align: left;
-            color: #636F7E;
+            color: #000000;
         }
         .quantity{
             text-align: right;
-            color: #A5B0BD;
+            color: #50555B;
         }
     }
 `
 export const RecipeStepWrap = styled.div`
-    > li {
+    // line 으로 분리
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        li {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
     }
     .step-number {
         padding-bottom: 0.9rem;
         font-size: 1.1rem;
         font-weight: 500;
-        border-bottom: 1px solid rgb(224, 224, 224);
+        border-bottom: 1px solid #ABABAB;
     }
+    .step-content {
+        padding: 0px 3px;
+    }
+    
+    // box로 분리
+    /* ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        li {
+
+            border: 1px solid #9D6B0A;
+            border-radius: 10px;
+            padding: 10px 20px;
+            div {
+
+            }
+        }
+    }
+    .step-number {
+        padding-bottom: 0.9rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+    } */
 `
 
-export const Button = styled.div`
 
+export const BtnContainer = styled.div`
+button {
+    float: right;
+
+}
 `
-
-export const RecipeLike = styled.div`
-    display: flex;
-`
-
 
 export const RelatedRecipe = styled.div`
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    
+    :last-child {
+        
+    }
+    .HorizontalScroll {
+        
+    }
+
 `
+
+export const CommentsContainer = styled.div`
+`
+
+
+

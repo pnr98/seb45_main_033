@@ -6,7 +6,8 @@ import {
   RecipeDescription,
   IngredientsContainer,
   RecipeStepWrap,
-  Button
+  BtnContainer,
+  CommentsContainer
 } from './RecipeDetailPage.styled'
 import HorizontalScroll from '../../components/HorizontalScroll/HorizontalScroll'
 import Tag from '../../components/Tag/Tag'
@@ -14,6 +15,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from "react-router-dom"
 import LikeButton from './IsLike'
+import CommentHandler from './Comment'
 
 
 export default function RecipeDetailPage() {
@@ -37,19 +39,31 @@ export default function RecipeDetailPage() {
           {
             "stepNumber": 2,
             "recipeContent": "물과 함께 끓입니다.",
+          },
+          {
+            "stepNumber": 3,
+            "recipeContent": "물과 함께 끓입니다.물과 함께 끓입니다.물과 함께 끓입니다.",
+          },
+          {
+            "stepNumber": 4,
+            "recipeContent": "물과 함께 끓입니다.물과 함께 끓입니다.물과물과 함께 끓입니다.물과 함께 끓입니다.물과 함께 끓입니다.물과 함께 끓입니다. 함께 끓입니다.물과 함께 끓입니다.물과 함께 끓입니다.",
+          },
+          {
+            "stepNumber": 5,
+            "recipeContent": "물과 함께 끓입니다.물과 함께 끓입니다.물과 함께 끓입니다.물과 함께 끓입니다.",
           }
           ],
         "ingredients": [ "김치 10g", "두부 100g", "돼지고기 200g", "고추장 두스푼", "간장 1티스푼", "다진 마늘 4g" ]
       }
 
-    const { recipeId } = useParams()
-    const [ recipeData, setRecipeData ] = useState(null)
-    const [separatedIngredients, setSeparatedIngredients] = useState([]);
-
     const tags = [ data.foodTypes, data.difficulty, data.cookingTime ];
 
-    // 상세 레시피 데이터 가져오기
+    const { recipeId } = useParams()
+    const [ recipeData, setRecipeData ] = useState(null)
+    const [separatedIngredients, setSeparatedIngredients] = useState([]);  
+
     useEffect(() => {
+      // 상세 레시피 데이터 가져오기
       const getRecipeData = async () => {
         try { 
           const response = await axios.get(`/recipe/${recipeId}`)
@@ -94,13 +108,19 @@ export default function RecipeDetailPage() {
           });
           setSeparatedIngredients(separatedIngredient)
           console.log(separatedIngredient)
-
           console.error(err)
         }
-      };
+      }
 
+
+      
       getRecipeData()
+
     }, [])
+
+    if (recipeData === null) {
+      return <div>Loading...</div>;
+    }
 
     // 시간 포맷 변환
     const timeSlice = (time) => {
@@ -110,18 +130,22 @@ export default function RecipeDetailPage() {
       return "";
     }
 
-    if (recipeData === null) {
-      return <div>Loading...</div>;
-    }
-
-    // 좋아요 수
+    // 좋아요 수 변경
     const handleLikeChange = (likeChange) => {
       setRecipeData((prevData) => ({
         ...prevData,
         likes: prevData.likes + likeChange,
       }))
     }
-    
+
+    // 수정, 삭제 버튼 
+    const handleEdit = () => {
+
+    }
+
+
+
+
     return (
         <Container>
             <RecipeWrap>
@@ -184,11 +208,19 @@ export default function RecipeDetailPage() {
                     })}
                   </ul>
                 </RecipeStepWrap>
-                <Button>
-                </Button>
+                <BtnContainer>
+                  <button>삭제</button>
+                  <button>수정</button>
+                </BtnContainer>
                 <RelatedRecipe>
+                  <div className='discription-title'>관련 레시피</div>
                   <HorizontalScroll />
                 </RelatedRecipe>
+                
+                <CommentsContainer>
+                  <div className='discription-title'>댓글</div>
+                  <CommentHandler timeSlice={timeSlice} recipeId={recipeId}/>
+                </CommentsContainer>
             </RecipeWrap>
 
         </Container>
