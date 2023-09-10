@@ -2,9 +2,9 @@ import { styled } from "styled-components";
 
 export const Container = styled.span`
   display: inline-block;
-  width: 160px;
-  margin-right: 16px;
   text-align: left;
+  width: 100%;
+  
   img {
     width: 100%;
     max-height: 200px;
@@ -17,5 +17,3 @@ export const Container = styled.span`
     margin-bottom: 4px;
   }
 `;
-
-

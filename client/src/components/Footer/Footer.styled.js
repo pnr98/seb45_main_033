@@ -7,9 +7,11 @@ export const FooterWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  min-width: 100%;
   margin: 0 auto;
   background-color: #37404D;
 `;
+
 
 export const BannerLink = styled.div`
   width: 100%;
