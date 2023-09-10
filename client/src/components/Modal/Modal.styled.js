@@ -31,12 +31,24 @@ export const ModalBody = styled.section`
 export const ModalText = styled.div`
   text-align: center;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  padding-top: 10px;
 `;
+
 
 export const ModalBtnBox = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-grow: 1;
+  gap: 10px;
 `;
+
+
 
 export const ModalBtn = styled.button`
   background-color: #D0C5B0;
@@ -44,10 +56,9 @@ export const ModalBtn = styled.button`
   border: none;
   border-radius: 8px;
   padding: 9px 15px; // 좀 더 넓은 패딩으로 버튼 크기 조절 // 원래는 9px 11px
-  cursor: pointer; // 버튼 위에 마우스 커서를 포인터로 변경
-  //transition: background-color 0.3s; // 부드러운 색상 전환 효과 추가
+  cursor: pointer;
 
   &:hover {
-    //background-color: #B8A690; // 마우스 오버 시 색상 변경
+    
   }
 `;

@@ -2,7 +2,8 @@ import { styled, createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
     :root {
-        --main-width: 1264px;
+        //--main-width: 1264px;
+        --main-width: 65.83vw;
         --main-height: calc(100vh);
         --orange : #EA862B;
         --grey: #636F7E;

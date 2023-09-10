@@ -38,7 +38,10 @@ export const IconLink = styled(Link)`
   @media (max-width: 710px) {
     visibility: visible;
     margin-left: 0px;
+  }
 
+  &:hover {
+    background-image: url(${searchIcon2});
   }
 `;
 
