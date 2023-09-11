@@ -35,7 +35,7 @@ public class ErrorResponse {
         boolean valid = exceptionCode != ExceptionCode.USERNAME_CONFLICT &&
                 exceptionCode != ExceptionCode.EMAIL_CONFLICT;
         logger.info("Exception code: {}", exceptionCode);
-        return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage());
+        return new ErrorResponse(exceptionCode.getErrorStatus().getCode(), exceptionCode.getMessage());
     }
 
     public static ErrorResponse of(HttpStatus httpStatus) {
