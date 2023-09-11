@@ -5,5 +5,22 @@
        "password" : "qwer1234!",
        "authorization" : "Bearer qwerasdasd",
        "refresh": "qwerasdasd"
-    }]
+    }],
+    "Comments":
+        [
+            {
+                "commentId": 1,
+                "commentBody": "Updated comment content.",
+                "timestamp": "2023-08-16T15:49:20.753395",
+                "memberId": 1,
+                "userName": "홍길동"
+            },
+            {
+                "commentId": 2,
+                "commentBody": "Updated comment content.",
+                "timestamp": "2023-08-16T15:49:20.753395",
+                "memberId": 2,
+                "userName": "홍길동2"
+            }
+        ]
 }

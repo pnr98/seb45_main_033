@@ -18,6 +18,7 @@ export const HeaderWrapper = styled.div`
   padding-right: 100px;
   box-sizing: border-box;
   flex-direction: row;
+  z-index: 998;
 `;
 
 export const LogoLink = styled(Link)`

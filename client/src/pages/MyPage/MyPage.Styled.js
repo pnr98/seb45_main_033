@@ -10,7 +10,7 @@ margin-top: 100px;
 
 export const TapContainer = styled.div`
 width: 165px;
-height: 100px;
+height: 200px;
 display: flex;
 flex-direction: column;
 align-items: center;
