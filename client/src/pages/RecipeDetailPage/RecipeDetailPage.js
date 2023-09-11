@@ -61,6 +61,7 @@ export default function RecipeDetailPage() {
     const { recipeId } = useParams()
     const [ recipeData, setRecipeData ] = useState(null)
     const [separatedIngredients, setSeparatedIngredients] = useState([]);  
+    const memberId = 1
 
     useEffect(() => {
       // 상세 레시피 데이터 가져오기
@@ -216,10 +217,9 @@ export default function RecipeDetailPage() {
                   <div className='discription-title'>관련 레시피</div>
                   <HorizontalScroll />
                 </RelatedRecipe>
-                
                 <CommentsContainer>
                   <div className='discription-title'>댓글</div>
-                  <CommentHandler timeSlice={timeSlice} recipeId={recipeId}/>
+                  <CommentHandler timeSlice={timeSlice} recipeId={recipeId} memberId={memberId}/>
                 </CommentsContainer>
             </RecipeWrap>
 
