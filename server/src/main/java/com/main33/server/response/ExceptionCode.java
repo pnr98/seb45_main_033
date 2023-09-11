@@ -13,7 +13,7 @@ public enum ExceptionCode {
     // 회원 정보 케이스
     INVALID_USERID_FORMAT(ErrorStatus.BAD_REQUEST, "잘못된 요청. userId가 누락되었습니다."),
     INVALID_USER_FORMAT(ErrorStatus.BAD_REQUEST, "userName은 2~10자, password는 7~20자의 영문, 숫자, 특수문자의 조합이어야 합니다."),
-    USER_NOT_FOUND(ErrorStatus.NOT_FOUND, "해당 userId를 가진 유저는 존재하지 않습니다."),
+    MEMBER_NOT_FOUND(ErrorStatus.NOT_FOUND, "해당 memberId를 가진 유저는 존재하지 않습니다."),
 
     // 레시피 케이스
     INVALID_RECIPE_NAME_FORMAT(ErrorStatus.BAD_REQUEST, "잘못된 요청. recipeName이 누락되었습니다."),

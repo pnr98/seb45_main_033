@@ -12,6 +12,7 @@ public enum SuccessCode {
 
     // 회원 정보 케이스
     SUCCESS_UPDATE_PROFILE(SuccessStatus.OK, "유저 데이터 업데이트에 성공했습니다."),
+    SUCCESS_DEACTIVATE(SuccessStatus.NO_CONTENT, "정상적으로 회원탈퇴 되었습니다."),
     SUCCESS_FIND_REFRIGERATOR(SuccessStatus.OK, null),
     SUCCESS_FIND_PROFILE(SuccessStatus.OK, null),
 

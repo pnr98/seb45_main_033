@@ -15,38 +15,36 @@ public class ErrorResponse {
 
     private int status;
     private String message;
-    private boolean valid;
 
-    private ErrorResponse(int status, String message, boolean valid) {
+    private ErrorResponse(int status, String message) {
         this.status = status;
         this.message = message;
-        this.valid = valid;
     }
 
     public static ErrorResponse of(BindingResult bindingResult) {
         logger.error("Binding error occurred: {}", bindingResult.getAllErrors());
-        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Binding Error", false);
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Binding Error");
     }
 
     public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {
         logger.error("Validation error occurred: {}", violations);
-        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Validation Error", false);
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Validation Error");
     }
 
     public static ErrorResponse of(ExceptionCode exceptionCode) {
         boolean valid = exceptionCode != ExceptionCode.USERNAME_CONFLICT &&
                 exceptionCode != ExceptionCode.EMAIL_CONFLICT;
         logger.info("Exception code: {}", exceptionCode);
-        return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage(), valid);
+        return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage());
     }
 
     public static ErrorResponse of(HttpStatus httpStatus) {
         logger.info("HTTP status: {}", httpStatus);
-        return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase(), true);
+        return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase());
     }
 
     public static ErrorResponse of(HttpStatus httpStatus, String message) {
         logger.info("HTTP status: {}, Message: {}", httpStatus, message);
-        return new ErrorResponse(httpStatus.value(), message, true);
+        return new ErrorResponse(httpStatus.value(), message);
     }
 }
