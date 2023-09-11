@@ -1,8 +1,9 @@
 import { useState,  useEffect } from "react";
 import axios from "axios";
-import { Container, BtnContainer } from "./Comment.styled";
+import { Container, InputContainer, EditContainer, Button } from "./Comment.styled";
+import Modal from '../../components/Modal/Modal'
 
-export default function CommentHandler({recipeId, timeSlice}) {
+export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     const comment = {
         "comments":
         [
@@ -24,9 +25,13 @@ export default function CommentHandler({recipeId, timeSlice}) {
     }
     const [ comments, setComments ] = useState([])
     const [ commentBody, setCommentBody ] = useState("");
+    // 댓글 수정
     const [ commentIdToEdit, setCommentIdToEdit ] = useState(null);
-    const AccessToken = 'a'
+    const [ isEditing, setIsEditing ] = useState(false);
+    const [ editingComment, setEditingComment] = useState("")
 
+    const [showModal, setShowModal] = useState(false);
+    const AccessToken = 'a'
 
     useEffect(() => {
         // 댓글 불러오기
@@ -58,12 +63,15 @@ export default function CommentHandler({recipeId, timeSlice}) {
                 { headers: { Authorization: `Bearer ${AccessToken}`,
                 },
             });
-
-            const newComment = response.data
-            setComments([...comment, newComment])
-            setCommentBody("");
+            if (response.status === 200) {
+                const newComment = response.data
+                setComments([...comments, newComment])
+                setCommentBody("");
+            } else {
+                console.log("댓글 등록 오류");
+            }
         } catch (error) {
-            console.error("댓글 등록 오류:", error);
+            console.error("댓글 등록 요청 실패:", error);
             //
             const newComment = [{
                 commentId: comments.length + 1,
@@ -74,19 +82,24 @@ export default function CommentHandler({recipeId, timeSlice}) {
             }];
             setComments([...comments, newComment])
             setCommentBody("");
+            console.log(newComment)
         }
     }
 
     // 댓글 삭제
     const handleCommentDelete = async (commentId) => {
         try {
-            await axios.delete(`/comment/${recipeId}/${commentId}`, {
+            const response = await axios.delete(`/comment/${recipeId}/${commentId}`, {
                 headers: {
                 Authorization: `Bearer {access_token}`,
             },
             })
-            const updateComments = comments.filter((comment) => comment.commentId !== commentId)
-            setComments(updateComments)
+            if (response.status === 204) {
+                const updateComments = comments.filter((comment) => comment.commentId !== commentId)
+                setComments(updateComments)
+            } else {
+                alert("댓글 삭제에 실패했습니다.");
+            }
         } catch (error) {
             console.error("댓글 삭제 오류:", error);
             //
@@ -96,59 +109,148 @@ export default function CommentHandler({recipeId, timeSlice}) {
     }
 
     // 댓글 수정
-    const handleCommentEdit = async (updatedCommentBody) => {
+    const handleCommentSave = async (commentId) => {
         try {
-            if (updatedCommentBody.trim() === "") {
-                // 수정된 댓글 내용이 비어있는 경우 처리
-                alert("댓글 내용을 입력하세요.");
-                return;
-            }
             const response = await axios.patch(`/comment/${recipeId}`, 
-                { commentBody: updatedCommentBody}, 
-                { headers: 
-                    { Authorization: `Bearer ${AccessToken}`}
+                { commentBody: editingComment}, 
+                { headers: { 
+                    Authorization: `Bearer ${AccessToken}`
+                }
             });
-            const updateComments = comments.map((comment) => {
-                comment.commentId === commentIdToEdit ? response.data : comment 
-            })
-            setComments(updateComments)
-            setCommentIdToEdit(null)
-            setCommentBody("")
-        } catch (error) {
-            console.error("댓글 수정 오류:", error);
-            //
 
+            if (response.status === 200) {
+                const updatedComments = comments.map((comment) => {
+                    comment.commentId === commentId ? response.data : comment 
+            })
+            setComments(updatedComments);
+            setCommentIdToEdit(null);
+            setIsEditing(false);
+            setEditingComment("");
+            } else if (response.status === 400) {
+                // 댓글 500자 이하
+                alert(response.data.message)
+            } else if (response.status === 401) {
+                // 권한이 없는 경우 (Unauthorized)
+                const errorData = response.data;
+                alert(errorData.message);
+            } else {
+                // 기타 오류 처리
+                alert("댓글 수정에 실패했습니다.");
+            }
+        } catch (error) {
+            console.error("댓글 수정 저장 오류:", error)
+
+            // 새로운 댓글 목록을 생성합니다.
+            const updatedComments = comments.map((comment) => {
+                if (comment.commentId === commentId) {
+                return { ...comment, commentBody: editingComment };
+                }
+                return comment;
+            });
+            // 업데이트된 댓글 목록을 적용합니다.
+            setComments(updatedComments);
+            setCommentIdToEdit(null);
+            setIsEditing(false);
+            setEditingComment("");
+        }
+    }
+    // 로그인 요청 모달
+    const handleModal = () => {
+        // isLogin으로 변경
+        if (!memberId) {
+            setShowModal(true)
         }
     }
 
     return (
         <Container>
-            <textarea
-            rows='5'
-            cols='100'
-            value={commentBody}
-            onChange={(e) => setCommentBody(e.target.value)}
-            placeholder=" 댓글을 입력하세요..."
-            ></textarea>
-            {commentIdToEdit !== null ? (
-                <button onClick={handleCommentEdit}> 수정</button>
-            ) : (
-                <button onClick={handleCommentSubmit}>등록</button>
+            {showModal && (
+                <Modal 
+                    type="LoginPlz"
+                    func={() => setShowModal(false)}
+                    recipe_id={recipeId}
+                />
             )}
+            <InputContainer>
+                <textarea
+                    rows='5'
+                    cols='100'
+                    value={commentBody}
+                    onChange={(e) => setCommentBody(e.target.value)}
+                    placeholder="댓글을 입력하세요..."
+                    onClick={handleModal}
+                />
+                <Button 
+                    boxColor="orange"
+                    onClick={handleCommentSubmit}>등록</Button>
+            </InputContainer>
             <ul>
                 {comments.map((el, index) => {
-                    return <li key={index}>
-                        <div className='comment'>
-                            <div className='name'>{el.userName}</div>
-                            <div className='time'>작성일 {timeSlice(el.timestamp)}</div>
-                            <BtnContainer>
-                                <button onClick={() => setCommentIdToEdit(el.commentId)}>수정</button>
-                                <button onClick={() => handleCommentDelete(el.commentId)}>삭제</button>
-                            </BtnContainer>
-                        </div>
-                            <div className='contents'>{el.commentBody}</div>
-                    </li>
-                })}
+                    return (
+                        <li key={index}>
+                            <div className='header'>
+                                <div className='name'>{el.userName}</div>
+                                <div className='time'>작성일 {timeSlice(el.timestamp)}</div>
+                            </div>
+                            {!(commentIdToEdit === el.commentId && isEditing) ? (
+                                <div className='contents'>{el.commentBody}</div>
+                            ) : (
+                                <textarea
+                                    className="edit-input"
+                                    rows='3'
+                                    cols='100'
+                                    value={editingComment}
+                                    onChange={(e) => setEditingComment(e.target.value)}
+                                ></textarea>
+                            )}
+                            <EditContainer>
+                                    {/* 본인이 작성한 글에만 수정과 삭제버튼 표시 */}
+                                    {el.memberId === memberId && (
+                                        <>
+                                            {!(commentIdToEdit === el.commentId && isEditing) ? (
+                                                <div className="Btn-container">
+                                                    <Button
+                                                        size="small"
+                                                        boxColor="orange"
+                                                        onClick={() => {
+                                                            setCommentIdToEdit(el.commentId);
+                                                            setEditingComment(el.commentBody);
+                                                            setIsEditing(true);
+                                                        }}
+                                                    >
+                                                        수정
+                                                    </Button>
+                                                    <Button 
+                                                        size="small"
+                                                        onClick={() => handleCommentDelete(el.commentId)}>
+                                                        삭제
+                                                    </Button>
+                                                </div>
+                                            ) : (
+                                                <div className="Btn-container">
+                                                    <Button 
+                                                        size="small"
+                                                        boxColor="orange"
+                                                        onClick={() => handleCommentSave(el.commentId)}>
+                                                        등록
+                                                    </Button>
+                                                    <Button
+                                                        size="small"
+                                                        onClick={() => {
+                                                            setCommentIdToEdit(null);
+                                                            setIsEditing(false);
+                                                            setEditingComment("");
+                                                        }}
+                                                    >
+                                                        취소
+                                                    </Button>
+                                                </div>
+                                            )}
+                                        </>
+                                    )}
+                            </EditContainer>
+                        </li>
+                    )})}
             </ul>
         </Container>
     )
