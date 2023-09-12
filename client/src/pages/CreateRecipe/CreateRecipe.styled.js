@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { TagBox } from "../../components/Tag/Tag.styled";
 
 export const BodyContiner = styled.div`
 width: 100%;
@@ -9,6 +10,7 @@ justify-content: center;
 export const MainContainer = styled.section`
 display: flex;
 flex-direction: column;
+gap:100px;
 `
 
 export const TitleText = styled.h1`
@@ -77,11 +79,13 @@ gap: 10px;
 `
 
 export const IngredientContianer = styled.div`
-margin-top: 70px;
 >input{
     width: 1000px;
     height: 120px;
 }
+display: flex;
+flex-direction: column;
+gap : 20px;
 `
 
 export const TagContainer = styled.section`
@@ -91,15 +95,58 @@ justify-content: center;
 gap:20px;
 `
 
-export const TagBox = styled.div`
+export const TagInputBox = styled.div`
 display: flex;
 flex-direction: column;
+gap:10px;
 `
 
 export const TagTitle = styled.div`
 
 `
 
-export const TagInput = styled.input`
+export const TagInput = styled.div`
+border: 1px solid black;
+display: flex;
+align-items: center;
+gap:10px;
+height: 36px;
+padding-left: 10px;
+`
 
+export const Tag = styled(TagBox)`
+margin: 0;
+cursor: pointer;
+background-color: ${(props)=>props.select ? '#e2990b':'#D5BA85'};
+`
+
+export const WriteRecipe = styled.button`
+background-color: #E2990B;
+width: 150px;
+height: 40px;
+color: white;
+border-radius: 8px;
+`
+
+export const BtnFlex = styled.div`
+display: flex;
+justify-content: center;
+`
+
+export const CurrentIngredients = styled.div`
+display: flex;
+gap: 10px;
+`
+
+export const InformationMessage = styled.div`
+color : green;
+`
+
+export const ErrText = styled.div`
+color: red;
+`
+
+export const TagFlex = styled.div`
+display: flex;
+gap: 3px;
 `

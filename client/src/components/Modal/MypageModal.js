@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { ModalBackground , ModalBody , ModalText , ModalBtnBox , ModalBtn, DeleteModalBody, DeleteModalText, InputContainer
-        , DeleteText, DeleteMessage, DeleteMessageContainer} from "./Modal.styled"
+        , DeleteText, DeleteMessage, DeleteMessageContainer, DeleteInput} from "./Modal.styled"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
@@ -71,7 +71,7 @@ const MyPageModal = ({type,func}) => {
         {!isDelete ? <ModalBody>
        <ModalText>
         {type === 'Logout' && '로그아웃 하시겠습니까?'}
-        {type === 'Withdrawal' && '회원탈퇴 하시겠습니까?'}
+        {type === 'Withdrawal' && <div><div>회원탈퇴 하시겠습니까?</div><DeleteMessage>탈퇴시 계정은 삭제되어 복구되지 않습니다.</DeleteMessage></div>}
          </ModalText>
          <ModalBtnBox>
            <ModalBtn onClick={setStateHandle}>취소</ModalBtn>
@@ -86,7 +86,7 @@ const MyPageModal = ({type,func}) => {
             <DeleteMessage>계정정보가 서버에서 삭제됩니다.</DeleteMessage>
         </DeleteModalText>
         <InputContainer>
-        <input value={deleteText} onChange={(e)=>setDeleteText(e.target.value)} />
+        <DeleteInput value={deleteText} onChange={(e)=>setDeleteText(e.target.value)} placeholder="'계정삭제'를 입력해주세요."/>
         </InputContainer>
         <DeleteMessageContainer>
             {deleteMessage && <DeleteMessage>(계정삭제)를 정확하게 입력해주세요.</DeleteMessage>}

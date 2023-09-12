@@ -148,7 +148,6 @@ const SignUp = () => {
     }
   };
   return (
-    <div>
       <BodyContainer>
         <FormContainer>
           <div>
@@ -218,7 +217,6 @@ const SignUp = () => {
           </SignLink>
         </FormContainer>
       </BodyContainer>
-    </div>
   );
 };
 
