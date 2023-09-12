@@ -1,6 +1,19 @@
 import { useState } from "react";
 import axios from 'axios'
-import { ErrText, InputStyle,BodyContainer,FormContainer,InputContainer,SignBtn,SignBtnContainer,SignLink,FormTop, FormBottom,FormInput,TextInput, AutoLoginContainer, Addition } from "../SignUp/SignUp.Styled";
+import { 
+  BodyContainer,
+  FormContainer,
+  Title,
+  ErrText, 
+  InputStyle,
+  InputContainer,
+  SignBtn,
+  SignBtnContainer,
+  SignLink,
+  FormBottom,
+  AutoLoginContainer,
+} from "../SignUp/SignUp.Styled";
+import TitleIcon from '../../common/image/signupLogo.svg'
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { setLoginStatus,setAccessToken } from "../../redux/action/action";
@@ -56,29 +69,35 @@ export default function Login() {
   const guestLogin = () => {
     navi('/')
   }
-  return <div>
+  return (
     <BodyContainer> 
     <FormContainer>
-    <FormTop>
-    <FormInput>
-      <TextInput>
-    <InputContainer>
+
+      <Title>
+        <img src={TitleIcon} alt="title icon" />
+        <h1>로그인</h1>
+      </Title>
+
+    <div>
+      <InputContainer>
     <InputStyle value={email} onChange={(e)=>onChange('email',e)} placeholder="이메일을 입력해 주세요."></InputStyle>
     </InputContainer>
     {emailErr && <ErrText>올바른 이메일 형식이 아닙니다.</ErrText>}
-    </TextInput>
-    <InputContainer>
+    </div>
+
+    <div>
+            <InputContainer>
     <InputStyle value={pw} onChange={(e)=>onChange('pw',e)} type="password" placeholder="비밀번호를 입력해 주세요."></InputStyle>
     </InputContainer>
-    </FormInput>
-    <Addition>
+    </div>
+
     <AutoLoginContainer>
     <input type="checkbox" checked={autoLogin} onClick={()=>setAutoLogin(!autoLogin)} />
-    <span>로그인 상태 유지</span>
+    <span> 로그인 상태 유지</span>
     </AutoLoginContainer>
-    </Addition>
+
+
     {loginErr && <ErrText>이메일,비밀번호를 확인해 주세요.</ErrText>}
-    </FormTop>
     <FormBottom>
     <SignBtnContainer>
     <SignBtn onClick={submitHandle}>로그인</SignBtn>
@@ -92,6 +111,6 @@ export default function Login() {
     </FormBottom>
     </FormContainer>
     </BodyContainer>
-  </div>;
+  )
 }
 

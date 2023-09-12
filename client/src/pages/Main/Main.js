@@ -1,68 +1,72 @@
-import { useEffect, useState } from "react";
-import Recipe from "../../components/Recipe/Recipe";
-import {ScrollMenu} from 'react-horizontal-scrolling-menu';
-export default function Main() {
-  const recipeList = [{
-    recipeId: 1,
-    recipeName: "메론 비쉬사이즈와 아몬드젤리를 곁들인 아보카도 킹크랩",
-    thumbnailUrl : "https://i.ibb.co/qJ2PyD1/4a8853aa-fd23-4646-a6ae-1eb423bc74e6-Kakao-Talk-20210217-214203816-jpg.png",
-    foodType : "한식",
-    difficulty : "중",
-    cook_time : "20분",
-    nutritions : null,
-  },{
-    recipeId: 2,
-    recipeName: "메론 비쉬사이즈와 아몬드젤리를 곁들인 아보카도 킹크랩",
-    thumbnailUrl : "https://i.ibb.co/qJ2PyD1/4a8853aa-fd23-4646-a6ae-1eb423bc74e6-Kakao-Talk-20210217-214203816-jpg.png",
-    foodType : "한식",
-    difficulty : "중",
-    cook_time : "20분",
-    nutritions : "고단백질",
-  },{
-    recipeId: 3,
-    recipeName: "메론 비쉬사이즈와 아몬드젤리를 곁들인 아보카도 킹크랩",
-    thumbnailUrl : "https://i.ibb.co/qJ2PyD1/4a8853aa-fd23-4646-a6ae-1eb423bc74e6-Kakao-Talk-20210217-214203816-jpg.png",
-    foodType : "한식",
-    difficulty : "중",
-    cook_time : "20분",
-    nutritions : "저지방",
-  },{
-    recipeId: 4,
-    recipeName: "메론 비쉬사이즈와 아몬드젤리를 곁들인 아보카도 킹크랩",
-    thumbnailUrl : "https://i.ibb.co/qJ2PyD1/4a8853aa-fd23-4646-a6ae-1eb423bc74e6-Kakao-Talk-20210217-214203816-jpg.png",
-    foodType : "한식",
-    difficulty : "중",
-    cook_time : "20분",
-    nutritions : null,
-  },{
-    recipeId: 5,
-    recipeName: "메론 비쉬사이즈와 아몬드젤리를 곁들인 아보카도 킹크랩",
-    thumbnailUrl : "https://i.ibb.co/qJ2PyD1/4a8853aa-fd23-4646-a6ae-1eb423bc74e6-Kakao-Talk-20210217-214203816-jpg.png",
-    foodType : "한식",
-    difficulty : "중",
-    cook_time : "20분",
-    nutritions : null,
-  },{
-    recipeId: 6,
-    recipeName: "메론 비쉬사이즈와 아몬드젤리를 곁들인 아보카도 킹크랩",
-    thumbnailUrl : "https://i.ibb.co/qJ2PyD1/4a8853aa-fd23-4646-a6ae-1eb423bc74e6-Kakao-Talk-20210217-214203816-jpg.png",
-    foodType : "한식",
-    difficulty : "중",
-    cook_time : "20분",
-    nutritions : null,
-  },{
-    recipeId: 7,
-    recipeName: "메론 비쉬사이즈와 아몬드젤리를 곁들인 아보카도 킹크랩",
-    thumbnailUrl : "https://i.ibb.co/qJ2PyD1/4a8853aa-fd23-4646-a6ae-1eb423bc74e6-Kakao-Talk-20210217-214203816-jpg.png",
-    foodType : "한식",
-    difficulty : "중",
-    cook_time : "20분",
-    nutritions : null,
-  }]
-  const [list,setList] = useState(recipeList)
-  return <div>
-    <div>아기 상급어 뚜루루뚜루</div>
-    <ScrollMenu LeftArrow={<button>Left</button>} RightArrow={<button>Right</button>} translate={0} >{list.map((el)=>{return <Recipe info={el} key={el.recipeId}/>})}</ScrollMenu>
-    </div>;
-}
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Container, MainContainer, MyFrigeWrapper, MyFrige, Title, FoodCategoryBox, FoodCategory, LatestCategoryBox, LatestCategory, RecipesContainer, ButtonLink } from './Main.styled';
+import Recipe from '../../components/Recipe/Recipe';
+import dummy from '../../common/data/dummy';
 
+const Main = () => {
+  //const [isLogin, setIsLogin] = useState(false);
+  // useEffect(() => {
+  //   const loginStatus = localStorage.getItem('isLogin') === 'true';
+  //   setIsLogin(loginStatus);
+  // }, []);
+  const isLogin = useSelector(state => state.isLogin);
+
+  const recipesPerRow = 5;
+  const MyFrigeRecipes = 
+    dummy.length - (dummy.length % recipesPerRow);
+
+  const dummyRecipes = 
+    dummy.slice(0, MyFrigeRecipes);
+
+  return (
+    <Container>
+      <MainContainer>
+        <MyFrigeWrapper>
+          <MyFrige>
+            {isLogin ? (
+              dummyRecipes.slice(0, 10).flatMap((recipeData, recipeIdx) => (
+                <Recipe key={recipeIdx} info={recipeData} />
+              ))
+            ) : (
+              <>
+                <Title>나만의 냉장고를 채워 보세요.</Title>
+                <p>냉장고의 재료로 다양한 레시피를 경험해 보세요!</p>
+                <ButtonLink to="/Login">재료 넣기</ButtonLink>
+              </>
+            )}
+          </MyFrige>
+        </MyFrigeWrapper>
+        <FoodCategoryBox>
+          <FoodCategory>
+            <div>전체</div>
+            <div>한식</div>
+            <div>일식</div>
+            <div>중식</div>
+            <div>양식</div>
+            <div>디저트</div>
+            <div>다이어트</div>
+          </FoodCategory>
+        </FoodCategoryBox>
+        <LatestCategoryBox>
+          <LatestCategory>
+            <div>최신순</div>
+            <div>·</div>
+            <div>추천순</div>
+            <div>·</div>
+            <div>코멘트순</div>
+            <div>·</div>
+            <div>조리시간순</div>
+          </LatestCategory>
+        </LatestCategoryBox>
+        <RecipesContainer>
+          {dummyRecipes.flatMap((recipeData, recipeIdx) => (
+            <Recipe key={recipeIdx} info={recipeData} />
+          ))}
+        </RecipesContainer>
+      </MainContainer>
+    </Container>
+  );
+};
+
+export default Main;
