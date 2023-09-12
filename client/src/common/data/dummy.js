@@ -10,7 +10,7 @@ const dummy = [
   },
   {
     recipeId: 2,
-    thumbnailUrl: 'https://source.unsplash.com/random/?meal',
+    thumbnailUrl: 'https://source.unsplash.com/random/?drink',
     recipeName: '임시 레시피 2',
     foodType: '일식',
     difficulty: '중',
@@ -28,7 +28,7 @@ const dummy = [
   },
   {
     recipeId: 4,
-    thumbnailUrl: 'https://source.unsplash.com/random/?food',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Breakfast',
     recipeName: '임시 레시피 4',
     foodType: '한식',
     difficulty: '하',
@@ -37,7 +37,7 @@ const dummy = [
   },
   {
     recipeId: 5,
-    thumbnailUrl: 'https://source.unsplash.com/random/?meal',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Lunch',
     recipeName: '임시 레시피 5',
     foodType: '일식',
     difficulty: '중',
@@ -46,7 +46,7 @@ const dummy = [
   },
   {
     recipeId: 6,
-    thumbnailUrl: 'https://source.unsplash.com/random/?food',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Dinner',
     recipeName: '임시 레시피 1',
     foodType: '한식',
     difficulty: '하',
@@ -55,7 +55,7 @@ const dummy = [
   },
   {
     recipeId: 7,
-    thumbnailUrl: 'https://source.unsplash.com/random/?meal',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Snack',
     recipeName: '임시 레시피 2',
     foodType: '일식',
     difficulty: '중',
@@ -64,7 +64,7 @@ const dummy = [
   },
   {
     recipeId: 8,
-    thumbnailUrl: 'https://source.unsplash.com/random/?cook',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Brunch',
     recipeName: '임시 레시피 3',
     foodType: '양식',
     difficulty: '상',
@@ -73,7 +73,7 @@ const dummy = [
   },
   {
     recipeId: 9,
-    thumbnailUrl: 'https://source.unsplash.com/random/?food',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Supper',
     recipeName: '임시 레시피 4',
     foodType: '한식',
     difficulty: '하',
@@ -82,7 +82,7 @@ const dummy = [
   },
   {
     recipeId: 10,
-    thumbnailUrl: 'https://source.unsplash.com/random/?meal',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Chef',
     recipeName: '임시 레시피 5',
     foodType: '일식',
     difficulty: '중',
@@ -91,7 +91,7 @@ const dummy = [
   },
   {
     recipeId: 11,
-    thumbnailUrl: 'https://source.unsplash.com/random/?food',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Tea',
     recipeName: '임시 레시피 1',
     foodType: '한식',
     difficulty: '하',
@@ -100,7 +100,7 @@ const dummy = [
   },
   {
     recipeId: 12,
-    thumbnailUrl: 'https://source.unsplash.com/random/?meal',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Bake',
     recipeName: '임시 레시피 2',
     foodType: '일식',
     difficulty: '중',
@@ -109,7 +109,7 @@ const dummy = [
   },
   {
     recipeId: 13,
-    thumbnailUrl: 'https://source.unsplash.com/random/?cook',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Juice',
     recipeName: '임시 레시피 3',
     foodType: '양식',
     difficulty: '상',
@@ -118,7 +118,7 @@ const dummy = [
   },
   {
     recipeId: 14,
-    thumbnailUrl: 'https://source.unsplash.com/random/?food',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Soda',
     recipeName: '임시 레시피 4',
     foodType: '한식',
     difficulty: '하',
@@ -127,7 +127,7 @@ const dummy = [
   },
   {
     recipeId: 15,
-    thumbnailUrl: 'https://source.unsplash.com/random/?meal',
+    thumbnailUrl: 'https://source.unsplash.com/random/?milk',
     recipeName: '임시 레시피 5',
     foodType: '일식',
     difficulty: '중',
@@ -136,7 +136,7 @@ const dummy = [
   },
   {
     recipeId: 16,
-    thumbnailUrl: 'https://source.unsplash.com/random/?food',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Lemonade',
     recipeName: '임시 레시피 1',
     foodType: '한식',
     difficulty: '하',
@@ -145,7 +145,7 @@ const dummy = [
   },
   {
     recipeId: 17,
-    thumbnailUrl: 'https://source.unsplash.com/random/?meal',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Smoothie',
     recipeName: '임시 레시피 2',
     foodType: '일식',
     difficulty: '중',
@@ -154,7 +154,7 @@ const dummy = [
   },
   {
     recipeId: 18,
-    thumbnailUrl: 'https://source.unsplash.com/random/?cook',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Wine',
     recipeName: '임시 레시피 3',
     foodType: '양식',
     difficulty: '상',
@@ -163,7 +163,7 @@ const dummy = [
   },
   {
     recipeId: 19,
-    thumbnailUrl: 'https://source.unsplash.com/random/?food',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Beer',
     recipeName: '임시 레시피 4',
     foodType: '한식',
     difficulty: '하',
@@ -172,7 +172,7 @@ const dummy = [
   },
   {
     recipeId: 20,
-    thumbnailUrl: 'https://source.unsplash.com/random/?meal',
+    thumbnailUrl: 'https://source.unsplash.com/random/?Cocktail',
     recipeName: '임시 레시피 5',
     foodType: '일식',
     difficulty: '중',
