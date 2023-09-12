@@ -7,6 +7,7 @@ position: fixed;
 left: 0;
 top: 0;
 background: rgba(0, 0, 0, 0.5);
+z-index: 999;
 `
 
 export const ModalBody = styled.section`
@@ -62,3 +63,34 @@ export const ModalBtn = styled.button`
     
   }
 `;
+
+export const DeleteModalBody = styled(ModalBody)`
+ height: 200px;
+`
+
+export const DeleteModalText = styled(ModalText)`
+ flex-direction: column;
+`
+
+export const InputContainer = styled.div`
+ display: flex;
+ justify-content: center;
+ width: 100%;
+`
+
+export const DeleteText = styled.div`
+color: red;
+`
+
+export const DeleteMessage = styled.div`
+color: red;
+font-size: 0.8em;
+`
+
+export const DeleteMessageContainer = styled(InputContainer)`
+
+`
+
+export const DeleteInput = styled.input`
+width: 90%;
+`
