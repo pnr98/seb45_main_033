@@ -20,7 +20,7 @@ public class RecipeLike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long likeId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id", nullable = false)
     private Member member;
 
@@ -30,4 +30,9 @@ public class RecipeLike {
 
     @CreationTimestamp
     private Timestamp createdAt;
+
+    public RecipeLike(Member member, Recipe recipe) {
+        this.member = member;
+        this.recipe = recipe;
+    }
 }

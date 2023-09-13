@@ -120,5 +120,10 @@ public class MemberService {
         profileDto.setUsername(member.getUsername());
         return profileDto;
     }
+
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
 }
 
