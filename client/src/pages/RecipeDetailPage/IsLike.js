@@ -3,14 +3,23 @@ import like from '../../common/image/like.png'
 import unlike from '../../common/image/unlike.png'
 import { BtnContainer } from "./IsLike.styled";
 import axios from "axios";
-
+import Modal from '../../components/Modal/Modal'
+import { useSelector } from "react-redux";
 
 export default function LikeButton({recipeId, likes, onLikeChange}) {
     const AccessToken = `ACCESS_TOKEN`
     const [ isLiked, setIsLiked ] = useState(false)
+    const [ showModal, setShowModal ] = useState(false);
+
+    const isLogin = useSelector((state) => state.isLogin);
 
     // 좋아요 클릭
     const handleOnClick = async () => {
+        if (!isLogin) { // 로그인되지 않은 경우 모달 열기
+            setShowModal(true)
+            return;
+        }
+        
         if (isLiked) { // 이미 좋아요를 누른 경우 DELETE
             axios.delete(`/recipe/${recipeId}`, {
                 headers: {
@@ -54,6 +63,13 @@ export default function LikeButton({recipeId, likes, onLikeChange}) {
 
     return (
         <BtnContainer>
+            {showModal && (
+                <Modal 
+                    type="LoginPlz"
+                    func={() => setShowModal(false)}
+                    recipe_id={recipeId}
+                />
+            )}
             <button onClick={handleOnClick}>
                 {isLiked ? 
                 (<img src={like} alt="like" />)
