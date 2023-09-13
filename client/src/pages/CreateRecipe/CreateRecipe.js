@@ -108,7 +108,6 @@ const spaceHandle = (e) => {
     if(e.key === " " && gapRegex.test(ingredientsInput.slice(0,ingredientsInput.length-1))){
         if(!ingredients.includes(ingredientsInput.slice(0,ingredientsInput.length-1))){
             setIngredients([...ingredients,ingredientsInput.slice(0,ingredientsInput.length-1)])
-            console.log(ingredients)
             setIngredientsInput('')
         }else{
             setDuplicationErr(true)
@@ -117,7 +116,6 @@ const spaceHandle = (e) => {
     if(e.key === 'Enter' && gapRegex.test(ingredientsInput.slice(0,ingredientsInput.length-1))){
         if(!ingredients.includes(ingredientsInput)){
             setIngredients([...ingredients,ingredientsInput])
-            console.log(ingredients)
             setIngredientsInput('')
         }else{
             setDuplicationErr(true)

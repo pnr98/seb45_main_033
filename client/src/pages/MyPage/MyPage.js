@@ -6,7 +6,6 @@ import UserInfo from "./UserInfo";
 import { MypageContainer,TapContainer,Tap } from "./MyPage.Styled";
 import { useDispatch } from "react-redux";
 import { setAccessToken, setLoginStatus } from "../../redux/action/action";
-import Cookies from "js-cookie";
 import MyPageModal from "../../components/Modal/MypageModal";
 const dummyData = {
   "profileImageUrl": "https://i.ibb.co/hHYvKbq/image.jpg",
@@ -26,7 +25,6 @@ export default function MyPage() {
     dispatch(setAccessToken(''))
     dispatch(setLoginStatus(false))
     sessionStorage.removeItem('Token')
-    Cookies.remove('Token')
     useNavigate('/')
   }
   const logoutModalOff = () => {

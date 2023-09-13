@@ -10,13 +10,21 @@ import MyPage from './pages/MyPage/MyPage';
 import RecipeDetailPage from './pages/RecipeDetailPage/RecipeDetailPage';
 import RecipeSearchPage from './pages/RecipeSearchPage/RecipeSearchPage';
 import CreateRecipe from './pages/CreateRecipe/CreateRecipe';
+import { useDispatch } from 'react-redux';
+import { setLoginStatus } from './redux/action/action';
 function App() {
   const location = useLocation();
-
+  const dispatch = useDispatch()
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
   
+  useEffect(() => {
+    const Token = localStorage.getItem('Token')
+    if(Token){
+      dispatch(setLoginStatus(true))
+    }
+  })
   return (
     <AppContainer>
       <Header />

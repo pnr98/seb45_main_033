@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios'
 import { 
   BodyContainer,
@@ -15,9 +15,9 @@ import {
 } from "../SignUp/SignUp.Styled";
 import TitleIcon from '../../common/image/signupLogo.svg'
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setLoginStatus,setAccessToken } from "../../redux/action/action";
-import Cookies from 'js-cookie';
+import { checkLogin } from "../../checkLogin/checkLogin";
 export default function Login() {
   const [email,setemail] = useState('')
   const [emailErr,setEmailErr] = useState(false)
@@ -27,6 +27,14 @@ export default function Login() {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const navi = useNavigate()
   const dispatch = useDispatch()
+  
+  useEffect(()=>{
+   const isLogin = checkLogin()
+   if(isLogin){
+    navi('/')
+    return
+   }
+  },[])
   const onChange = (type,e) =>{
     if(type === 'email'){
      setemail(e.target.value)
@@ -56,13 +64,14 @@ export default function Login() {
         if(res.status===200){
           dispatch(setAccessToken(res.data.token))
           sessionStorage.setItem('Token',res.data.token)
-          if(autoLogin){
-            Cookies.set('Token',res.data.token,{ expires : 1})
-          }
           dispatch(setLoginStatus(true))
           navi('/')
         }
-      }).catch((res)=>{setLoginErr(true)})
+      }).catch((res)=>{
+        dispatch(setAccessToken('Bearer abcd'))  // 서버 열리면 수정해야할 곳
+        sessionStorage.setItem('Token', 'Bearer abcd')
+        dispatch(setLoginStatus(true))
+        navi('/')})
       console.log('보냄')
     }  //로그인 버튼 클릭시 요청 보내고 로그인 성공 응답일 경우 데이터를 받아서 스토어에 담음
   }
