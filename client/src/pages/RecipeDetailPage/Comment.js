@@ -1,4 +1,5 @@
 import { useState,  useEffect } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { Container, InputContainer, EditContainer, Button } from "./Comment.styled";
 import Modal from '../../components/Modal/Modal'
@@ -31,6 +32,8 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     const [ editingComment, setEditingComment] = useState("")
 
     const [showModal, setShowModal] = useState(false);
+    const isLogin = useSelector((state) => state.isLogin)
+    
     const AccessToken = 'a'
 
     useEffect(() => {
@@ -46,7 +49,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
             };
             getComments()
         }, [])
-
+        
     // 댓글 작성
     const handleCommentSubmit = async () => {
         try {
@@ -67,9 +70,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
                 const newComment = response.data
                 setComments([...comments, newComment])
                 setCommentBody("");
-            } else {
-                console.log("댓글 등록 오류");
-            }
+            } 
         } catch (error) {
             console.error("댓글 등록 요청 실패:", error);
             //
@@ -97,8 +98,6 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
             if (response.status === 204) {
                 const updateComments = comments.filter((comment) => comment.commentId !== commentId)
                 setComments(updateComments)
-            } else {
-                alert("댓글 삭제에 실패했습니다.");
             }
         } catch (error) {
             console.error("댓글 삭제 오류:", error);
@@ -129,14 +128,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
             } else if (response.status === 400) {
                 // 댓글 500자 이하
                 alert(response.data.message)
-            } else if (response.status === 401) {
-                // 권한이 없는 경우 (Unauthorized)
-                const errorData = response.data;
-                alert(errorData.message);
-            } else {
-                // 기타 오류 처리
-                alert("댓글 수정에 실패했습니다.");
-            }
+            } 
         } catch (error) {
             console.error("댓글 수정 저장 오류:", error)
 
@@ -156,8 +148,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     }
     // 로그인 요청 모달
     const handleModal = () => {
-        // isLogin으로 변경
-        if (!memberId) {
+        if (isLogin) {
             setShowModal(true)
         }
     }
