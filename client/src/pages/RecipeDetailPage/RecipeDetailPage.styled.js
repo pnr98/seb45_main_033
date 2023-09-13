@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
-
+import { ScrollContainer } from "../../components/HorizontalScroll/HorizontalScroll.styled"
+import { Button } from "./Comment.styled";
 export const Container = styled.div`
     display: flex;
     justify-content: center;
@@ -147,18 +148,22 @@ export const RecipeStepWrap = styled.div`
 
 
 export const BtnContainer = styled.div`
-button {
-    float: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    Button {
 
-}
+    }
 `
+
 
 export const RelatedRecipe = styled.div`
     display: flex;
     flex-direction: column;
     
-    :last-child {
-        
+    >:last-child {
+        position: relative;
+        left:-56px
     }
     .HorizontalScroll {
         
@@ -169,5 +174,8 @@ export const RelatedRecipe = styled.div`
 export const CommentsContainer = styled.div`
 `
 
+export const ScrollContainerCentered  = styled(ScrollContainer)`
+background-color: red;
+`
 
 
