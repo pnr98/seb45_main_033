@@ -32,7 +32,7 @@ public class RecipeService {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_ACCESS);
         }
 
-        // Principal에서 사용자 이름을 가져와서, 이를 통해 사용자의 고유 ID를 찾습니다.
+        // Principal에서 사용자 이름을 가져와서, 이를 통해 사용자의 고유 ID를 찾음
         String username = principal.getName();
         Member currentUser = memberRepository.findByUsername(username)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
@@ -45,7 +45,6 @@ public class RecipeService {
     }
 
     public Recipe updateRecipe(Recipe recipe) {
-        // 이 예에서는 간단하게 처리합니다. 실제로는 더 복잡한 로직이 필요할 수 있습니다.
         return recipeRepository.save(recipe);
     }
 
