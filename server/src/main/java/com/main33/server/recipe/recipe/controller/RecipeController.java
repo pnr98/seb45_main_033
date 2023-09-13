@@ -1,6 +1,5 @@
 package com.main33.server.recipe.recipe.controller;
 
-import com.main33.server.member.dto.MemberResponseDto;
 import com.main33.server.recipe.recipe.dto.RecipeDto;
 import com.main33.server.recipe.recipe.entity.Recipe;
 import com.main33.server.recipe.recipe.mapper.RecipeMapper;
@@ -11,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +18,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/recipes")
@@ -71,12 +67,12 @@ public class RecipeController {
         return new ResponseEntity<>(recipeMapper.recipeToRecipeDetail(recipe), HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<?> listRecipes(@RequestParam(name = "page", defaultValue = "0") int page,
-                                         @RequestParam(name = "size", defaultValue = "10") int size) {
-        List<Recipe> recipes = recipeService.findAllRecipes(page, size);
-        return new ResponseEntity<>(recipeMapper.recipesToRecipeSummarys(recipes), HttpStatus.OK);
-    }
+//    @GetMapping
+//    public ResponseEntity<?> listRecipes(@RequestParam(name = "page", defaultValue = "0") int page,
+//                                         @RequestParam(name = "size", defaultValue = "5") int size) {
+//        List<Recipe> recipes = recipeService.findAllRecipes(page, size);
+//        return new ResponseEntity<>(recipeMapper.recipesToRecipeSummarys(recipes), HttpStatus.OK);
+//    }
 
     @DeleteMapping("/{recipe-id}")
     public ResponseEntity<?> deleteRecipe(@PathVariable("recipe-id") Long recipeId) {
@@ -86,7 +82,7 @@ public class RecipeController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        // 여기에 유효성 검사 실패 시의 로직을 작성합니다.
+        //TODO 유효성 검사 실패 시의 로직 작성
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
