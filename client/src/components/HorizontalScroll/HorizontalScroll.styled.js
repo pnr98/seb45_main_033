@@ -1,11 +1,11 @@
 import { styled } from "styled-components"
 
-export const Container = styled.div`
-  width: 120%;
+export const ScrollContainer = styled.div`
+  width: 114%;
 
 `
 
-export const Wrap = styled.div`
+export const ScrollWrap = styled.div`
   display: flex;
   .swiper {
     width: 100%;

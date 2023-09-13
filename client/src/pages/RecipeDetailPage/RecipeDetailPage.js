@@ -16,6 +16,7 @@ import axios from 'axios'
 import { useParams } from "react-router-dom"
 import LikeButton from './IsLike'
 import CommentHandler from './Comment'
+import { Button } from './Comment.styled'
 
 
 export default function RecipeDetailPage() {
@@ -62,6 +63,10 @@ export default function RecipeDetailPage() {
     const [ recipeData, setRecipeData ] = useState(null)
     const [separatedIngredients, setSeparatedIngredients] = useState([]);  
     const memberId = 1
+
+    // // 수정, 삭제 버튼 표시 여부
+    const currentUser = "전우치"
+    const [ showButtons, setShowButtons ] = useState(false)
 
     useEffect(() => {
       // 상세 레시피 데이터 가져오기
@@ -113,10 +118,7 @@ export default function RecipeDetailPage() {
         }
       }
 
-
-      
       getRecipeData()
-
     }, [])
 
     if (recipeData === null) {
@@ -141,10 +143,7 @@ export default function RecipeDetailPage() {
 
     // 수정, 삭제 버튼 
     const handleEdit = () => {
-
     }
-
-
 
 
     return (
@@ -209,13 +208,17 @@ export default function RecipeDetailPage() {
                     })}
                   </ul>
                 </RecipeStepWrap>
-                <BtnContainer>
-                  <button>삭제</button>
-                  <button>수정</button>
-                </BtnContainer>
+
+                  {(recipeData && recipeData.userName === currentUser) && 
+                  (<BtnContainer>
+                    <Button boxColor="orange">수정</Button>
+                    <Button>삭제</Button>
+                  </BtnContainer>)}
                 <RelatedRecipe>
                   <div className='discription-title'>관련 레시피</div>
-                  <HorizontalScroll />
+                  <div>
+                    <HorizontalScroll />
+                  </div>
                 </RelatedRecipe>
                 <CommentsContainer>
                   <div className='discription-title'>댓글</div>
