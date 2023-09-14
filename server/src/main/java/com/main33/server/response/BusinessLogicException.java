@@ -2,7 +2,6 @@ package com.main33.server.response;
 
 import lombok.Getter;
 
-
 public class BusinessLogicException extends RuntimeException {
     @Getter
     private ExceptionCode exceptionCode;
