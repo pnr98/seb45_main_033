@@ -11,10 +11,11 @@ import {
     HamburgerBar,
     DropdownMenu
 } from "./Header.styled";
+import { checkLogin } from '../../checkLogin/checkLogin';
 
 const Header = () => {
   //const [isLogin, setIsLogin] = useState(false);
-  const isLogin = useSelector(state => state.isLogin);
+  const [isLogin,setIsLogin] = useState(false)
   const dispatch = useDispatch();
   const [showHamburger, setShowHamburger] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -45,6 +46,8 @@ const Header = () => {
   // };
   const handleLogout = () => {
     dispatch({ type: 'SET_LOGIN_STATUS', payload: false });
+    sessionStorage.removeItem('Token')
+    setIsLogin(checkLogin())
     closeDropdown();
     navigate("/");
   };
@@ -74,7 +77,11 @@ const Header = () => {
       behavior: 'smooth'
     });
   };
+  
 
+  useEffect(()=>{
+  setIsLogin(checkLogin())
+  },[sessionStorage.getItem('Token')])
   return (
     <HeaderWrapper>
       <LogoLink to="/" onClick={scrollToTop}>로고</LogoLink>
