@@ -1,215 +1,314 @@
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css';
-import { BodyContiner, TitleText, TitleContainer, Thumbnail, MainContainer, ThumbnailImg, ButtonContainer,
-    ResetBth, FileInputWrapper, RecipeTitle, FormContainer, IngredientContianer, TagContainer, TagInputBox,
-    TagTitle, TagInput, Tag, WriteRecipe, BtnFlex, CurrentIngredients, InformationMessage, ErrText, TagFlex} from './CreateRecipe.styled'
+import { BodyContiner, MainContainer, FormContainer, Thumbnail, ButtonContainer, CurrentIngredients, RecipeContainer, IngredientContianer, TagContainer, TagBoxContainer, Tag, CreateButton, InformationMessage } from './CreateRecipe.styled'
 import { useEffect, useState } from 'react'
 import Modal from '../../components/Modal/Modal'
 import axios from 'axios';
 
-const CreateRecipe = () =>{
-const [title,setTitle] = useState('')
-const [recipeDescription,setRecipeDescription] = useState('')
-const [text,setText] = useState('')
-const [steps,setSteps] = useState([])
-const [ingredients,setIngredients] = useState([])
-const [ingredientsInput,setIngredientsInput] = useState('')
-const [thumbnail,setThumbnail] = useState('')
-const [extensionModal,setExtensionModal] = useState(false)
-const [createModal,setCreateModal] = useState(false)
-const [foodType,setFoodType] = useState('')
-const [difficulty,setDifficulty] = useState('')
-const [cookingTime,setCoockinTime] = useState('')
-const [duplicationErr,setDuplicationErr] = useState(false)
+export default function CreateRecipe() {
+    const [showModal, setShowModal] = useState(false);
+    const [createModal, setCreateModal] = useState(false)
+    const [thumbnail, setThumbnail] = useState('')
 
-const gapRegex = /^\S+$/
-
-const dragOverHandle = (e) => {
-    e.preventDefault();
-  };
-
-const dropHandle = (e) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if(file) {
-        if(file.type === 'image/png' || file.type === 'image/jpeg'){
-            const imageUrl = URL.createObjectURL(file);
-            setThumbnail(imageUrl)
-        }else{
-            setExtensionModal(true)
+    // 썸네일 업로드
+    const dragOverHandle = (e) => {
+        e.preventDefault();
+    };
+    const dropHandle = (e) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        if (file) {
+            if (file.type === 'image/png' || file.type === 'image/jpeg') {
+                const imageUrl = URL.createObjectURL(file);
+                setThumbnail(imageUrl)
+            } else {
+                setShowModal(true)
+            }
         }
     }
-}
-
-const inputBtnhandle = (e) =>{
-    const file = e.target.files[0]
-    if(file){
-        if(file.type === 'image/png' || file.type === 'image/jpeg'){
-            const imageUrl = URL.createObjectURL(file);
-            setThumbnail(imageUrl)
-        }else{
-            setExtensionModal(true)
+    const inputBtnhandle = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            if (file.type === 'image/png' || file.type === 'image/jpeg') {
+                const imageUrl = URL.createObjectURL(file);
+                setThumbnail(imageUrl)
+            } else {
+                setShowModal(true)
+            }   
         }
     }
-}
-
-const modalOff = () => {
-    setExtensionModal(false)
-}
-
-const resetThumbnail = () => {
-    setThumbnail('')
-}
-
-const textHandle = (e) => {
-    setText(e)
-}
-
-const tagClickHandle = (type,tag) => {
-    if(type === 'foodType'){
-     setFoodType(tag)
+    const resetThumbnail = () => {
+        setThumbnail('')
     }
-    if(type === 'difficulty'){
-     setDifficulty(tag)
-    }
-    if(type === 'cookingTime'){
-     setCoockinTime(tag)
-    }
-}
 
-const submitHandle = () => {
-    if(text && foodType && title && ingredients.length !== 0){
-      const header = {
-        Headers:{
-            Authorization: `Bearer {Token}`
+    // 카테고리 선택
+    const categories = {
+        categoryTag: ["한식", "중식", "일식", "양식", "디저트", "다이어트"],
+        timeTag: [10, 20, 30, 40, 50, 60],
+        levelTag: ["상", "중", "하"],
+    };
+    // 모든 선택이 완료되면 true, 그렇지 않으면 false
+    const [selectedTags, setSelectedTags] = useState({
+        category: null,
+        time: null,
+        level: null,
+    })
+    const handleTagClick = (type, value) => {
+        setSelectedTags((prevSelectedTags) => ({
+            ...prevSelectedTags,
+            [type]: value,
+        }))
+        console.log("선택된 카테고리:", value);
+        console.log("선택된 카테고리:", selectedTags.category);
+        console.log("선택된 시간:", selectedTags.time);
+        console.log("선택된 레벨:", selectedTags.level);
+    }
+
+    // 재료
+    const [ingredients, setIngredients] = useState([])
+    const [ingredientsInput, setIngredientsInput] = useState('')
+    const [duplicationErr, setDuplicationErr] = useState(false)
+    const gapRegex = /^\S+$/
+    const spaceHandle = (e) => {
+        if (e.key === " " && gapRegex.test(ingredientsInput.slice(0, ingredientsInput.length - 1))) {
+            if (!ingredients.includes(ingredientsInput.slice(0, ingredientsInput.length - 1))) {
+                setIngredients([...ingredients, ingredientsInput.slice(0, ingredientsInput.length - 1)])
+                console.log(ingredients)
+                setIngredientsInput('')
+            } else {
+                setDuplicationErr(true)
+            }
         }
-      }
-      const data = {
-        "foodType": foodType,
-        "difficulty": difficulty,
-        "recipeName": title,
-        "recipeDescription":recipeDescription,
-        "cookingTime":cookingTime,
-        "ingredients": ingredients,
-        "steps" : steps
-      }
-      axios.post('/recipes',data,header).then((res)=>{
-        if(res.status === 201){
+        if (e.key === 'Enter' && gapRegex.test(ingredientsInput.slice(0, ingredientsInput.length - 1))) {
+            if (!ingredients.includes(ingredientsInput)) {
+                setIngredients([...ingredients, ingredientsInput])
+                console.log(ingredients)
+                setIngredientsInput('')
+            } else {
+                setDuplicationErr(true)
+            }
+        }
+        if (e.key === 'Backspace') {
+            setDuplicationErr(false)
+        }
+    }
+    const deleteTag = (tag) => {
+        const newArr = ingredients.filter((el) => el !== tag)
+        setIngredients(newArr)
+    }
+
+    // recipe step
+    const [recipeContents, setRecipeContents] = useState({
+        title: "",
+        description: "",
+        steps: [],
+    })
+    const handleOnChange = (e, field) => {
+        setRecipeContents({
+            ...recipeContents,
+            [field]: e.target.value,
+        })
+        console.log(`${field} : ${e.target.value}`)
+    }
+    // 레시피 내용 변경
+    const handleStepChange = (e, idx) => {
+        const updatedSteps = [...recipeContents.steps];
+        updatedSteps[idx] = e.target.value
+        setRecipeContents({
+            ...recipeContents,
+            steps: updatedSteps,
+        })
+    }
+    // step 추가
+    const addStep = () => {
+        setRecipeContents((prevRecipeContent) => ({
+            ...prevRecipeContent,
+            steps: [...prevRecipeContent.steps,
+            {
+                stepContent: "", // 빈 단계 생성
+            },]
+        }))
+    };
+    // step 삭제
+    const deleteStep = (idx) => {
+        setRecipeContents((prevRecipeContent) => {
+            const updatedSteps = [...recipeContents.steps];
+            updatedSteps.splice(idx, 1) // 해당 인덱스의 단계 삭제
+            return {
+                ...prevRecipeContent,
+                steps: updatedSteps, // 업데이트된 단계 배열로 업데이트
+            }
+        })
+    };
+
+    // 등록버튼
+    const isSubmitEnabled = 
+        selectedTags.category && 
+        selectedTags.time && 
+        selectedTags.level &&
+        recipeContents.title.trim() !== "" &&
+        recipeContents.description.trim() !== "" &&
+        thumbnail !== "" &&
+        recipeContents.steps.length > 2 &&
+        ingredients.length > 0;
+
+    const handleCreatePost = async (e) => {
+        e.preventDefault();
+        const requestData = {
+            "foodType": selectedTags.category,
+            "difficulty": selectedTags.level,
+            "recipeName": recipeContents.title,
+            "recipeDescription": recipeContents.description,
+            "cookingTime": selectedTags.time,
+            "ingredients": ingredients,
+            "steps": recipeContents.steps.map((step, idx) => ({
+                stepNumber: idx + 1,
+                stepContent: step.stepContent,
+            }))
+        };
+        console.log(requestData);
+        try {
+            if (isSubmitEnabled) {
+                // 선택된 카테고리, 시간, 레벨을 서버에 전달하여 글을 생성하는 로직을 구현
+                const header = {
+                    Headers: {
+                        Authorization: `Bearer {Token}`
+                    }
+                }
+                const response = await axios.post(`recipe`, requestData, header)
+                if (response.status === 201) {
+                    setCreateModal(true)
+                }
+            }
+        } catch (err) {
+            console.error("레시피 등록 요청 실패:", err);
+            console.log(requestData)
             setCreateModal(true)
         }
-      }).catch((res)=>{
-        console.log(data)
-        setCreateModal(true)
-      })
     }
-}
 
-const spaceHandle = (e) => {
-    if(e.key === " " && gapRegex.test(ingredientsInput.slice(0,ingredientsInput.length-1))){
-        if(!ingredients.includes(ingredientsInput.slice(0,ingredientsInput.length-1))){
-            setIngredients([...ingredients,ingredientsInput.slice(0,ingredientsInput.length-1)])
-            console.log(ingredients)
-            setIngredientsInput('')
-        }else{
-            setDuplicationErr(true)
-        }
-    }
-    if(e.key === 'Enter' && gapRegex.test(ingredientsInput.slice(0,ingredientsInput.length-1))){
-        if(!ingredients.includes(ingredientsInput)){
-            setIngredients([...ingredients,ingredientsInput])
-            console.log(ingredients)
-            setIngredientsInput('')
-        }else{
-            setDuplicationErr(true)
-        }
-    }
-    if(e.key === 'Backspace'){
-        setDuplicationErr(false)
-    }
-}
+    return (
+        <BodyContiner>
+            {showModal && <Modal type='Badextension' func={() => setShowModal(false)} />}
+            {createModal && <Modal type='Create' func={() => setShowModal(false)} />}
+            <MainContainer>
+                <h1>Spread your recipe !</h1>
+                <FormContainer onSubmit={handleCreatePost}>
 
-const deleteTag = (tag) =>{
-  const newArr = ingredients.filter((el)=> el!==tag)
-  setIngredients(newArr)
-}
-return <BodyContiner>
-    <MainContainer>
-    <TitleContainer>
-    <TitleText>Spread your recipe</TitleText>
-    </TitleContainer>
-    <FormContainer>
-    {thumbnail ? <ThumbnailImg src={thumbnail} alt='thumbnail' onDrop={dropHandle} onDragOver={dragOverHandle} /> 
-    : <Thumbnail id='fileinput' onDrop={dropHandle} onDragOver={dragOverHandle}>
-        <div>썸네일 이미지를 드래그 앤 드롭 해보세요.</div>
-        <div>썸네일 이미지는 jpg/png 확장자만 지원합니다.</div>
-    </Thumbnail>}
-    <ButtonContainer>
-        <FileInputWrapper>
-            파일선택
-        <input type='file' onChange={(e)=>inputBtnhandle(e)}/>
-        </FileInputWrapper>
-    <ResetBth onClick={resetThumbnail}>초기화</ResetBth>
-    </ButtonContainer>
-    <RecipeTitle placeholder='제목을 입력해 주세요.' value={title} onChange={(e)=>setTitle(e.target.value)}/>
-    <input value={recipeDescription} onChange={(e)=>setRecipeDescription(e.target.value)} placeholder='레시피 설명을 입력해 주세요.'/>
-    <ReactQuill value={text} onChange={textHandle} placeholder='내용을 입력해 주세요.' />
-    </FormContainer>
-    <IngredientContianer>
-    <input placeholder='필요한 재료를 입력해 주세요.' value={ingredientsInput} 
-    onChange={(e)=>setIngredientsInput(e.target.value)} onKeyUp={(e)=>spaceHandle(e)} />
-    <CurrentIngredients>
-    {ingredients.length ? 
-    <div>
-        <TagFlex>
-        {ingredients.map((el,index)=>{return <Tag key={index} onClick={()=>deleteTag(el)}>{el}</Tag>})}
-        </TagFlex>
-     <InformationMessage>재료를 클릭하여 제거할 수 있습니다.</InformationMessage>
-     {duplicationErr && <ErrText>동일한 재료는 입력할 수 없습니다.</ErrText>}
-    </div>
-     : <div>
-        입력한 재료는 이곳에서 확인 가능합니다.
-        <InformationMessage>원하는 재료를 입력후 스페이스 바(Space bar)키 혹은 엔터(Enter)키를 눌러주세요</InformationMessage>
-        </div>}
-    </CurrentIngredients>
-    </IngredientContianer>
-    <TagContainer>
-        <TagInputBox>
-        <TagTitle>음식 종류</TagTitle>
-        <TagInput>
-            <Tag select={foodType === 'korean' ? true : undefined} onClick={()=>tagClickHandle('foodType','korean')}>한식</Tag>
-            <Tag select={foodType === 'japan' ? true : undefined} onClick={()=>tagClickHandle('foodType','japan')}>일식</Tag>
-            <Tag select={foodType === 'chinese' ? true : undefined} onClick={()=>tagClickHandle('foodType','chinese')}>중식</Tag>
-            <Tag select={foodType === 'western' ? true : undefined} onClick={()=>tagClickHandle('foodType','western')}>양식</Tag>
-            <Tag select={foodType === 'dessert' ? true : undefined} onClick={()=>tagClickHandle('foodType','dessert')}>디저트</Tag>
-            <Tag select={foodType === 'diet' ? true : undefined} onClick={()=>tagClickHandle('foodType','diet')}>다이어트</Tag>
-        </TagInput>
-        </TagInputBox>
-        <TagInputBox>
-        <TagTitle>조리 시간</TagTitle>
-        <TagInput>
-            <Tag select={difficulty === 'twenty_min' ? true : undefined} onClick={()=>tagClickHandle('difficulty','twenty_min')}>~20분</Tag>
-            <Tag select={difficulty === 'forty_min' ? true : undefined} onClick={()=>tagClickHandle('difficulty','forty_min')}>40분</Tag>
-            <Tag select={difficulty === 'sixty_min' ? true : undefined} onClick={()=>tagClickHandle('difficulty','sixty_min')}>60분</Tag>
-            <Tag select={difficulty === 'ninety_min' ? true : undefined} onClick={()=>tagClickHandle('difficulty','ninety_min')}>90분</Tag>
-            <Tag select={difficulty === 'two_hours' ? true : undefined} onClick={()=>tagClickHandle('difficulty','two_hours')}>120분~</Tag>
-        </TagInput>
-        </TagInputBox>
-        <TagInputBox>
-        <TagTitle>난이도</TagTitle>
-        <TagInput>
-            <Tag select={cookingTime === 'high' ? true : undefined} onClick={()=>tagClickHandle('cookingTime','high')}>상</Tag>
-            <Tag select={cookingTime === 'middle' ? true : undefined} onClick={()=>tagClickHandle('cookingTime','middle')}>중</Tag>
-            <Tag select={cookingTime === 'low' ? true : undefined} onClick={()=>tagClickHandle('cookingTime','low')}>하</Tag>
-        </TagInput>
-        </TagInputBox>
-    </TagContainer>
-    <BtnFlex>
-    <WriteRecipe onClick={submitHandle}>레시피 등록</WriteRecipe>
-    </BtnFlex>
-    </MainContainer>
-    {extensionModal && <Modal type='Badextension' func={modalOff} />}
-    {createModal && <Modal type='Create' />}
-</BodyContiner>
-}
+                    <Thumbnail>
+                        {thumbnail ?
+                            <img src={thumbnail} alt='thumbnail' onDrop={dropHandle} onDragOver={dragOverHandle} />
+                            :
+                            <div id='fileinput' onDrop={dropHandle} onDragOver={dragOverHandle}>
+                                <div>썸네일 이미지를 드래그 앤 드롭 해보세요.</div>
+                                <div>썸네일 이미지는 jpg/png 확장자만 지원합니다.</div>
+                            </div>}
+                        <ButtonContainer>
+                            <div>
+                                파일선택
+                                <input type='file' onChange={(e) => inputBtnhandle(e)} />
+                            </div>
+                            <CreateButton onClick={resetThumbnail} >
+                                초기화
+                            </CreateButton>
+                        </ButtonContainer>
+                    </Thumbnail>
 
-export default CreateRecipe
+                    <RecipeContainer>
+                        <input placeholder='레시피 이름을 입력해 주세요.' value={recipeContents.title} onChange={(e) => handleOnChange(e, 'title')} />
+                        <input placeholder='레시피 설명을 입력해 주세요.' value={recipeContents.description} onChange={(e) => handleOnChange(e, 'description')} />
+                        <div className='step-container'>
+                            <ul>
+                                {recipeContents.steps.map((step, idx) => (
+                                    <li key={idx}>
+                                        <textarea value={step.stepContent} onChange={(e) => handleStepChange(e, idx)} placeholder={`Step ${idx + 1}`} />
+                                    </li>
+                                ))}
+                            </ul>
+                            <div className='button-container'>
+                                <CreateButton onClick={addStep} size="small" boxColor="orange">추가</CreateButton>
+                                <CreateButton onClick={deleteStep} size="small">삭제</CreateButton>
+                            </div>
+                        </div>
+
+
+                        <IngredientContianer>
+                            <input 
+                                placeholder='필요한 재료를 입력해 주세요.' 
+                                value={ingredientsInput} 
+                                onChange={(e) => setIngredientsInput(e.target.value)} 
+                                onKeyUp={(e) => spaceHandle(e)} />
+                            <CurrentIngredients>
+                                {ingredients.length ?
+                                    <div>
+                                        <TagBoxContainer>
+                                            {ingredients.map((el, idx) => (
+                                                <Tag key={idx} onClick={() => deleteTag(el)}>{el}</Tag>
+                                            ))}
+                                        </TagBoxContainer>
+                                        <InformationMessage>
+                                            <div>재료를 클릭하여 제거할 수 있습니다.</div>
+                                            {duplicationErr && <div className='error'>동일한 재료는 입력할 수 없습니다.</div>}
+                                        </InformationMessage>
+                                    </div>
+                                    :
+                                    <InformationMessage>
+                                        <div>입력한 재료는 이곳에서 확인 가능합니다.</div>
+                                        <div>원하는 재료를 입력후 스페이스 바(Space bar)키 혹은 엔터(Enter)키를 눌러주세요</div>
+                                    </InformationMessage>
+                                }
+                            </CurrentIngredients>
+                        </IngredientContianer>
+
+                    </RecipeContainer>
+
+                    <TagContainer>
+                        <div>
+                            <h3>음식 종류</h3>
+                            <TagBoxContainer>
+                                {categories.categoryTag.map((category, idx) => (
+                                    <Tag
+                                        tags={[category]}
+                                        key={idx}
+                                        onClick={() => handleTagClick("category", category)}
+                                        selected={selectedTags.category === category}
+                                    >{category}</Tag>
+                                ))}
+                            </TagBoxContainer>
+                        </div>
+                        <div>
+                            <h3>조리 시간 (min)</h3>
+                            <TagBoxContainer>
+                                {categories.timeTag.map((category, idx) => (
+                                    <Tag
+                                        tags={[category]}
+                                        key={idx}
+                                        onClick={() => handleTagClick("time", category)}
+                                        selected={selectedTags.time === category}
+                                    >{category}</Tag>
+                                ))}
+                            </TagBoxContainer>
+                        </div>
+                        <div>
+                            <h3>난이도</h3>
+                            <TagBoxContainer>
+                                {categories.levelTag.map((category, idx) => (
+                                    <Tag
+                                        tags={[category]}
+                                        key={idx}
+                                        onClick={() => handleTagClick("level", category)}
+                                        selected={selectedTags.level === category}
+                                    >{category}</Tag>
+                                ))}
+                            </TagBoxContainer>
+                        </div>
+                    </TagContainer>
+                    <div className='button-container'>
+                        <CreateButton onClick={(e) => handleCreatePost(e)} disabled={!isSubmitEnabled} boxColor="orange" size="big">레시피 등록</CreateButton>
+                    </div>
+                </FormContainer>
+            </MainContainer>
+        </BodyContiner>
+    )
+
+}
