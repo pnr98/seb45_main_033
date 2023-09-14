@@ -1,152 +1,159 @@
 import { styled } from "styled-components";
 import { TagBox } from "../../components/Tag/Tag.styled";
+import { Button } from "../RecipeDetailPage/Comment.styled"
 
 export const BodyContiner = styled.div`
-width: 100%;
-height: 100%;
-display: flex;
-justify-content: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
 `
 export const MainContainer = styled.section`
-display: flex;
-flex-direction: column;
-gap:100px;
+  width: 50rem;
+  margin: 1.5rem 0rem;
+  h1{
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
 `
-
-export const TitleText = styled.h1`
-font-size: 48px;
-`
-
-export const TitleContainer = styled.div`
-display: flex;
+export const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
 `
 
 export const Thumbnail = styled.div`
-width: 1000px;
-height: 175px;
-background-color: aqua;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-`
+  width: 100%;
+  height: 175px;
+  border: 2px solid #DFDFDF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-export const ThumbnailImg = styled.img`
-width: 1000px;
-height: 175px;
+  img {
+    width: auto;
+    height: 100%;
+    margin: 10px;
+  }
 `
 
 export const ButtonContainer = styled.div`
-display: flex;
-align-items: center;
-`
-
-export const FileInputWrapper = styled.div`
-  position: relative;
   display: flex;
-  overflow: hidden;
-  justify-content: center;
-  input[type="file"] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
+  align-items: center;
+  div {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    width: 85px;
+    border: 1px solid black;
+    background-color: #A5B0BD;
+    height: 23px;
+      input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
   }
-  width: 85px;
-  border: 1px solid black;
-  background-color: #A5B0BD;
-  height: 23px;
+
+  button {
+    width: 85px;
+    border: 1px solid black;
+    background-color: #A5B0BD;
+  }
+`
+export const CreateButton = styled(Button)`
+  width: ${(props) => (props.size === "big" ? "30%" : "auto")};
 `
 
 
-export const ResetBth = styled.button`
-width: 85px;
-border: 1px solid black;
-background-color: #A5B0BD;
-`
+export const RecipeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
 
-export const RecipeTitle = styled.input`
+  input {
+    width: 100%;
+    border: 2px solid #DFDFDF;
+    padding: 10px;
+    resize: none;
+    outline: none;
+  }
 
-`
+  textarea {
+    width: 100%;
+    border: 2px solid #DFDFDF;
+    padding: 10px;
+    resize: none;
+    outline: none;
+  }
 
-export const FormContainer = styled.section`
-display: flex;
-flex-direction: column;
-justify-content: center;
-gap: 10px;
+  .step-container {
+    
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: flex-end; 
+    gap: 10px
+  }
 `
 
 export const IngredientContianer = styled.div`
->input{
-    width: 1000px;
-    height: 120px;
-}
-display: flex;
-flex-direction: column;
-gap : 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  >input{
+    
+  }
 `
-
-export const TagContainer = styled.section`
-display: flex;
-flex-direction: column;
-justify-content: center;
-gap:20px;
-`
-
-export const TagInputBox = styled.div`
-display: flex;
-flex-direction: column;
-gap:10px;
-`
-
-export const TagTitle = styled.div`
-
-`
-
-export const TagInput = styled.div`
-border: 1px solid black;
-display: flex;
-align-items: center;
-gap:10px;
-height: 36px;
-padding-left: 10px;
-`
-
-export const Tag = styled(TagBox)`
-margin: 0;
-cursor: pointer;
-background-color: ${(props)=>props.select ? '#e2990b':'#D5BA85'};
-`
-
-export const WriteRecipe = styled.button`
-background-color: #E2990B;
-width: 150px;
-height: 40px;
-color: white;
-border-radius: 8px;
-`
-
-export const BtnFlex = styled.div`
-display: flex;
-justify-content: center;
-`
-
 export const CurrentIngredients = styled.div`
-display: flex;
-gap: 10px;
-`
 
+`
 export const InformationMessage = styled.div`
-color : green;
+  gap:10px;
+  color: grey;
+  font-size: var(--font-size-14);
+  display: flex;
+  flex-direction: column;
+  .error {
+    color: red;
+  } 
 `
 
-export const ErrText = styled.div`
-color: red;
+export const TagContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap:20px;
+  margin-bottom: 59px;
+  h3 {
+    font-size: var(--font-size-20);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+`
+export const TagBoxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  height: 45px;
+  border: 2px solid #DFDFDF;
+  padding: 10px;
+  gap: 5px;
+`
+export const Tag = styled(TagBox)`
+  margin: 0;
+  cursor: pointer;
+  background-color: ${(props) => props.selected ? '#e2990b':'#D5BA85'};
+  &:hover{
+    background-color: #e2990b
+  }
 `
 
-export const TagFlex = styled.div`
-display: flex;
-gap: 3px;
-`
