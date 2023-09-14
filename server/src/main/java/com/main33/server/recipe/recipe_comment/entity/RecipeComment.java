@@ -3,6 +3,7 @@ package com.main33.server.recipe.recipe_comment.entity;
 
 import com.main33.server.member.entity.Member;
 import com.main33.server.recipe.recipe.entity.Recipe;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
