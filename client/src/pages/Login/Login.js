@@ -75,6 +75,10 @@ export default function Login() {
       console.log('보냄')
     }  //로그인 버튼 클릭시 요청 보내고 로그인 성공 응답일 경우 데이터를 받아서 스토어에 담음
   }
+
+  const enterHandle = (e) => {
+    if(e.key==='Enter') submitHandle()
+  }
   const guestLogin = () => {
     navi('/')
   }
@@ -96,7 +100,7 @@ export default function Login() {
 
     <div>
             <InputContainer>
-    <InputStyle value={pw} onChange={(e)=>onChange('pw',e)} type="password" placeholder="비밀번호를 입력해 주세요."></InputStyle>
+    <InputStyle value={pw} onChange={(e)=>onChange('pw',e)} onKeyUp={(e)=>enterHandle(e)} type="password" placeholder="비밀번호를 입력해 주세요."></InputStyle>
     </InputContainer>
     </div>
 
