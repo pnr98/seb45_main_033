@@ -9,8 +9,7 @@ import {
     IconLink,
     ButtonLink,
     HamburgerBar,
-    DropdownMenu,
-    MyPageLink
+    DropdownMenu
 } from "./Header.styled";
 import { checkLogin } from '../../checkLogin/checkLogin';
 
@@ -89,12 +88,12 @@ const Header = () => {
       <HamburgerBar onClick={Hamburger}>☰</HamburgerBar>
         <DropdownMenu show={showHamburger}>
           <IconLink to="/search" onClick={(e) => {scrollToTop(); closeDropdown();}} showHamburger={showHamburger}></IconLink>
-          <ButtonLink  onClick={handleRecipeCreation} showHamburger={showHamburger}>
+          <ButtonLink to={isLogin ? "/create-recipe" : undefined} onClick={handleRecipeCreation} showHamburger={showHamburger}>
             레시피 작성
           </ButtonLink>
           {isLogin ? (
             <>
-              <MyPageLink to="/my-page" onClick={closeDropdown} showHamburger={showHamburger}>마이페이지</MyPageLink>
+              <ButtonLink to="/my-page" onClick={closeDropdown} showHamburger={showHamburger}>마이페이지</ButtonLink>
               <ButtonLink to="/" onClick={handleLogout} showHamburger={showHamburger}>로그아웃</ButtonLink>
             </>
           ) : (

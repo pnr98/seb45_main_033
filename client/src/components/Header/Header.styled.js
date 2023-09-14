@@ -89,15 +89,3 @@ export const DropdownMenu = styled.div`
     background-color: #f1f1f1;
   }
 `;
-
-export const MyPageLink = styled.button`
-  margin-left: 50px;
-  text-decoration: none;
-  visibility: visible;
-
-  @media (max-width: 710px) {
-    visibility: visible;
-    margin-left: 0px;
-    border-top: 1px solid lightgray;
-  }
-`
