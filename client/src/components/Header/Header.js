@@ -9,7 +9,8 @@ import {
     IconLink,
     ButtonLink,
     HamburgerBar,
-    DropdownMenu
+    DropdownMenu,
+    MyPageLink
 } from "./Header.styled";
 import { checkLogin } from '../../checkLogin/checkLogin';
 
@@ -93,7 +94,7 @@ const Header = () => {
           </ButtonLink>
           {isLogin ? (
             <>
-              <ButtonLink to="/my-page" onClick={closeDropdown} showHamburger={showHamburger}>마이페이지</ButtonLink>
+              <MyPageLink to="/my-page" onClick={closeDropdown} showHamburger={showHamburger}>마이페이지</MyPageLink>
               <ButtonLink to="/" onClick={handleLogout} showHamburger={showHamburger}>로그아웃</ButtonLink>
             </>
           ) : (
