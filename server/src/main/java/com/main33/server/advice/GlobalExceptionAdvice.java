@@ -2,10 +2,13 @@ package com.main33.server.advice;
 
 import com.main33.server.response.BusinessLogicException;
 import com.main33.server.response.ErrorResponse;
+import com.main33.server.response.ExceptionCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -32,14 +35,12 @@ public class GlobalExceptionAdvice {
     public ErrorResponse handleConstraintViolationException(
             ConstraintViolationException e) {
         final ErrorResponse response = ErrorResponse.of(e.getConstraintViolations());
-
         return response;
     }
 
     @ExceptionHandler
     public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
         final ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
-
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode()
                 .getErrorStatus().getCode()));
     }
@@ -48,9 +49,7 @@ public class GlobalExceptionAdvice {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ErrorResponse handleHttpRequestMethodNotSupportedException(
             HttpRequestMethodNotSupportedException e) {
-
         final ErrorResponse response = ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED);
-
         return response;
     }
 
@@ -74,6 +73,18 @@ public class GlobalExceptionAdvice {
                 e.getMessage());
 
         return response;
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException e) {
+        final ErrorResponse response = ErrorResponse.of(ExceptionCode.UNAUTHORIZED_ACCESS);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(ExceptionCode.UNAUTHORIZED_ACCESS.getErrorStatus().getCode()));
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<?> handleBadCredentialsException(BadCredentialsException e) {
+        final ErrorResponse response = ErrorResponse.of(ExceptionCode.INCORRECT_PASSWORD);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(ExceptionCode.INCORRECT_PASSWORD.getErrorStatus().getCode()));
     }
 
     @ExceptionHandler

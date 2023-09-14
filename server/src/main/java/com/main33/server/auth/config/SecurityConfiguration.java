@@ -54,7 +54,8 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/auth/signup").permitAll() // TODO 레시피 등록 등 추가로 권한 설정 필요
+                        .antMatchers(HttpMethod.POST, "/auth/signup").permitAll()
+                        .antMatchers("/recipes/**").authenticated()
                         .anyRequest().permitAll()
                 );
         return http.build();
