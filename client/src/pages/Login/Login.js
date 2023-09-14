@@ -100,12 +100,6 @@ export default function Login() {
     </InputContainer>
     </div>
 
-    <AutoLoginContainer>
-    <input type="checkbox" checked={autoLogin} onClick={()=>setAutoLogin(!autoLogin)} />
-    <span> 로그인 상태 유지</span>
-    </AutoLoginContainer>
-
-
     {loginErr && <ErrText>이메일,비밀번호를 확인해 주세요.</ErrText>}
     <FormBottom>
     <SignBtnContainer>
