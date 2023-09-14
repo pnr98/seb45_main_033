@@ -46,7 +46,7 @@ export const IconLink = styled(Link)`
   }
 `;
 
-export const ButtonLink = styled(Link)`
+export const ButtonLink = styled.button`
   margin-left: 50px;
   text-decoration: none;
   visibility: visible;

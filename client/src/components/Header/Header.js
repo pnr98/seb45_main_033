@@ -88,7 +88,7 @@ const Header = () => {
       <HamburgerBar onClick={Hamburger}>☰</HamburgerBar>
         <DropdownMenu show={showHamburger}>
           <IconLink to="/search" onClick={(e) => {scrollToTop(); closeDropdown();}} showHamburger={showHamburger}></IconLink>
-          <ButtonLink to="/create-recipe" onClick={handleRecipeCreation} showHamburger={showHamburger}>
+          <ButtonLink  onClick={handleRecipeCreation} showHamburger={showHamburger}>
             레시피 작성
           </ButtonLink>
           {isLogin ? (
