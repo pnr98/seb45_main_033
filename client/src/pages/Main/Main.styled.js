@@ -13,6 +13,7 @@ export const MainContainer = styled.div`
     flex-direction: column;
     align-items: center;
     padding-top: 3rem;
+    margin-bottom: 100px;
     width: var(--main-width);
 `;
 
@@ -24,11 +25,13 @@ export const MyFrigeWrapper = styled.div`
     align-items: center;
     margin: 0 0 50px 0;
     width: 100%;
-    background-image: url('https://source.unsplash.com/random/?meal');
+    background-image: ${({ isLogin }) =>
+        isLogin ? 'none' : "url('https://source.unsplash.com/random/?meal')"};
+    background-color: ${({ isLogin }) => (isLogin ? '#D9D9D9' : 'none')};
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    z-index: -1;
+    z-index: 0;
 
 &::before {
     content: "";
@@ -38,18 +41,26 @@ export const MyFrigeWrapper = styled.div`
     width: 100%;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(3px);
-    z-index: -1;
+    backdrop-filter: blur(4px);
+    z-index: 0;
 }
 `;
 
-export const Title = styled.h1`
+export const WelcomeTitle1 = styled.h1`
     font-size: 2.7rem;
     font-weight: bold;
     color: white;
-    text-shadow: 0px 0px 50px rgba(0, 0, 0, 100);
+    text-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
     margin-bottom: 20px;
 `;
+
+export const WelcomeTitle2 = styled.p`
+    font-size: 1.3rem;
+    color: black;
+    text-shadow: 0px 0px 4px rgba(255, 255, 255, 1);
+`;
+
+
 
 export const MyFrige = styled.div`
     display: flex;
@@ -57,27 +68,35 @@ export const MyFrige = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 70px 0 50px 0;
+    padding: ${({ isLogin }) => (isLogin ? '20px 0 0 0' : '60px 0 50px 0')};
     font-size: 1.3rem;
     font-weight: bold;
     text-shadow: 0px 0px 50px rgba(255, 255, 255, 1);
-    /* background-image: url('https://source.unsplash.com/random/?meal');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center; */
+    z-index: 1;
 `;
 
-export const FoodCategoryBox = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 10px 0;
-    margin: 0 0 40px 0;
-    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.12);
+export const MyFrigeTitle = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  padding: 0 50px 30px 30px;
+
+  p {
+      font-size: 1rem;
+  }
 `;
 
-export const ButtonLink = styled.button`
+export const MyFrigeRecipes = styled.div`
+    width: 95%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+    gap: 1rem;
+`;
+
+export const Button = styled.button`
     padding: 10px 15px;
     background-color: #E2990B;
     border-radius: 5px;
@@ -90,30 +109,36 @@ export const ButtonLink = styled.button`
 
     &:hover {
       background-color: #DDAF55;
-      border: 2px solid #F1DAAD;
+      outline: 2px solid #F1DAAD;
     }
 `;
 
 export const FoodCategory = styled.button`
-    display: flex;
-    justify-content: space-between;
-    width: 100%; 
-    padding: 10px;
     border: none;
     outline: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    height: 70px;
+    margin: 0 0 40px 0;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.12);
 
     div {
+        display: flex;
         flex: 1;
+        align-items: center;
+        justify-content: center;
         text-align: center;
-        padding: 5px 10px;
+        height: 100%;
+        transition: background-image 0.5s; 
         
         &:hover {
-          background-color: #f5f5f5;
+          background-image: linear-gradient(#E0E0E0, #F7F7F7);
         }
         &:active {
-          background-color: #FFEBB7, #FFFFFF00;
+          background-image: linear-gradient(#FFEBB7, #FFFFFF00);
+          font-weight: bold;
         }
     }
 `;
@@ -124,28 +149,45 @@ export const LatestCategoryBox = styled.div`
     align-items: flex-end;
     margin-bottom: 70px;
     padding: 5px;
-    width: 100%
+    width: 100%;
 `;
 
-export const LatestCategory = styled.div`
+export const LatestCategory = styled.button`
     display: flex;
     justify-content: flex-end;
     padding: 5px;
 
     div {
-      margin: 0 20px;
-    }
-    &:active {
+      margin: 0 35px;
+
+      &:active {
       font-weight: bold;
+    }
     }
 `;
 
 export const RecipesContainer = styled.div`
     width: var(--main-width);
+    height: 1400px;
+    overflow-y: auto;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1.5rem;
-    margin-bottom: 100px;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent; 
+    }
+    &::-webkit-scrollbar-thumb {
+        background: transparent; 
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: transparent; 
+    }
+    scrollbar-width: none;  
+    -ms-overflow-style: none;   
 
     > div {
         display: flex;
@@ -158,15 +200,4 @@ export const RecipesContainer = styled.div`
     @media (max-width: 1400px) {
         grid-template-columns: repeat(3, 1fr);
     }
-
-    @media (max-width: 1024px) {
-        /**/
-    }
-`;
-
-export const PaginationContainer = styled.div`
-    margin: 80px 0 70px 0;
-    text-align: center;
-
-    border: 1px solid red;
 `;

@@ -13,41 +13,41 @@ import {
 } from "./Header.styled";
 
 const Header = () => {
-  //const [isLogin, setIsLogin] = useState(false);
-  const isLogin = useSelector(state => state.isLogin);
-  const dispatch = useDispatch();
+  const [isLogin, setIsLogin] = useState(false);
+  // const isLogin = useSelector(state => state.isLogin);
+  // const dispatch = useDispatch();
   const [showHamburger, setShowHamburger] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-//   useEffect(() => {
-//     const loginStatus = localStorage.getItem('isLogin') === 'true';
-//     setIsLogin(loginStatus);
-// }, [localStorage.getItem('isLogin')]);
+  useEffect(() => {
+    const loginStatus = localStorage.getItem('isLogin') === 'true';
+    setIsLogin(loginStatus);
+}, [localStorage.getItem('isLogin')]);
 
 
-  // const handleLogin = () => {
-  //   localStorage.setItem('isLogin', 'true');
-  //   setIsLogin(true);
-  //   closeDropdown();
-  // };
   const handleLogin = () => {
-    dispatch({ type: 'SET_LOGIN_STATUS', payload: true });
+    localStorage.setItem('isLogin', 'true');
+    setIsLogin(true);
     closeDropdown();
   };
-
-
-  // const handleLogout = () => {
-  //   localStorage.setItem('isLogin', 'false');
-  //   setIsLogin(false);
+  // const handleLogin = () => {
+  //   dispatch({ type: 'SET_LOGIN_STATUS', payload: true });
   //   closeDropdown();
-  //   navigate("/");
   // };
+
+
   const handleLogout = () => {
-    dispatch({ type: 'SET_LOGIN_STATUS', payload: false });
+    localStorage.setItem('isLogin', 'false');
+    setIsLogin(false);
     closeDropdown();
     navigate("/");
   };
+  // const handleLogout = () => {
+  //   dispatch({ type: 'SET_LOGIN_STATUS', payload: false });
+  //   closeDropdown();
+  //   navigate("/");
+  // };
 
 
   const handleRecipeCreation = () => {

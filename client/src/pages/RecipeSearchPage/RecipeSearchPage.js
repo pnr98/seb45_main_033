@@ -3,8 +3,6 @@ import dummy from '../../common/data/dummy';
 import { Container, RecipeSearchContainer, SearchWrapper, SearchIcon, SearchInput, Hr, RecipesContainer, PaginationContainer } from './RecipeSearchPage.styled';
 
 const RecipeSearchPage = () => {
-
-
   const recipesPerRow = 5;
   const numDisplayedRecipes = 
     dummy.length - (dummy.length % recipesPerRow);
