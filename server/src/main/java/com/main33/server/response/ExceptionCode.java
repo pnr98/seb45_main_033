@@ -21,7 +21,7 @@ public enum ExceptionCode {
 
     // 댓글 케이스
     INVALID_COMMENT_FORMAT(ErrorStatus.BAD_REQUEST, "댓글은 500자 이하여야 합니다."),
-
+    COMMENT_NOT_FOUND(ErrorStatus.NOT_FOUND, "댓글을 찾을 수 없습니다."),
     // 검색 케이스
 
     // 좋아요 케이스
