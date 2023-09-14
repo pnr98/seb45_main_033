@@ -1,6 +1,6 @@
 import Recipe from '../../components/Recipe/Recipe';
 import dummy from '../../common/data/dummy';
-import { Container, RecipeSearchContainer, SearchWrapper, SearchIcon, SearchInput, Hr, RecipesContainer, PaginationContainer } from './RecipeSearchPage.styled';
+import { Container, RecipeSearchContainer, SearchWrapper, SearchIcon, SearchInput, Hr, RecipesContainer, PaginationContainer } from './RecipeSearchPage.Styled';
 
 const RecipeSearchPage = () => {
 
