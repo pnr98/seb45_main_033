@@ -55,12 +55,12 @@ const MyPageModal = ({type,func}) => {
                     dispatch(setAccessToken(''))
                     dispatch(setLoginStatus(false))
                     sessionStorage.removeItem('Token')
-                    Cookies.remove('Token')
                     setDeleteComplete(true)
                 }
                }).catch((res)=>{
                 console.log('계정삭제 성공')
                 setDeleteComplete(true)
+                sessionStorage.removeItem('Token')
                })
         }else{
             setDeleteMessage(true)

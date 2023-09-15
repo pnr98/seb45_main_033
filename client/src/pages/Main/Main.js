@@ -32,7 +32,7 @@ const Main = () => {
               <>
               <MyFrigeTitle>
                 <div>김코딩님만을 위한 레시피</div>
-                <Link to='/Login'><p>+더보기</p></Link>
+                <Link to='/search'><p>+더보기</p></Link>
               </MyFrigeTitle>
               
               <MyFrigeRecipes>
@@ -45,7 +45,7 @@ const Main = () => {
               <>
                 <WelcomeTitle1>나만의 냉장고를 채워 보세요.</WelcomeTitle1>
                 <WelcomeTitle2>냉장고의 재료로 다양한 레시피를 경험해 보세요!</WelcomeTitle2>
-                <Link to='/Login'><Button>재료 넣기</Button></Link>
+                <Link to='/login'><Button>재료 넣기</Button></Link>
               </>
             )}
           </MyFrige>

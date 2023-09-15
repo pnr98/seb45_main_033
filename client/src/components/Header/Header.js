@@ -11,11 +11,18 @@ import {
     HamburgerBar,
     DropdownMenu
 } from "./Header.styled";
+import { checkLogin } from '../../checkLogin/checkLogin';
 
 const Header = () => {
+<<<<<<< HEAD
   const [isLogin, setIsLogin] = useState(false);
   // const isLogin = useSelector(state => state.isLogin);
   // const dispatch = useDispatch();
+=======
+  //const [isLogin, setIsLogin] = useState(false);
+  const [isLogin,setIsLogin] = useState(false)
+  const dispatch = useDispatch();
+>>>>>>> cca1dd5c8437c78c1931cd029ff11f9f489a2b8a
   const [showHamburger, setShowHamburger] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -38,8 +45,14 @@ const Header = () => {
 
 
   const handleLogout = () => {
+<<<<<<< HEAD
     localStorage.setItem('isLogin', 'false');
     setIsLogin(false);
+=======
+    dispatch({ type: 'SET_LOGIN_STATUS', payload: false });
+    sessionStorage.removeItem('Token')
+    setIsLogin(checkLogin())
+>>>>>>> cca1dd5c8437c78c1931cd029ff11f9f489a2b8a
     closeDropdown();
     navigate("/");
   };
@@ -74,14 +87,18 @@ const Header = () => {
       behavior: 'smooth'
     });
   };
+  
 
+  useEffect(()=>{
+  setIsLogin(checkLogin())
+  },[sessionStorage.getItem('Token')])
   return (
     <HeaderWrapper>
       <LogoLink to="/" onClick={scrollToTop}>로고</LogoLink>
       <HamburgerBar onClick={Hamburger}>☰</HamburgerBar>
         <DropdownMenu show={showHamburger}>
           <IconLink to="/search" onClick={(e) => {scrollToTop(); closeDropdown();}} showHamburger={showHamburger}></IconLink>
-          <ButtonLink to="/create-recipe" onClick={handleRecipeCreation} showHamburger={showHamburger}>
+          <ButtonLink to={isLogin ? "/create-recipe" : undefined} onClick={handleRecipeCreation} showHamburger={showHamburger}>
             레시피 작성
           </ButtonLink>
           {isLogin ? (

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
 import { IngredientContainer, LikeTagBox , LikeContainer,LikeInput , ButtonContainer,
      CancelBtn, WriteBtn, DisLikeContainer, DisLikeTagBox,DisLikeInput, AllergyContainer, AllergyTagBox, AllergyInput,
-    BtnLineContainer, ErrText,Box, FrigeTitle, FrigeContainer, RecipeTitle} from "./MyFrige.Styled"
-import { TagBox } from "../../components/Tag/Tag.styled"
+    BtnLineContainer, ErrText,Box, FrigeTitle, FrigeContainer, RecipeTitle, UpdateBtn, RightFlex, ResetBtn, Tag} from "./MyFrige.Styled"
 import axios from "axios"
 import HorizontalScroll from '../../components/HorizontalScroll/HorizontalScroll'
 const dummyData = {
@@ -132,23 +131,29 @@ const MyFrige = () => {
     const [allergyErr,setAllergyErr] = useState('')
     const [myRecipe,setMyRecipe] = useState([])
     const [likedRecipe,setLikedRecipe] = useState([])
-    useEffect(()=>{
-        const header = {
-            Headers : {
-                Authorization: `Bearer {access_token}`
-            }
+    
+    const gapRegex = /^\S+$/;
+
+    const axiosData = () => {
+      const header = {
+        Headers : {
+            Authorization: `Bearer {access_token}`
         }
-        axios.get(`/mypage/refrigerator/{user-id}`,'', header).then((res)=>{
-            setLike(res.data.preferredIngredients)
-            setDisLike(res.data.dislikedIngredients)
-            setAllergy(res.data.allergyIngredients)
-            setLikedRecipe(res.data.likedRecipes)
-            setMyRecipe(res.data.myRecipes)
-        }).catch((res)=>{
-            setLike(dummyData.preferredIngredients)
-            setDisLike(dummyData.dislikedIngredients)
-            setAllergy(dummyData.allergyIngredients)
-        })
+    }
+    axios.get(`/mypage/refrigerator/{user-id}`,'', header).then((res)=>{
+        setLike(res.data.preferredIngredients)
+        setDisLike(res.data.dislikedIngredients)
+        setAllergy(res.data.allergyIngredients)
+        setLikedRecipe(res.data.likedRecipes)
+        setMyRecipe(res.data.myRecipes)
+    }).catch((res)=>{
+        setLike(dummyData.preferredIngredients)
+        setDisLike(dummyData.dislikedIngredients)
+        setAllergy(dummyData.allergyIngredients)
+    })
+    }
+    useEffect(()=>{
+      axiosData()
     },[])
 
     const addHandle = (type,e) =>{
@@ -171,7 +176,7 @@ const MyFrige = () => {
         }
     }
     const pushText = (type) =>{
-        if(type === 'like' && !like.includes(addLike) && addLike.length <=5 && addLike.length){
+        if(type === 'like' && !like.includes(addLike) && addLike.length <=5 && addLike.length && gapRegex.test(addLike)){
             setLike([...like,addLike])
             setAddLike('')
             setLikeErr('')
@@ -180,10 +185,12 @@ const MyFrige = () => {
         }else if(addLike.length >5){
             setLikeErr('5글자 이하의 재료만 등록할 수 있습니다.')
         }else if(type === 'like' && addLike.length===0){
-            setLikeErr('공백은 등록할 수 없습니다.')
-        }
+            setLikeErr('재료를 입력해 주세요.')
+        }else if(type === 'like' && !gapRegex.test(addLike)){
+          setLikeErr('재료에 공백을 포함할 수 없습니다.')
+      }
         
-        if(type === 'dislike' && !disLike.includes(addDisLike) && addDisLike.length <=5 && addDisLike.length){
+        if(type === 'dislike' && !disLike.includes(addDisLike) && addDisLike.length <=5 && addDisLike.length && gapRegex.test(addDisLike)){
             setDisLike([...disLike,addDisLike])
             setAddDisLike('')
             setDisLikeErr('')
@@ -192,10 +199,12 @@ const MyFrige = () => {
         }else if(type === 'dislike' && addDisLike.length >5){
             setDisLikeErr('5글자 이하의 재료만 등록할 수 있습니다.')
         }else if(type === 'dislike' && !addDisLike.length){
-            setDisLikeErr('공백은 등록할 수 없습니다.')
+            setDisLikeErr('재료를 입력해 주세요.')
+        }else if(type === 'dislike' && !gapRegex.test(addDisLike)){
+            setDisLikeErr('재료에 공백을 포함할 수 없습니다.')
         }
         
-        if(type === 'allergy' && !allergy.includes(addAllergy) && addAllergy.length <=5 && addAllergy.length){
+        if(type === 'allergy' && !allergy.includes(addAllergy) && addAllergy.length <=5 && addAllergy.length && gapRegex.test(addAllergy)){
             setAllergy([...allergy,addAllergy])
             setAddAllergy('')
             setAllergyErr('')
@@ -204,19 +213,62 @@ const MyFrige = () => {
         }else if(type === 'allergy' && addAllergy.length >5){
             setAllergyErr('5글자 이하의 재료만 등록할 수 있습니다.')
         }else if(type === 'allergy' && !addAllergy.length){
-            setAllergyErr('공백은 등록할 수 없습니다.')
-        }
-        
+            setAllergyErr('재료를 입력해 주세요.')
+        }else if(type === 'allergy' && !gapRegex.test(addAllergy)){
+          setAllergyErr('재료에 공백을 포함할 수 없습니다.')
+      }
     }
+    const enterHandle = (e,type) =>{
+     if(e.key === 'Enter'){
+      pushText(type)
+     }
+    }
+
+    const tagDelete = (type,tag) => {
+      if(type === 'like'){
+        const newArr = like.filter((el)=>{
+          return el !== tag
+        })
+        setLike(newArr)
+      }
+      if(type === 'dislike'){
+        const newArr = disLike.filter((el)=> el !== tag)
+        setDisLike(newArr)
+      }
+      if(type === 'allergy'){
+        const newArr = allergy.filter(el => el !== tag)
+        setAllergy(newArr)
+      }
+    }
+    const submitHandle = () =>{
+      const header = {
+        Headers:{
+          Authorization: `Bearer {Token}`
+        }
+      }
+      const data = {
+        "preferredIngredients": like,
+        "dislikedIngredients": disLike,
+        "allergyIngredients": allergy
+      }
+      axios.patch(`/mypage/refrigerator/{member-id}`,data,header).then((res)=>{
+        if(res.status === 200){
+          axiosData()
+        }
+      })
+  }
+  const resetHandle = () => {
+    axiosData()
+  }
     return <FrigeContainer>
         <FrigeTitle>나만의 냉장고</FrigeTitle>
     <IngredientContainer>
         <LikeContainer>
         <div>선호하는 재료</div>
         <LikeTagBox>
-            {like && like.map((el,index)=>{return <TagBox key={index}>{el}</TagBox>})}
+            {like && like.map((el,index)=>{return <Tag key={index} onClick={()=>tagDelete('like',el)}>{el}</Tag>})}
         </LikeTagBox>
-        <LikeInput value={addLike} onChange={(e)=> addHandle('like',e)} placeholder="재료를 입력해주세요."/>
+        <LikeInput value={addLike} onChange={(e)=> addHandle('like',e)} placeholder="재료를 입력해주세요." onKeyUp={(e)=>(enterHandle(e,'like'))} />
         <BtnLineContainer>
             {likeErr ? <ErrText>{likeErr}</ErrText>: <span>{' '}</span>}
         <ButtonContainer>
@@ -228,9 +280,9 @@ const MyFrige = () => {
         <DisLikeContainer>
         <div>싫어하는 재료</div>
         <DisLikeTagBox>
-        {disLike && disLike.map((el,index)=>{return <TagBox key={index}>{el}</TagBox>})}
+        {disLike && disLike.map((el,index)=>{return <Tag key={index} onClick={()=>tagDelete('dislike',el)}>{el}</Tag>})}
         </DisLikeTagBox>
-        <DisLikeInput value={addDisLike} onChange={(e)=> addHandle('dislike',e)} placeholder="재료를 입력해주세요."/>
+        <DisLikeInput value={addDisLike} onChange={(e)=> addHandle('dislike',e)} placeholder="재료를 입력해주세요." onKeyUp={(e)=>(enterHandle(e,'dislike'))} />
         <BtnLineContainer>
         {disLikeErr ? <ErrText>{disLikeErr}</ErrText> : <span>{' '}</span>}
         <ButtonContainer>
@@ -242,9 +294,9 @@ const MyFrige = () => {
         <AllergyContainer>
         <div>알레르기 재료</div>
         <AllergyTagBox>
-            {allergy && allergy.map((el,index)=>{return <TagBox key={index}>{el}</TagBox>})}
+            {allergy && allergy.map((el,index)=>{return <Tag key={index} onClick={()=>tagDelete('allergy',el)}>{el}</Tag>})}
         </AllergyTagBox>
-        <AllergyInput value={addAllergy} onChange={(e)=>addHandle('allergy',e)} placeholder="재료를 입력해주세요." />
+        <AllergyInput value={addAllergy} onChange={(e)=>addHandle('allergy',e)} placeholder="재료를 입력해주세요." onKeyUp={(e)=>(enterHandle(e,'allergy'))} />
         <BtnLineContainer>
         {allergyErr ? <ErrText>{allergyErr}</ErrText> : <span>{' '}</span>}
         <ButtonContainer>
@@ -253,6 +305,10 @@ const MyFrige = () => {
         </ButtonContainer>
         </BtnLineContainer>
         </AllergyContainer>
+        <RightFlex>
+        <ResetBtn onClick={resetHandle}>초기화</ResetBtn>
+        <UpdateBtn onClick={submitHandle}>수정 완료</UpdateBtn>
+        </RightFlex>
     </IngredientContainer>
     <RecipeTitle>내가 좋아하는 레시피</RecipeTitle>
     <Box>
