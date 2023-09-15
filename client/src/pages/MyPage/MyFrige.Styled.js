@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { TagBox } from '../../components/Tag/Tag.styled';
 
 export const IngredientContainer = styled.div`
 width: 47.3vw;
@@ -97,4 +98,22 @@ font-size: 24px;
 
 export const RecipeTitle = styled.h1`
 font-size: 20px;
+`
+
+export const UpdateBtn = styled(WriteBtn)`
+width: fit-content;
+`
+
+export const RightFlex = styled.div`
+display: flex;
+justify-content: end;
+gap : 15px;
+`
+
+export const ResetBtn = styled(CancelBtn)`
+width: fit-content;
+`
+
+export const Tag = styled(TagBox)`
+cursor: pointer;
 `
