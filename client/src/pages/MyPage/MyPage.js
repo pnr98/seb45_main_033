@@ -6,8 +6,8 @@ import UserInfo from "./UserInfo";
 import { MypageContainer,TapContainer,Tap } from "./MyPage.Styled";
 import { useDispatch } from "react-redux";
 import { setAccessToken, setLoginStatus } from "../../redux/action/action";
-import Cookies from "js-cookie";
 import MyPageModal from "../../components/Modal/MypageModal";
+import { checkLogin } from "../../checkLogin/checkLogin";
 const dummyData = {
   "profileImageUrl": "https://i.ibb.co/hHYvKbq/image.jpg",
   "email": "example@gmail.com",
@@ -17,17 +17,18 @@ export default function MyPage() {
   const [currentTap,setCurrentTap] = useState('냉장고')
   const [logoutModal,setLogoutModal] = useState(false)
   const [withdrawalModal,setWithdrawalModal] = useState(false)
+  const isLogin = checkLogin()
   const navi = useNavigate()
+
+  useEffect(()=>{
+    if(!isLogin){
+      navi('/')
+    }
+  },[])
+  
   const dispatch = useDispatch()
   const TapEvent = (type) =>{
     setCurrentTap(type)
-  }
-  const logOutHandle = () =>{
-    dispatch(setAccessToken(''))
-    dispatch(setLoginStatus(false))
-    sessionStorage.removeItem('Token')
-    Cookies.remove('Token')
-    useNavigate('/')
   }
   const logoutModalOff = () => {
     setLogoutModal(false)

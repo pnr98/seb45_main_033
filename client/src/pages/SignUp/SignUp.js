@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ErrText,
   SuccecsText,
@@ -14,6 +14,8 @@ import {
 } from './SignUp.Styled'
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { checkLogin } from '../../checkLogin/checkLogin';
 const SignUp = () => {
   const [name, setName] = useState('');
   const [nameText, setNameText] = useState('');
@@ -35,6 +37,15 @@ const SignUp = () => {
   const passwordRegex =
     /^(?=.*[A-Za-z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z@$!%*?&\d]{7,20}$/i;
   const navi = useNavigate()
+
+  useEffect(()=>{
+    const isLogin = checkLogin()
+    if(isLogin){
+     navi('/')
+     return
+    }
+   },[])
+
   const onChange = (type, e) => {
     if (type === 'name') {
       setName(e.target.value);
