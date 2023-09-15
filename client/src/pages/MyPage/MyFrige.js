@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { IngredientContainer, LikeTagBox , LikeContainer,LikeInput , ButtonContainer,
      CancelBtn, WriteBtn, DisLikeContainer, DisLikeTagBox,DisLikeInput, AllergyContainer, AllergyTagBox, AllergyInput,
-    BtnLineContainer, ErrText,Box, FrigeTitle, FrigeContainer, RecipeTitle, UpdateBtn, RightFlex, ResetBtn, Tag} from "./MyFrige.Styled"
+    BtnLineContainer, ErrText,Box, FrigeTitle, FrigeContainer, RecipeTitle, UpdateBtn, RightFlex, ResetBtn, Tag, HelpText} from "./MyFrige.Styled"
 import axios from "axios"
 import HorizontalScroll from '../../components/HorizontalScroll/HorizontalScroll'
 const dummyData = {
@@ -262,6 +262,7 @@ const MyFrige = () => {
   }
     return <FrigeContainer>
         <FrigeTitle>나만의 냉장고</FrigeTitle>
+        <HelpText>재료 클릭시 냉장고에서 해당 재료가 삭제됩니다.</HelpText>
     <IngredientContainer>
         <LikeContainer>
         <div>선호하는 재료</div>

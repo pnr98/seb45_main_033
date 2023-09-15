@@ -3,6 +3,7 @@ import { BodyContainer,InfoTextBox, ImageBox, Image, Text, ImageTextBox,
   ChangeImage, NickNameBox, NickNameText, ChangeBtn, EmailBox , EmailText, PassWordBox, PassWordText, PwErrText} from "./UserInfo.Styled";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { RightFlex, UpdateBtn } from "./MyFrige.Styled";
 
 const dummyData = {
   "profileImageUrl": "https://i.ibb.co/hHYvKbq/image.jpg",
@@ -46,6 +47,8 @@ export default function UserInfo() {
   },[])
   const imageChange = (e) =>{
     setSelectImage(e.target.files[0])
+    const imageUrl = URL.createObjectURL(e.target.files[0])
+    setUserImage(imageUrl)
     console.log(e.target.files)
   }
   const nameHandle = (e) =>{
@@ -146,7 +149,9 @@ export default function UserInfo() {
         {pwChange && <ChangeBtn onClick={()=>setShowPassword(!showPassword)}>{showPassword ? '숨기기' :'보기'}</ChangeBtn>}
         {pwChange && <ChangeBtn onClick={cancelChange}>초기화</ChangeBtn>}        
       </PassWordBox>
-      <button onClick={submitHandle}>수정완료</button>
+      <RightFlex>
+      <UpdateBtn onClick={submitHandle}>수정완료</UpdateBtn>
+      </RightFlex>
       {changeErr && <PwErrText>모든 수정을 완료해 주세요.</PwErrText>}
       {pwErr && <PwErrText>비밀번호는 7글자이상 20글자 이하이며 영문자,숫자,특수문자가 각각
                 1개이상 포함되어야 합니다.</PwErrText>}
