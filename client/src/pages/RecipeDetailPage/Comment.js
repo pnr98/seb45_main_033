@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { Container, InputContainer, EditContainer, Button } from "./Comment.styled";
 import Modal from '../../components/Modal/Modal'
+import { checkLogin } from "../../checkLogin/checkLogin";
 
 export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     const comment = {
@@ -32,7 +33,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     const [ editingComment, setEditingComment] = useState("")
 
     const [showModal, setShowModal] = useState(false);
-    const isLogin = useSelector((state) => state.isLogin)
+    const isLogin = checkLogin()
     
     const AccessToken = 'a'
 
@@ -68,7 +69,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
             });
             if (response.status === 200) {
                 const newComment = response.data
-                setComments([...comments, newComment])
+                setComments((prevComments) => [...prevComments, newComment]);
                 setCommentBody("");
             } 
         } catch (error) {
@@ -78,12 +79,13 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
                 commentId: comments.length + 1,
                 commentBody: commentBody,
                 timestamp: "2023-08-16T15:49:20.753395",
-                memberId: 3,
+                memberId: 1,
                 userName: "홍길동3",
             }];
-            setComments([...comments, newComment])
-            setCommentBody("");
+            console.log(comments)
             console.log(newComment)
+            setComments((prevComments) => [...prevComments, newComment]);
+            setCommentBody("");
         }
     }
 
@@ -148,6 +150,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     }
     // 로그인 요청 모달
     const handleModal = () => {
+        //
         if (isLogin) {
             setShowModal(true)
         }
