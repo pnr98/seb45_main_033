@@ -41,7 +41,10 @@ const Modal = ({type,func, recipe_id}) => {
       navi('/login')
       func();
     }
-    if(type==='Create' || type==='Welcome'){
+    if(type==='Create'){
+      navi(`/recipe/${recipe_id}`)
+    }
+    if(type==='Welcome'){
       navi('/')
     }
     if(type==='Update'){
