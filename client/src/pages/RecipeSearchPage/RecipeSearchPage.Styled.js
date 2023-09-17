@@ -77,6 +77,4 @@ export const RecipesContainer = styled.div`
 export const PaginationContainer = styled.div`
     margin: 80px 0 70px 0;
     text-align: center;
-
-    border: 1px solid red;
 `;

@@ -1,16 +1,23 @@
+import React from 'react';
 import Recipe from '../../components/Recipe/Recipe';
 import dummy from '../../common/data/dummy';
+import Pagination from '../../components/Pagination/Pagination';
 import { Container, RecipeSearchContainer, SearchWrapper, SearchIcon, SearchInput, Hr, RecipesContainer, PaginationContainer } from './RecipeSearchPage.Styled';
 
 const RecipeSearchPage = () => {
-
-
   const recipesPerRow = 5;
-  const numDisplayedRecipes = 
-    dummy.length - (dummy.length % recipesPerRow);
-
-  const dummyRecipes = 
-    dummy.slice(0, numDisplayedRecipes);
+  
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const recipesPerPage = 5 * recipesPerRow;
+  const totalPages = Math.ceil(dummy.length / recipesPerPage);
+  
+  const handlePageChange = (page) => {
+      setCurrentPage(page);
+  };
+  
+  const startIndex = (currentPage - 1) * recipesPerPage;
+  const endIndex = startIndex + recipesPerPage;
+  const displayedRecipes = dummy.slice(startIndex, endIndex);
 
   return (
     <Container>
@@ -21,11 +28,18 @@ const RecipeSearchPage = () => {
         </SearchWrapper>
         <Hr />
         <RecipesContainer>
-          {dummyRecipes.flatMap((recipeData, recipeIdx) => (
+          {displayedRecipes.flatMap((recipeData, recipeIdx) => (
             <Recipe key={recipeIdx} info={recipeData} />
           ))}
         </RecipesContainer>
-        <PaginationContainer>페이지네이션 컴포넌트 자리</PaginationContainer>
+        <PaginationContainer>
+          <Pagination 
+              totalRecipes={dummy.length}
+              recipesPerPage={recipesPerPage}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+          />
+        </PaginationContainer>
       </RecipeSearchContainer>
     </Container>
   );

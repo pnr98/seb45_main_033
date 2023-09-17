@@ -11,10 +11,27 @@ import {
   GithubIcon, 
   Copyright 
 } from './Footer.styled';
+import { useRef, useEffect } from 'react';
+
+export function useFooterHeight() {
+  const footerRef = useRef(null);
+  
+  useEffect(() => {
+      if (footerRef.current) {
+          const footerHeight = footerRef.current.offsetHeight;
+          document.documentElement.style.setProperty('--footer-height', `${footerHeight}px`);
+      }
+  }, []);
+  
+  return footerRef;
+}
 
 const Footer = () => {
+  const footerRef = useFooterHeight();
+
   return (
-    <FooterWrapper>
+    <>
+    <FooterWrapper ref={footerRef}>
       <BannerLink>
         <BannerFont>자신만의 레시피를 공유해주세요!</BannerFont>
         <BannerImg />
@@ -52,6 +69,7 @@ const Footer = () => {
       </FooterSection>
       <Copyright>Copyright  2023  33양호 Inc. All Rights Reserved   E-mail: codestates@gmail.com</Copyright>
     </FooterWrapper>
+    </>
   );
 };
 

@@ -20,13 +20,10 @@ const Header = () => {
   const [showHamburger, setShowHamburger] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-
 //   useEffect(() => {
 //     const loginStatus = localStorage.getItem('isLogin') === 'true';
 //     setIsLogin(loginStatus);
 // }, [localStorage.getItem('isLogin')]);
-
-
   // const handleLogin = () => {
   //   localStorage.setItem('isLogin', 'true');
   //   setIsLogin(true);
@@ -36,8 +33,6 @@ const Header = () => {
     dispatch({ type: 'SET_LOGIN_STATUS', payload: true });
     closeDropdown();
   };
-
-
   // const handleLogout = () => {
   //   localStorage.setItem('isLogin', 'false');
   //   setIsLogin(false);
@@ -51,8 +46,6 @@ const Header = () => {
     closeDropdown();
     navigate("/");
   };
-
-
   const handleRecipeCreation = () => {
     if (!isLogin) {
       setShowModal(true);
@@ -61,23 +54,20 @@ const Header = () => {
     }
     closeDropdown();
   };
-
   
   const Hamburger = () => {
     setShowHamburger(!showHamburger);
   };
-
   const closeDropdown = () => {
     setShowHamburger(false);
   };
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
   };
-  
+
 
   useEffect(()=>{
   setIsLogin(checkLogin())
@@ -104,5 +94,4 @@ const Header = () => {
     </HeaderWrapper>
   );
 }
-
 export default Header;

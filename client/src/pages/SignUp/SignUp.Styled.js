@@ -32,9 +32,10 @@ export const Title = styled.div`
 `
 
 export const InputContainer = styled.section`
- display: flex;
- justify-content: center;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const ErrText = styled.div`
   color: red;
@@ -65,11 +66,21 @@ export const TextInput = styled.div`
   gap:10px;
 `
 
-export const InputStyle = styled.input`
- width: 350px;
- height: 50px;
- padding: 0 10px;
-`
+export const InputStyle = styled.div`
+  width: 350px;
+  height: 50px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+
+  input {
+    flex: 1;
+    border: none;
+    outline: none;
+  }
+`;
 
 export const SignBtn = styled.button`
 width: 350px;
@@ -101,15 +112,32 @@ margin-left: 380px;
 `
 
 export const Postionbtn = styled.button`
-margin-top: 15px;
-margin-left: 500px;
-position: absolute;
-`
+  background-color: #D8D8D8;
+  color: gray;
+  border: none;
+  border-radius: 10px;
+  height: 70%;
+  padding: 0 10px;
+  cursor: pointer;
+  font-size: smaller;
+
+  &:hover {
+    background-color: #BCBCBC;
+    color: white;
+  }
+  &:active {
+    background-color: #BCBCBC;
+    outline: 2px solid #D8D8D8;
+  }
+`;
 
 export const SignLink = styled.div`
 display: flex;
 justify-content: center;
 gap: 10px;
+  a {
+      color: #0075FF;
+    }
 `
 
 export const FormTop = styled.section`
