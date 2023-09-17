@@ -10,7 +10,7 @@ export const BodyContiner = styled.div`
 `
 export const MainContainer = styled.section`
   width: 50rem;
-  margin: 1.5rem 0rem;
+  margin: 1.5rem 0rem 2.5rem 0rem;
   h1{
     font-size: 48px;
     margin-bottom: 10px;
@@ -21,36 +21,44 @@ export const FormContainer = styled.form`
   flex-direction: column;
   justify-content: center;
   gap: 20px;
+  .button-container {
+    margin-top: 6px;
+    display: flex;
+    justify-content: flex-end; 
+    gap: 10px
+  }
+  >.button-container {
+    justify-content: center; 
+  }
 `
 
 export const Thumbnail = styled.div`
-  width: 100%;
-  height: 175px;
-  border: 2px solid #DFDFDF;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    width: auto;
-    height: 100%;
-    margin: 10px;
+  > div:first-child {
+    width: 100%;
+    height: 300px;
+    border: 2px solid #DFDFDF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: auto;
+      height: 100%;
+      margin: 10px;
+    }
   }
 `
 
 export const ButtonContainer = styled.div`
   display: flex;
-  align-items: center;
-  div {
+  justify-content: flex-end; 
+  gap: 10px;
+  margin-top: 10px;
+  button:first-child {
     position: relative;
-    display: flex;
     overflow: hidden;
-    justify-content: center;
-    width: 85px;
-    border: 1px solid black;
-    background-color: #A5B0BD;
-    height: 23px;
+    background-color: #E2990B;
+    
       input[type="file"] {
       position: absolute;
       top: 0;
@@ -58,25 +66,19 @@ export const ButtonContainer = styled.div`
       width: 100%;
       height: 100%;
       opacity: 0;
+      cursor: pointer;
     }
-  }
-
-  button {
-    width: 85px;
-    border: 1px solid black;
-    background-color: #A5B0BD;
   }
 `
 export const CreateButton = styled(Button)`
   width: ${(props) => (props.size === "big" ? "30%" : "auto")};
 `
 
-
 export const RecipeContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
 
   input {
     width: 100%;
@@ -85,7 +87,6 @@ export const RecipeContainer = styled.div`
     resize: none;
     outline: none;
   }
-
   textarea {
     width: 100%;
     border: 2px solid #DFDFDF;
@@ -93,22 +94,16 @@ export const RecipeContainer = styled.div`
     resize: none;
     outline: none;
   }
-
   .step-container {
     
   }
-  
-  .button-container {
-    display: flex;
-    justify-content: flex-end; 
-    gap: 10px
-  }
+
 `
 
 export const IngredientContianer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 
   >input{
     
@@ -118,7 +113,7 @@ export const CurrentIngredients = styled.div`
 
 `
 export const InformationMessage = styled.div`
-  gap:10px;
+  gap:5px;
   color: grey;
   font-size: var(--font-size-14);
   display: flex;
@@ -133,7 +128,7 @@ export const TagContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   gap:20px;
-  margin-bottom: 59px;
+  margin-bottom: 40px;
   h3 {
     font-size: var(--font-size-20);
     font-weight: 700;
