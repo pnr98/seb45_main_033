@@ -1,23 +1,31 @@
 import { styled } from 'styled-components';
+import upBtnIcon1 from '../../common/image/upBtn1.svg';
+import upBtnIcon2 from '../../common/image/upBtn2.svg';
 
-export const ScrollButton = styled.button`
+export const Button = styled.button`
     position: fixed;
-    right: 20px;
-    bottom: 60px;
+    bottom: calc(var(--footer-height) + 10px);
+    right: 2%;
     width: 50px;
     height: 50px;
-    background-color: #555;
-    color: #fff;
+    background-image: url(${upBtnIcon1});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 24px;
-    background-image: url('../../../common/image/upBtn.svg');
-    background-size: cover;
     z-index: 1000;
-    opacity: 0.7;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.9s;
 
     &:hover {
-        opacity: 1;
+      background-image: url(${upBtnIcon2});
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
     }
 `;

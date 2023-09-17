@@ -26,8 +26,8 @@ export const MyFrigeWrapper = styled.div`
     margin: 0 0 50px 0;
     width: 100%;
     background-image: ${({ isLogin }) =>
-        isLogin ? 'none' : "url('https://source.unsplash.com/random/?meal')"};
-    background-color: ${({ isLogin }) => (isLogin ? '#D9D9D9' : 'none')};
+        isLogin ? "url('https://source.unsplash.com/random/?meal')" : 'none'};
+    background-color: ${({ isLogin }) => (isLogin ? 'none' : '#D9D9D9')};
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

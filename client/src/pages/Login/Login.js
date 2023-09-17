@@ -116,8 +116,8 @@ export default function Login() {
       <Link to='/sign-up'>가입하기</Link>
     </SignLink>
     </FormBottom>
+
     </FormContainer>
     </BodyContainer>
   )
 }
-

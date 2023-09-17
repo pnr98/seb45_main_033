@@ -12,6 +12,7 @@ import RecipeSearchPage from './pages/RecipeSearchPage/RecipeSearchPage';
 import CreateRecipe from './pages/CreateRecipe/CreateRecipe';
 import { useDispatch } from 'react-redux';
 import { setLoginStatus } from './redux/action/action';
+import UpBtn from './components/UpBtn/UpBtn';
 function App() {
   const location = useLocation();
   const dispatch = useDispatch()
@@ -37,6 +38,7 @@ function App() {
         <Route path="/search" element={<RecipeSearchPage />} />
         <Route path="/create-recipe" element={<CreateRecipe />} />
       </Routes>
+      <UpBtn />
       <Footer />
     </AppContainer>
   );

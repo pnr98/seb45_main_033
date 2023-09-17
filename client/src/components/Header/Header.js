@@ -14,55 +14,38 @@ import {
 import { checkLogin } from '../../checkLogin/checkLogin';
 
 const Header = () => {
-<<<<<<< HEAD
-  const [isLogin, setIsLogin] = useState(false);
-  // const isLogin = useSelector(state => state.isLogin);
-  // const dispatch = useDispatch();
-=======
   //const [isLogin, setIsLogin] = useState(false);
   const [isLogin,setIsLogin] = useState(false)
   const dispatch = useDispatch();
->>>>>>> cca1dd5c8437c78c1931cd029ff11f9f489a2b8a
   const [showHamburger, setShowHamburger] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const loginStatus = localStorage.getItem('isLogin') === 'true';
-    setIsLogin(loginStatus);
-}, [localStorage.getItem('isLogin')]);
-
-
-  const handleLogin = () => {
-    localStorage.setItem('isLogin', 'true');
-    setIsLogin(true);
-    closeDropdown();
-  };
+//   useEffect(() => {
+//     const loginStatus = localStorage.getItem('isLogin') === 'true';
+//     setIsLogin(loginStatus);
+// }, [localStorage.getItem('isLogin')]);
   // const handleLogin = () => {
-  //   dispatch({ type: 'SET_LOGIN_STATUS', payload: true });
+  //   localStorage.setItem('isLogin', 'true');
+  //   setIsLogin(true);
   //   closeDropdown();
   // };
-
-
-  const handleLogout = () => {
-<<<<<<< HEAD
-    localStorage.setItem('isLogin', 'false');
-    setIsLogin(false);
-=======
-    dispatch({ type: 'SET_LOGIN_STATUS', payload: false });
-    sessionStorage.removeItem('Token')
-    setIsLogin(checkLogin())
->>>>>>> cca1dd5c8437c78c1931cd029ff11f9f489a2b8a
+  const handleLogin = () => {
+    dispatch({ type: 'SET_LOGIN_STATUS', payload: true });
     closeDropdown();
-    navigate("/");
   };
   // const handleLogout = () => {
-  //   dispatch({ type: 'SET_LOGIN_STATUS', payload: false });
+  //   localStorage.setItem('isLogin', 'false');
+  //   setIsLogin(false);
   //   closeDropdown();
   //   navigate("/");
   // };
-
-
+  const handleLogout = () => {
+    dispatch({ type: 'SET_LOGIN_STATUS', payload: false });
+    sessionStorage.removeItem('Token')
+    setIsLogin(checkLogin())
+    closeDropdown();
+    navigate("/");
+  };
   const handleRecipeCreation = () => {
     if (!isLogin) {
       setShowModal(true);
@@ -71,23 +54,20 @@ const Header = () => {
     }
     closeDropdown();
   };
-
   
   const Hamburger = () => {
     setShowHamburger(!showHamburger);
   };
-
   const closeDropdown = () => {
     setShowHamburger(false);
   };
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
   };
-  
+
 
   useEffect(()=>{
   setIsLogin(checkLogin())
@@ -114,5 +94,4 @@ const Header = () => {
     </HeaderWrapper>
   );
 }
-
 export default Header;
