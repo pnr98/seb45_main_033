@@ -10,10 +10,15 @@ const Main = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [loadedRecipesCount, setLoadedRecipesCount] = useState(25);
   
-  useEffect(() => {
-    const loginStatus = localStorage.getItem('isLogin') === 'true';
-    setIsLogin(loginStatus);
-  }, []);
+  // useEffect(() => {
+  //   const loginStatus = localStorage.getItem('isLogin') === 'true';
+  //   setIsLogin(loginStatus);
+  // }, []);
+
+      useEffect(() => {
+        const loginStatus = sessionStorage.getItem('Token') !== null;
+        setIsLogin(loginStatus);
+    }, []);
 
   const loadMoreRecipes = () => {
     if (loadedRecipesCount < dummy.length) {
@@ -28,12 +33,12 @@ const Main = () => {
       <MainContainer>
         <MyFrigeWrapper isLogin={isLogin}>
           <MyFrige>
-            {isLogin ? (
+            {!isLogin ? (
               <>
               <WelcomeTitle1>나만의 냉장고를 채워 보세요.</WelcomeTitle1>
               <WelcomeTitle2>냉장고의 재료로 다양한 레시피를 경험해 보세요!</WelcomeTitle2>
               <Link to='/login'><Button>재료 넣기</Button></Link>
-            </>
+              </>            
             ) : (
               <>
               <MyFrigeTitle>
@@ -46,7 +51,7 @@ const Main = () => {
                 <Recipe key={recipeIdx} info={recipeData} />
               ))}
             </MyFrigeRecipes>
-            </>              
+            </>                          
             )}
           </MyFrige>
         </MyFrigeWrapper>
