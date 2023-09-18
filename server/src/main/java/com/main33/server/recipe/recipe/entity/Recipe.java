@@ -5,6 +5,7 @@ import com.main33.server.member.entity.Member;
 import com.main33.server.recipe.recipe.domain.Difficulty;
 import com.main33.server.recipe.recipe.domain.FoodType;
 import com.main33.server.recipe.recipe_comment.entity.RecipeComment;
+import com.main33.server.recipe.recipe_like.entity.RecipeLike;
 import com.main33.server.recipe.recipe_step.entity.RecipeStep;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -55,8 +56,14 @@ public class Recipe {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipe")
     private List<RecipeStep> recipeStep = new ArrayList<>();
 
-    @ElementCollection
-    private List<String> ingredients;
+    @OneToMany(mappedBy = "recipe")
+    private List<RecipeComment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "recipe")
+    private List<RecipeLike> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "recipe")
+    private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
 
     @Column(nullable = false, columnDefinition = "bigint default 0")
     private Long viewCount = 0L;
@@ -66,9 +73,6 @@ public class Recipe {
 
     @Column(nullable = false, columnDefinition = "bigint default 0")
     private Long commentCount = 0L;
-
-    @OneToMany(mappedBy = "recipe")
-    private List<RecipeComment> comments = new ArrayList<>();
 
     @CreationTimestamp
     private Timestamp createdAt;
