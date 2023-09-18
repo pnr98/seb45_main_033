@@ -23,7 +23,7 @@ export default function LikeButton({recipeId, likes, onLikeChange}) {
         }
         
         if (isLiked) { // 이미 좋아요를 누른 경우 DELETE
-            axios.delete(`/recipe/${recipeId}`, {
+            axios.delete(`/${recipeId}`, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`
                 },
@@ -43,7 +43,7 @@ export default function LikeButton({recipeId, likes, onLikeChange}) {
                 console.error('좋아요 취소 요청 중 오류 발생.', err)
             })
         } else { // POST 요청을 통해 좋아요 추가                
-            axios.post(`/recipe/${recipeId}`, null, {
+            axios.post(`/${recipeId}`, null, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`
                 }

@@ -41,7 +41,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
         // 댓글 불러오기
         const getComments = async () => {
             try {
-                const response = await axios.get(`comment/${recipeId}`)
+                const response = await axios.get(`/${recipeId}`)
                 setComments(response.data.comments)
             } catch (err) {
                 console.error(err)
@@ -62,7 +62,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
                 alert("댓글은 500자 이하여야 합니다.")
                 return;
             }
-            const response = await axios.post(`/comment/${recipeId}`, 
+            const response = await axios.post(`/${recipeId}`, 
                 { commentBody: commentBody }, 
                 { headers: { Authorization: `Bearer ${AccessToken}`,
                 },
@@ -92,7 +92,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     // 댓글 삭제
     const handleCommentDelete = async (commentId) => {
         try {
-            const response = await axios.delete(`/comment/${recipeId}/${commentId}`, {
+            const response = await axios.delete(`/${recipeId}/${commentId}`, {
                 headers: {
                 Authorization: `Bearer {access_token}`,
             },

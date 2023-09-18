@@ -73,7 +73,7 @@ export default function RecipeDetailPage() {
       // 상세 레시피 데이터 가져오기
       const getRecipeData = async () => {
         try { 
-          const response = await axios.get(`/recipe/${recipeId}`)
+          const response = await axios.get(`/${recipeId}`)
           setRecipeData(response.data)
           console.log(response.data);
 
@@ -145,7 +145,7 @@ export default function RecipeDetailPage() {
     // 삭제 버튼 
     // const handleDeleteClick = async () => {
     //   try {
-    //     const response = await axios.delete(`recipes/${recipeId}`);
+    //     const response = await axios.delete(`/${recipeId}`);
     //     if (response.status === 204) {
     //       navigate(`/`)
     //     } else if (response.status === 401) {
@@ -161,7 +161,7 @@ export default function RecipeDetailPage() {
     }
     // 수정 버튼
     const handleEdit = () => {
-      navigate(`recipes/${recipeId}`)
+      navigate(`update-recipe/${recipeId}`)
     }
 
 
