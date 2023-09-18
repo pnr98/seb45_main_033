@@ -11,6 +11,5 @@ import java.util.List;
 
 @Repository
 public interface RecipeCommentRepository extends JpaRepository<RecipeComment, Long> {
-    List<RecipeComment> findAllBy(Long recipeId);
     Page<RecipeComment> findByRecipe(Recipe recipe, Pageable pageable);
 }

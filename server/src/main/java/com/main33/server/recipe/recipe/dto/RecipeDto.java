@@ -130,9 +130,7 @@ public class RecipeDto {
         private String message;
         private Long recipeId;
 
-        public RecipePostResponse(String message) {
-            this.message = message;
-        }
+
 
         public RecipePostResponse(String message, Long recipeId) {
             this.message = message;
