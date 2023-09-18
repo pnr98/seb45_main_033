@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RefrigeratorIngredient {
+public class    RefrigeratorIngredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
