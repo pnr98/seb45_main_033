@@ -38,7 +38,7 @@ export default function HorizontalScroll({ recipeId }) {
     // const getRelatedData = async () => {
     //     try{
     //         setLoading(true);
-    //         const response = await axios.get(`/recipes/${recipeId}/related?offset=${offset}`)
+    //         const response = await axios.get(`/${recipeId}/related?offset=${offset}`)
     //         if (response.status === 200) {
     //             setRelatedRecipes([...relatedRecipes, response.data.relatedRecipes])
     //             setLoading(false);

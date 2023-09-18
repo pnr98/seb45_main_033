@@ -237,7 +237,7 @@ export default function CreateRecipe() {
                         Authorization: `Bearer {Token}`
                     }
                 }
-                const response = await axios.post(`recipe`, requestData, header)
+                const response = await axios.post(`/recipe`, requestData, header)
                 if (response.status === 201) {
                     setRecipeId(response.data.recipeId)
                     setCreateModal(true)
