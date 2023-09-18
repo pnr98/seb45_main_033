@@ -2,6 +2,7 @@ import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css';
 import { BodyContiner, MainContainer, FormContainer, Thumbnail, ButtonContainer, CurrentIngredients, RecipeContainer, IngredientContianer, TagContainer, TagBoxContainer, Tag, CreateButton, InformationMessage } from './CreateRecipe.styled'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Modal from '../../components/Modal/Modal'
 import axios from 'axios';
 
@@ -9,6 +10,7 @@ export default function CreateRecipe() {
     const [showModal, setShowModal] = useState(false);
     const [createModal, setCreateModal] = useState(false)
     const [thumbnail, setThumbnail] = useState('')
+    const [recipeId, setRecipeId] = useState(null)
 
     // 썸네일 업로드
     const dragOverHandle = (e) => {
@@ -65,25 +67,68 @@ export default function CreateRecipe() {
     }
 
     // 재료
-    const [ingredients, setIngredients] = useState([])
-    const [ingredientsInput, setIngredientsInput] = useState('')
+    const [ingredientInput, setIngredientInput] = useState('')
+    const [ingredientList, setIngredientList] = useState([])
     const [duplicationErr, setDuplicationErr] = useState(false)
     const gapRegex = /^\S+$/
-    const spaceHandle = (e) => {
-        if (e.key === " " && gapRegex.test(ingredientsInput.slice(0, ingredientsInput.length - 1))) {
-            if (!ingredients.includes(ingredientsInput.slice(0, ingredientsInput.length - 1))) {
-                setIngredients([...ingredients, ingredientsInput.slice(0, ingredientsInput.length - 1)])
-                console.log(ingredients)
-                setIngredientsInput('')
+    
+    const handleEnterPress = (e) => {
+        if(e.key === 'Enter') {
+            e.preventDefault(); // 엔터 입력을 방지해 줄바꿈 방지
+            addIngredient()
+        }
+    } 
+    const addIngredient = ()=> {
+        if (!ingredientInput.trim()) { // 입력이 비어있을 때는 처리하지 않음
+            return;
+        }
+        const [name, quantity] = ingredientInput.split('/') // '/'를 기준으로 name, quantity 할당
+        if (name && quantity) {
+            const newIngredient = {
+                name: name.trim(),
+                quantity: quantity.trim(),
+            };
+        
+            if (!ingredientList.some((ingredient) => ingredient.name === newIngredient.name)) {
+                setIngredientList([...ingredientList, newIngredient]);
+                setIngredientInput(''); // 입력 초기화
+                setDuplicationErr(false);
+            } else {
+                setDuplicationErr(true);
+            }
+        } else {
+            setDuplicationErr(true); // 재료명과 재료량을 모두 입력하지 않았을 경우 오류 처리
+        }
+    }
+    const deleteIngredient = (idx) => {
+        const updatedIngredients = [...ingredientList]
+        updatedIngredients.splice(idx, 1);
+        setIngredientList(updatedIngredients)
+    }
+    
+    const [ingredients, setIngredients] = useState([])
+    const [ingredientsInput, setIngredientsInput] = useState('')
+    const spaceHandle1 = (e) => {
+        if (e.key === " " && gapRegex.test(ingredientInput.slice(0, ingredientInput.length - 1))) {
+            if (!ingredientList.includes(ingredientInput.slice(0, ingredientInput.length - 1))) {
+                setIngredientList([...ingredientList, ingredientInput.slice(0, ingredientInput.length - 1)])
+                console.log(ingredientList)
+                setIngredientInput({
+                    name: '',
+                    quantity: '',
+                })
             } else {
                 setDuplicationErr(true)
             }
         }
-        if (e.key === 'Enter' && gapRegex.test(ingredientsInput.slice(0, ingredientsInput.length - 1))) {
-            if (!ingredients.includes(ingredientsInput)) {
-                setIngredients([...ingredients, ingredientsInput])
-                console.log(ingredients)
-                setIngredientsInput('')
+        if (e.key === 'Enter' && gapRegex.test(ingredientInput.slice(0, ingredientInput.length - 1))) {
+            if (!ingredientList.includes(ingredientInput)) {
+                setIngredientList([...ingredientList, ingredientInput])
+                console.log(ingredientList)
+                setIngredientInput({
+                    name: '',
+                    quantity: '',
+                })
             } else {
                 setDuplicationErr(true)
             }
@@ -92,16 +137,19 @@ export default function CreateRecipe() {
             setDuplicationErr(false)
         }
     }
-    const deleteTag = (tag) => {
-        const newArr = ingredients.filter((el) => el !== tag)
-        setIngredients(newArr)
+    const deleteTag1 = (tag) => {
+        const newArr = ingredientList.filter((el) => el !== tag)
+        setIngredientList(newArr)
     }
 
     // recipe step
     const [recipeContents, setRecipeContents] = useState({
         title: "",
         description: "",
-        steps: [],
+        steps: [{
+            "stepNumber": 1,
+            "stepContent": "",
+        }],
     })
     const handleOnChange = (e, field) => {
         setRecipeContents({
@@ -113,7 +161,11 @@ export default function CreateRecipe() {
     // 레시피 내용 변경
     const handleStepChange = (e, idx) => {
         const updatedSteps = [...recipeContents.steps];
-        updatedSteps[idx] = e.target.value
+        // updatedSteps[idx] = e.target.value
+        updatedSteps[idx] = {
+            ...updatedSteps[idx],
+            stepContent: e.target.value
+        };
         setRecipeContents({
             ...recipeContents,
             steps: updatedSteps,
@@ -124,7 +176,8 @@ export default function CreateRecipe() {
         setRecipeContents((prevRecipeContent) => ({
             ...prevRecipeContent,
             steps: [...prevRecipeContent.steps,
-            {
+            {   
+                stepNumber: prevRecipeContent.steps.length + 1,
                 stepContent: "", // 빈 단계 생성
             },]
         }))
@@ -133,13 +186,20 @@ export default function CreateRecipe() {
     const deleteStep = (idx) => {
         setRecipeContents((prevRecipeContent) => {
             const updatedSteps = [...recipeContents.steps];
-            updatedSteps.splice(idx, 1) // 해당 인덱스의 단계 삭제
+            // updatedSteps.splice(idx, 1) // 해당 인덱스의 단계 삭제
+            if(updatedSteps.length > 0) {
+                updatedSteps.pop();
+                for(let i = 0; i < updatedSteps.length; i++) {
+                    updatedSteps[i].stepNumber = i + 1
+                }
+            }
             return {
                 ...prevRecipeContent,
                 steps: updatedSteps, // 업데이트된 단계 배열로 업데이트
             }
         })
     };
+    
 
     // 등록버튼
     const isSubmitEnabled = 
@@ -149,8 +209,8 @@ export default function CreateRecipe() {
         recipeContents.title.trim() !== "" &&
         recipeContents.description.trim() !== "" &&
         thumbnail !== "" &&
-        recipeContents.steps.length > 2 &&
-        ingredients.length > 0;
+        recipeContents.steps.length > 1 &&
+        ingredientList.length > 0;
 
     const handleCreatePost = async (e) => {
         e.preventDefault();
@@ -158,18 +218,20 @@ export default function CreateRecipe() {
             "foodType": selectedTags.category,
             "difficulty": selectedTags.level,
             "recipeName": recipeContents.title,
+            "mainImageUrl": thumbnail,
             "recipeDescription": recipeContents.description,
             "cookingTime": selectedTags.time,
-            "ingredients": ingredients,
+            "ingredients": ingredientList.map((ingredient) => (
+                `${ingredient.name} ${ingredient.quantity}`
+            )),
             "steps": recipeContents.steps.map((step, idx) => ({
-                stepNumber: idx + 1,
-                stepContent: step.stepContent,
+                "stepNumber": idx + 1,
+                "stepContent": step.stepContent,
             }))
         };
         console.log(requestData);
         try {
             if (isSubmitEnabled) {
-                // 선택된 카테고리, 시간, 레벨을 서버에 전달하여 글을 생성하는 로직을 구현
                 const header = {
                     Headers: {
                         Authorization: `Bearer {Token}`
@@ -177,37 +239,42 @@ export default function CreateRecipe() {
                 }
                 const response = await axios.post(`recipe`, requestData, header)
                 if (response.status === 201) {
+                    setRecipeId(response.data.recipeId)
                     setCreateModal(true)
                 }
             }
         } catch (err) {
             console.error("레시피 등록 요청 실패:", err);
+            //
             console.log(requestData)
             setCreateModal(true)
         }
     }
-
+    console.log(recipeContents);
+    console.log(ingredientList)
+    
     return (
         <BodyContiner>
             {showModal && <Modal type='Badextension' func={() => setShowModal(false)} />}
-            {createModal && <Modal type='Create' func={() => setShowModal(false)} />}
+            {createModal && <Modal type='Create' func={() => setShowModal(false)} recipe_id={recipeId}/>}
             <MainContainer>
                 <h1>Spread your recipe !</h1>
                 <FormContainer onSubmit={handleCreatePost}>
-
                     <Thumbnail>
-                        {thumbnail ?
-                            <img src={thumbnail} alt='thumbnail' onDrop={dropHandle} onDragOver={dragOverHandle} />
-                            :
-                            <div id='fileinput' onDrop={dropHandle} onDragOver={dragOverHandle}>
-                                <div>썸네일 이미지를 드래그 앤 드롭 해보세요.</div>
-                                <div>썸네일 이미지는 jpg/png 확장자만 지원합니다.</div>
-                            </div>}
+                        <div>
+                            {thumbnail ?
+                                <img src={thumbnail} alt='thumbnail' onDrop={dropHandle} onDragOver={dragOverHandle} />
+                                :
+                                <div id='fileinput' onDrop={dropHandle} onDragOver={dragOverHandle}>
+                                    <div>썸네일 이미지를 드래그 앤 드롭 해보세요.</div>
+                                    <div>썸네일 이미지는 jpg/png 확장자만 지원합니다.</div>
+                                </div>}
+                        </div>
                         <ButtonContainer>
-                            <div>
+                            <CreateButton>
                                 파일선택
                                 <input type='file' onChange={(e) => inputBtnhandle(e)} />
-                            </div>
+                            </CreateButton>
                             <CreateButton onClick={resetThumbnail} >
                                 초기화
                             </CreateButton>
@@ -226,24 +293,25 @@ export default function CreateRecipe() {
                                 ))}
                             </ul>
                             <div className='button-container'>
-                                <CreateButton onClick={addStep} size="small" boxColor="orange">추가</CreateButton>
-                                <CreateButton onClick={deleteStep} size="small">삭제</CreateButton>
+                                <CreateButton type="button" onClick={addStep} size="small" boxColor="orange">추가</CreateButton>
+                                <CreateButton type="button" onClick={deleteStep} size="small">삭제</CreateButton>
                             </div>
                         </div>
 
-
                         <IngredientContianer>
                             <input 
-                                placeholder='필요한 재료를 입력해 주세요.' 
-                                value={ingredientsInput} 
-                                onChange={(e) => setIngredientsInput(e.target.value)} 
-                                onKeyUp={(e) => spaceHandle(e)} />
+                                type='text'
+                                placeholder='슬래시(/)를 기준으로 필요한 재료명과 재료량을 입력해주세요. 예시) 감자/10g' 
+                                value={ingredientInput} 
+                                onChange={(e) => setIngredientInput(e.target.value)} 
+                                onKeyPress={handleEnterPress} 
+                            />
                             <CurrentIngredients>
-                                {ingredients.length ?
+                                {ingredientList.length ? (
                                     <div>
                                         <TagBoxContainer>
-                                            {ingredients.map((el, idx) => (
-                                                <Tag key={idx} onClick={() => deleteTag(el)}>{el}</Tag>
+                                            {ingredientList.map((ingredient, idx) => (
+                                                <Tag key={idx} onClick={() => deleteIngredient(idx)}>{ingredient.name}/{ingredient.quantity}</Tag>
                                             ))}
                                         </TagBoxContainer>
                                         <InformationMessage>
@@ -251,15 +319,15 @@ export default function CreateRecipe() {
                                             {duplicationErr && <div className='error'>동일한 재료는 입력할 수 없습니다.</div>}
                                         </InformationMessage>
                                     </div>
-                                    :
+                                    ) : (
                                     <InformationMessage>
                                         <div>입력한 재료는 이곳에서 확인 가능합니다.</div>
-                                        <div>원하는 재료를 입력후 스페이스 바(Space bar)키 혹은 엔터(Enter)키를 눌러주세요</div>
+                                        <div>원하는 재료를 입력후 엔터(Enter)키를 눌러주세요</div>
                                     </InformationMessage>
+                                    )
                                 }
                             </CurrentIngredients>
                         </IngredientContianer>
-
                     </RecipeContainer>
 
                     <TagContainer>

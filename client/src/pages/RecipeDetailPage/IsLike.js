@@ -5,17 +5,19 @@ import { BtnContainer } from "./IsLike.styled";
 import axios from "axios";
 import Modal from '../../components/Modal/Modal'
 import { useSelector } from "react-redux";
+import { checkLogin } from "../../checkLogin/checkLogin";
 
 export default function LikeButton({recipeId, likes, onLikeChange}) {
     const AccessToken = `ACCESS_TOKEN`
     const [ isLiked, setIsLiked ] = useState(false)
     const [ showModal, setShowModal ] = useState(false);
 
-    const isLogin = useSelector((state) => state.isLogin);
+    const isLogin = checkLogin();
 
     // 좋아요 클릭
     const handleOnClick = async () => {
-        if (!isLogin) { // 로그인되지 않은 경우 모달 열기
+        //
+        if (isLogin) { // 로그인되지 않은 경우 모달 열기
             setShowModal(true)
             return;
         }
@@ -35,6 +37,7 @@ export default function LikeButton({recipeId, likes, onLikeChange}) {
                 }
             })
             .catch ((err) => {
+                //
                 setIsLiked(false)
                 onLikeChange(-1)
                 console.error('좋아요 취소 요청 중 오류 발생.', err)
@@ -54,6 +57,7 @@ export default function LikeButton({recipeId, likes, onLikeChange}) {
                 }
                 })
             .catch ((err) => {
+                //
                 setIsLiked(true)
                 onLikeChange(1)
                 console.error('좋아요 요청 중 오류 발생.', err)

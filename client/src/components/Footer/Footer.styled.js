@@ -7,6 +7,7 @@ export const FooterWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 300px;
   min-width: 100%;
   margin: 0 auto;
   background-color: #37404D;

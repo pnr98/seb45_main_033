@@ -1,22 +1,25 @@
 /* eslint-disable import/no-unresolved */
 import { Navigation } from 'swiper';
+import { useRef , useState , useEffect } from 'react';
+import axios from 'axios'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.min.css';
-
 import 'swiper/css';
 // import 'swiper/css/navigation';
-import { useRef , useState , useEffect } from 'react';
-import { ScrollContainer, ScrollWrap, ArrowBtn } from './HorizontalScroll.styled';
+import { ScrollContainer, ScrollWrap, ArrowBtn, LodingImage } from './HorizontalScroll.styled';
 import Recipe from '../Recipe/Recipe'
 import {data} from './dummyData'
 import ArrowIcon from '../../common/image/ArrowIcon.png'
-// https://velog.io/@sohee-k/React-TypeScript-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-Swiper-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0image-slider-library
-export default function HorizontalScroll() {
-    
-    const [ list, setList ] = useState(data)
+import dummy from '../../common/data/dummy'
+
+export default function HorizontalScroll({ recipeId }) {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
     const [ swiperSetting, setSwiperSetting ] = useState(null)
+
+    const [ relatedRecipes, setRelatedRecipes ] = useState([]);
+    const [ offset, setOffset ] = useState(0)
+    const [ loading, setLoading ] = useState(false);
 
     const settings = {
         spaceBetween: 10,
@@ -32,30 +35,91 @@ export default function HorizontalScroll() {
             swiper.navigation.update();
         },
     }
+    // const getRelatedData = async () => {
+    //     try{
+    //         setLoading(true);
+    //         const response = await axios.get(`/recipes/${recipeId}/related?offset=${offset}`)
+    //         if (response.status === 200) {
+    //             setRelatedRecipes([...relatedRecipes, response.data.relatedRecipes])
+    //             setLoading(false);
+    //             setOffset(offset + 5);
+    //         }
+    //     } catch (err) {
+    //         console.error('관련 레시피 요청 실패:', err);
+    //         setLoading(true);
+    //     }
+    // };
+    // useEffect(() => {
+    //     if(!swiperSetting) {
+    //         setSwiperSetting(settings)
+    //     }
+    //     getRelatedData();
+    // }, [swiperSetting, offset])
 
+    //
     useEffect(() => {
         if(!swiperSetting) {
-            
             setSwiperSetting(settings)
         }
     }, [swiperSetting])
-    
+    const [ list, setList ] = useState(dummy)
     return (
         <ScrollContainer>
             <ScrollWrap>
-                <ArrowBtn ref={prevRef}><img src={ArrowIcon} alt='' className='pre'></img></ArrowBtn>
+                <ArrowBtn ref={prevRef}><img src={ArrowIcon} alt='' className='pre'/></ArrowBtn>
                 {swiperSetting && (
                     <Swiper 
                     modules={[Navigation]}
                     navigation
                     {...settings}
+                    // onReachEnd={() => {getRelatedData()}}
                     onSlideChange={() => console.log('slide change')}
                 >
-                    {list.map((el) => {return <SwiperSlide key={el.id}> <Recipe info={el} /> </SwiperSlide>})}
+                    {list.map((el) => (
+                        <SwiperSlide key={el.id}>
+                            {loading ? (
+                                <LodingImage>
+                                    <div>Loading...</div>
+                                </LodingImage>
+                            ) : (
+                                <Recipe info={el} />
+                            )}
+                            </SwiperSlide>))}
                 </Swiper>
                 )}
-                <ArrowBtn ref={nextRef}><img src={ArrowIcon} alt='' className='next'></img></ArrowBtn>
+                <ArrowBtn ref={nextRef}><img src={ArrowIcon} alt='' className='next'/></ArrowBtn>
             </ScrollWrap>
         </ScrollContainer>
     )
+
+    // return (
+    //     <ScrollContainer>
+    //         <ScrollWrap>
+    //             <ArrowBtn ref={prevRef}><img src={ArrowIcon} alt='' className='pre'/></ArrowBtn>
+    //             {swiperSetting && (
+    //                 <Swiper 
+    //                 modules={[Navigation]}
+    //                 navigation
+    //                 {...settings}
+    //                 onReachEnd={() => {getRelatedData()}}
+    //                 onSlideChange={() => console.log('slide change')}
+    //             >
+    //                 {relatedRecipes.map((el) => (
+    //                     <SwiperSlide key={el.recipeId}> 
+    //                         {loading ? (
+    //                             <LodingImage>
+    //                                 <div>Loading...</div>
+    //                             </LodingImage>
+    //                         ) : (
+    //                             <Recipe info={el} />
+    //                         )}
+    //                     </SwiperSlide>
+    //                     ))}
+    //             </Swiper>
+    //             )}
+    //             <ArrowBtn ref={nextRef}><img src={ArrowIcon} alt='' className='next'/></ArrowBtn>
+    //             {loading && <p>Loading...</p>}
+    //         </ScrollWrap>
+    //     </ScrollContainer>
+    // )
 }   

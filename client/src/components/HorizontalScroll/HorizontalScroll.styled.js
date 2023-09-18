@@ -29,3 +29,17 @@ export const ArrowBtn = styled.button`
     margin-left: 16px;
   }
 `
+
+export const LodingImage = styled.div`
+  background-color: #f0f0f0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  div{
+    color: #999;
+    font-size: 16px;
+    font-weight: bold;
+  }
+`

@@ -10,8 +10,11 @@ import {
   SignBtnContainer,
   Emoji,
   Postionbtn,
-  SignLink
+  SignLink,
+  Title,
+  PwErrText
 } from './SignUp.Styled'
+import TitleIcon from '../../common/image/signupLogo.svg'
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -161,16 +164,26 @@ const SignUp = () => {
   return (
       <BodyContainer>
         <FormContainer>
+
+
+        <Title>
+          <img src={TitleIcon} alt="title icon" />
+          <h1>회원가입</h1>
+        </Title>
+
+
           <div>
             <InputContainer>
-            <InputStyle
-              value={name}
-              onChange={(e) => onChange('name', e)}
-              placeholder="유저네임을 입력하세요"
-            />
-            <Postionbtn onClick={duplicateNameHandle}>중복 확인</Postionbtn>
-            
+            <InputStyle>
+              <input
+                value={name}
+                onChange={(e) => onChange('name', e)}
+                placeholder="유저네임을 입력하세요"
+              />
+              <Postionbtn onClick={duplicateNameHandle}>중복 확인</Postionbtn>
+            </InputStyle>
             </InputContainer>
+
             {nameErr && (
               <ErrText>{nameText}</ErrText>
             )}
@@ -178,54 +191,74 @@ const SignUp = () => {
               <SuccecsText>{nameText}</SuccecsText>
             )}
           </div>
+
+
           <div>
-            <InputContainer>
-            <InputStyle
-              value={email}
-              onChange={(e) => onChange('email', e)}
-              placeholder="이메일을 입력하세요.(아이디)"
-            />
-            <Postionbtn onClick={duplicateEmailHandle}>중복 확인</Postionbtn>
-            </InputContainer>
+          <InputContainer>
+            <InputStyle>
+              <input
+                value={email}
+                onChange={(e) => onChange('email', e)}
+                placeholder="이메일을 입력하세요.(아이디)"
+              />
+              <Postionbtn onClick={duplicateEmailHandle}>중복 확인</Postionbtn>
+            </InputStyle>
+          </InputContainer>
+
             {emailErr && <ErrText>{emailText}</ErrText>}
             {!emailErr && duplicateEmail && (
               <SuccecsText>{emailText}</SuccecsText>
             )}
           </div>
+
+
           <div> 
-            <InputContainer>
-            <InputStyle
+          <InputContainer>
+            <InputStyle>
+              <input
               value={pw}
               type="password"
               onChange={(e) => onChange('pw', e)}
               placeholder="비밀번호를 입력하세요."
-            />
-            </InputContainer>
+              />
+            </InputStyle>
+          </InputContainer>
+
             {pwErr && (
-              <ErrText>
+              <PwErrText>
                 비밀번호는 7글자이상 20글자 이하이며 영문자,숫자,특수문자가 각각
                 1개이상 포함되어야 합니다.
-              </ErrText>
+              </PwErrText>
             )}
           </div>
+
+
           <div>
-            <InputContainer>
-            <InputStyle
+          <InputContainer>
+            <InputStyle>
+              <input
               value={verifyPw}
               type="password"
               onChange={(e) => onChange('verifyPw', e)}
-            />
+              />
             <Postionbtn onClick={samePwHandle}>비밀번호 확인</Postionbtn>
             {succecsSamePw && <Emoji>✔️</Emoji>}
-            </InputContainer>
+            </InputStyle>
+          </InputContainer>
             {verifyPwErr && <ErrText>비밀번호를 확인해주세요</ErrText>}
           </div>
+
+
           <SignBtnContainer>
           <SignBtn onClick={submitHandle}>회원가입</SignBtn>
           </SignBtnContainer>
+
+
           <SignLink>계정이 있으신가요?
             <Link to='/login'>로그인</Link>
           </SignLink>
+
+
         </FormContainer>
       </BodyContainer>
   );

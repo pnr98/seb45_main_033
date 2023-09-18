@@ -19,7 +19,7 @@ const Modal = ({type,func, recipe_id}) => {
 
   const ModalHandle = () => {
     if(type==='Delete'){
-      const access_token = useSelector((state)=>state.access_token)
+      const access_token = token
       const header = {
         Headers : {
           Authorization: `Bearer ${access_token}`
@@ -29,8 +29,8 @@ const Modal = ({type,func, recipe_id}) => {
         if(res.status === 204){
           navi('/')
         }
-      }).catch((res)=>{
-        console.log(res)
+      }).catch((err)=>{
+        console.error('삭제 요청 실패: ', err)
       })
     }
     if(type==='Guest' ){
@@ -41,7 +41,10 @@ const Modal = ({type,func, recipe_id}) => {
       navi('/login')
       func();
     }
-    if(type==='Create' || type==='Welcome'){
+    if(type==='Create'){
+      navi(`/recipe/${recipe_id}`)
+    }
+    if(type==='Welcome'){
       navi('/')
     }
     if(type==='Update'){
@@ -63,7 +66,7 @@ const Modal = ({type,func, recipe_id}) => {
       {type==='Badextension' && 'jpg/png 파일만 업로드 가능합니다.'}
       </ModalText>
       <ModalBtnBox>
-        {(type==='Delete' || type==='Guest') && <ModalBtn onClick={()=>setStateHandle}>취소</ModalBtn>}
+        {(type==='Delete' || type==='Guest') && <ModalBtn onClick={()=>setStateHandle()}>취소</ModalBtn>}
       <ModalBtn onClick={ModalHandle}>
         {type === 'Delete' && '삭제'}
         {type === 'Guest' && '수락'}

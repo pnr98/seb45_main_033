@@ -32,9 +32,9 @@ export const RecipeInfoContainer = styled.section`
     .image-wrap{
         img {
             width: 100%;
-            height: auto;
+            height: 450px;
             border-radius: 1.25rem;
-            background-size: contain;
+            object-fit: cover;
         }
     }
     .header {
@@ -107,7 +107,7 @@ export const RecipeStepWrap = styled.div`
     ul {
         display: flex;
         flex-direction: column;
-        gap: 25px;
+        gap: 30px;
         li {
             display: flex;
             flex-direction: column;
@@ -115,7 +115,7 @@ export const RecipeStepWrap = styled.div`
         }
     }
     .step-number {
-        padding-bottom: 0.9rem;
+        padding-bottom: 0.5rem;
         font-size: 1.1rem;
         font-weight: 500;
         border-bottom: 1px solid #ABABAB;
