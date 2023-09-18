@@ -93,14 +93,14 @@ export default function Login() {
 
     <div>
       <InputContainer>
-    <InputStyle value={email} onChange={(e)=>onChange('email',e)} placeholder="이메일을 입력해 주세요."></InputStyle>
+    <InputStyle><input value={email} onChange={(e)=>onChange('email',e)} placeholder="이메일을 입력해 주세요." /></InputStyle>
     </InputContainer>
     {emailErr && <ErrText>올바른 이메일 형식이 아닙니다.</ErrText>}
     </div>
 
     <div>
             <InputContainer>
-    <InputStyle value={pw} onChange={(e)=>onChange('pw',e)} onKeyUp={(e)=>enterHandle(e)} type="password" placeholder="비밀번호를 입력해 주세요."></InputStyle>
+    <InputStyle><input value={pw} onChange={(e)=>onChange('pw',e)} onKeyUp={(e)=>enterHandle(e)} type="password" placeholder="비밀번호를 입력해 주세요." /></InputStyle>
     </InputContainer>
     </div>
 
