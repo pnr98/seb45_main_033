@@ -13,10 +13,11 @@ import HorizontalScroll from '../../components/HorizontalScroll/HorizontalScroll
 import Tag from '../../components/Tag/Tag'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import LikeButton from './IsLike'
 import CommentHandler from './Comment'
 import { Button } from './Comment.styled'
+import Modal from '../../components/Modal/Modal'
 
 
 export default function RecipeDetailPage() {
@@ -24,7 +25,7 @@ export default function RecipeDetailPage() {
         "foodTypes": "한식",
         "difficulty": "하",
         "recipeName": "김치찌개",
-        "mainImageUrl": "https://i.ibb.co/qJ2PyD1/4a8853aa-fd23-4646-a6ae-1eb423bc74e6-Kakao-Talk-20210217-214203816-jpg.png",
+        "mainImageUrl": "https://source.unsplash.com/random/?Supper",
         "recipeDescription": "두부로 만드는 건강하고 맛있는 한 끼 식사! 오늘은 정말 너~무 맛있어서 다들 맛보셨으면 하는 레시피를 들고 왔답니다! 바로 식물 단백질이 풍부한 두부로 만든 두부 덮밥인데요. 두부 덮밥은 먹음직스럽게 도톰하게 썬 두부를 간장 베이스로 졸여 밥 위에 얹으면 완성! 고추냉이와 다진 생강을 곁들이면 감칠맛이 나기 때문에 이건 꼭 같이 드셔보시길 추천할게요. 만들기도 간단하고 맛도 좋아 누구나 좋아할 두부 덮밥. 이런저런 요리하기 귀찮다면 반찬 필요 없는 두부 덮밥 한 번 만들어 보세요!",
         "userName": "전우치",
         "cookingTime": 30,
@@ -58,15 +59,15 @@ export default function RecipeDetailPage() {
       }
 
     const tags = [ data.foodTypes, data.difficulty, data.cookingTime ];
-
+    const navigate = useNavigate()
     const { recipeId } = useParams()
     const [ recipeData, setRecipeData ] = useState(null)
     const [separatedIngredients, setSeparatedIngredients] = useState([]);  
+    const [ showModal, setShowModal ] = useState(false)
     const memberId = 1
 
-    // // 수정, 삭제 버튼 표시 여부
+    // 수정, 삭제 버튼 표시 여부
     const currentUser = "전우치"
-    const [ showButtons, setShowButtons ] = useState(false)
 
     useEffect(() => {
       // 상세 레시피 데이터 가져오기
@@ -141,8 +142,26 @@ export default function RecipeDetailPage() {
       }))
     }
 
-    // 수정, 삭제 버튼 
+    // 삭제 버튼 
+    // const handleDeleteClick = async () => {
+    //   try {
+    //     const response = await axios.delete(`recipes/${recipeId}`);
+    //     if (response.status === 204) {
+    //       navigate(`/`)
+    //     } else if (response.status === 401) {
+    //       alert('로그인이 필요한 기능입니다.')
+    //     }
+    //   } catch (err) {
+    //     console.error('삭제 요청 오류: ', err)
+    //   }
+    // }
+
+    const handleModal = () => {
+      setShowModal(true)
+    }
+    // 수정 버튼
     const handleEdit = () => {
+      navigate(`recipes/${recipeId}`)
     }
 
 
@@ -211,13 +230,20 @@ export default function RecipeDetailPage() {
 
                   {(recipeData && recipeData.userName === currentUser) && 
                   (<BtnContainer>
-                    <Button boxColor="orange">수정</Button>
-                    <Button>삭제</Button>
+                    <Button onClick={handleEdit} boxColor="orange">수정</Button>
+                    <Button onClick={handleModal}>삭제</Button>
+                    {showModal && (
+                      <Modal 
+                          type="Delete"
+                          func={() => setShowModal(false)}
+                          recipe_id={recipeId}
+                      />
+                    )}
                   </BtnContainer>)}
                 <RelatedRecipe>
                   <div className='discription-title'>관련 레시피</div>
                   <div>
-                    <HorizontalScroll />
+                    <HorizontalScroll recipeId={recipeId}/>
                   </div>
                 </RelatedRecipe>
                 <CommentsContainer>
