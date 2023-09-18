@@ -5,7 +5,9 @@ import com.main33.server.recipe.recipe.entity.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     List<Recipe> findByFoodTypeIn(List<FoodType> foodTypes);
+    Optional<Recipe> findByRecipeId(Long recipeId);
 }

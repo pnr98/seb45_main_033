@@ -3,6 +3,8 @@ package com.main33.server.recipe.recipe_comment.service;
 import com.main33.server.member.entity.Member;
 import com.main33.server.member.repository.MemberRepository;
 import com.main33.server.recipe.recipe.entity.Recipe;
+import com.main33.server.recipe.recipe.repository.RecipeRepository;
+import com.main33.server.recipe.recipe.service.RecipeService;
 import com.main33.server.recipe.recipe_comment.dto.RecipeCommentPostDto;
 import com.main33.server.recipe.recipe_comment.dto.RecipeCommentResponseDto;
 import com.main33.server.recipe.recipe_comment.dto.RecipeCommentUpdateDto;
@@ -59,7 +61,7 @@ public class RecipeCommentService {
     }
 
     public Page<RecipeCommentResponseDto> findAllComment(Pageable pageable, Long recipeId) {
-        Recipe recipe = recipeService.findRecipeId(recipeId);
+        Recipe recipe = recipeService.findRecipeById(recipeId);
         Page<RecipeComment> comments = recipeCommentRepository.findByRecipe(recipe, pageable);
         return comments.map(this::FindFromReply);
     }

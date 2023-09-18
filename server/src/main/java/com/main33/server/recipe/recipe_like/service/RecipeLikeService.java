@@ -2,6 +2,8 @@ package com.main33.server.recipe.recipe_like.service;
 
 import com.main33.server.member.entity.Member;
 import com.main33.server.recipe.recipe.entity.Recipe;
+import com.main33.server.recipe.recipe.repository.RecipeRepository;
+import com.main33.server.recipe.recipe.service.RecipeService;
 import com.main33.server.recipe.recipe_like.entity.RecipeLike;
 import com.main33.server.recipe.recipe_like.repository.RecipeLikeRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,7 @@ public class RecipeLikeService {
 
     public void addLike(Long recipeId, Member member) {
 
-        Recipe recipe = recipeService.findByRecipeId(recipeId);
+        Recipe recipe = recipeService.findRecipeById(recipeId);
 
         if(!recipeLikeRepository.existsByMemberAndRecipe(member, recipe)) {
             // 호출되면 recipe에 있는 count 증가
