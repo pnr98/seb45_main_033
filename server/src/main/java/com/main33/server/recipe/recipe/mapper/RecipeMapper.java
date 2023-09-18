@@ -12,4 +12,6 @@ public interface RecipeMapper {
     Recipe patchDtoToRecipe(RecipeDto.Patch patchDto);
     RecipeDto.RecipeDetail recipeToRecipeDetail(Recipe recipe);
     List<RecipeDto.RecipeSummary> recipesToRecipeSummarys(List<Recipe> recipes);
+    List<RecipeDto.RecipePostResponse> recipesToResponses(List<Recipe> recipes);
+    RecipeDto.RecipeDetailResponse recipeToRecipeDetailResponse(Recipe recipe);
 }

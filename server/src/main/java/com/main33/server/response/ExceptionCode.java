@@ -17,7 +17,9 @@ public enum ExceptionCode {
 
     // 레시피 케이스
     INVALID_RECIPE_NAME_FORMAT(ErrorStatus.BAD_REQUEST, "잘못된 요청. recipeName이 누락되었습니다."),
+    INVALID_RECIPE_DESCRIPTION_FORMAT(ErrorStatus.BAD_REQUEST, "잘못된 요청. recipeDescrption이 누락되었습니다."),
     REFRIGERATOR_NOT_FOUND(ErrorStatus.NOT_FOUND, "나만의 냉장고 데이터를 찾을 수 없습니다."),
+    RECIPE_NOT_FOUND(ErrorStatus.NOT_FOUND, "레시피를 찾을 수 없습니다."),
 
     // 댓글 케이스
     INVALID_COMMENT_FORMAT(ErrorStatus.BAD_REQUEST, "댓글은 500자 이하여야 합니다."),

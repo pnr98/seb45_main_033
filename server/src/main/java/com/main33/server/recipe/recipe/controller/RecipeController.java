@@ -1,15 +1,17 @@
 package com.main33.server.recipe.recipe.controller;
 
+import com.main33.server.dto.SingleResponseDto;
 import com.main33.server.recipe.recipe.dto.RecipeDto;
 import com.main33.server.recipe.recipe.entity.Recipe;
 import com.main33.server.recipe.recipe.mapper.RecipeMapper;
 import com.main33.server.recipe.recipe.service.RecipeService;
-import com.main33.server.response.BusinessLogicException;
-import com.main33.server.response.ExceptionCode;
+import com.main33.server.response.SuccessCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/recipes")
@@ -25,6 +29,7 @@ import java.util.List;
 @Slf4j
 public class RecipeController {
     private static final String RECIPE_DEFAULT_URL = "/recipes";
+
     private final RecipeService recipeService;
     private final RecipeMapper recipeMapper;
 
@@ -35,50 +40,69 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createRecipe(@Valid @RequestBody RecipeDto.Post postDto,
-                                          Principal principal) {
-        RecipeDto.Response response = new RecipeDto.Response();
-        if (principal == null) {
-            // 로그인하지 않은 경우 401 Unauthorized 응답을 반환
-            response.setMessage(ExceptionCode.UNAUTHORIZED_ACCESS.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        }
+    public ResponseEntity<?> postRecipe(
+            @Valid @RequestBody RecipeDto.Post requestBody) {
+        // 현재 인증된 사용자 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
 
-        try {
-            Recipe recipe = recipeMapper.postDtoToRecipe(postDto);
-            Recipe createdRecipe = recipeService.createRecipe(recipe, principal);
-            URI location = URI.create(RECIPE_DEFAULT_URL + "/" + createdRecipe.getRecipeId());
-            response.setMessage("레시피가 성공적으로 등록되었습니다.");
-            response.setRecipeId(createdRecipe.getRecipeId());
-            return ResponseEntity.created(location).body(response);
-        } catch (BusinessLogicException e) {
-            if (e.getExceptionCode() == ExceptionCode.INVALID_RECIPE_NAME_FORMAT) {
-                response.setMessage(ExceptionCode.INVALID_RECIPE_NAME_FORMAT.getMessage());
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            }
+        // 레시피 생성 로직
+        Recipe recipeToCreate = recipeMapper.postDtoToRecipe(requestBody);
+        Recipe createdRecipe = recipeService.createRecipe(recipeToCreate, currentPrincipalName);
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 내부 오류가 발생했습니다.");
-        }
+        // 생성된 레시피의 URI
+        URI location = URI.create(RECIPE_DEFAULT_URL + "/" + createdRecipe.getRecipeId());
+
+        // 응답 메시지 생성
+        RecipeDto.RecipePostResponse recipePostResponse =
+                new RecipeDto.RecipePostResponse(SuccessCode.SUCCESS_CREATE_RECIPE.getMessage(), createdRecipe.getRecipeId());
+        return ResponseEntity.created(location).body(recipePostResponse);
+    }
+
+    @PatchMapping("/{recipe-id}")
+    public ResponseEntity<?> patchRecipe(
+            @PathVariable("recipe-id") Long recipeId,
+            @Valid @RequestBody RecipeDto.Patch requestBody) {
+        // 현재 인증된 사용자 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        // 레시피 수정 로직
+        Recipe recipeToUpdate = recipeMapper.patchDtoToRecipe(requestBody);
+        Recipe updatedRecipe = recipeService.updateRecipe(recipeToUpdate, currentPrincipalName);
+
+        // 수정된 레시피의 URI
+        URI location = URI.create(RECIPE_DEFAULT_URL + "/" + updatedRecipe.getRecipeId());
+
+        // 응답 메시지 생성
+        SingleResponseDto<String> recipePatchResponse =
+                new SingleResponseDto<>(SuccessCode.SUCCESS_UPDATE_RECIPE.getMessage());
+        return ResponseEntity.created(location).body(recipePatchResponse);
     }
 
     @GetMapping("/{recipe-id}")
     public ResponseEntity<?> getRecipe(@PathVariable("recipe-id") Long recipeId) {
         Recipe recipe = recipeService.findRecipeById(recipeId);
-        return new ResponseEntity<>(recipeMapper.recipeToRecipeDetail(recipe), HttpStatus.OK);
+        RecipeDto.RecipeDetailResponse recipeDetailResponse = recipeMapper.recipeToRecipeDetailResponse(recipe);
+        return new ResponseEntity<>(new SingleResponseDto<>(recipeDetailResponse), HttpStatus.OK);
     }
-
-//    @GetMapping
-//    public ResponseEntity<?> listRecipes(@RequestParam(name = "page", defaultValue = "0") int page,
-//                                         @RequestParam(name = "size", defaultValue = "5") int size) {
-//        List<Recipe> recipes = recipeService.findAllRecipes(page, size);
-//        return new ResponseEntity<>(recipeMapper.recipesToRecipeSummarys(recipes), HttpStatus.OK);
-//    }
 
     @DeleteMapping("/{recipe-id}")
     public ResponseEntity<?> deleteRecipe(@PathVariable("recipe-id") Long recipeId) {
         recipeService.deleteRecipeById(recipeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+//    @GetMapping("/recipes/{recipe-id}/related")
+//    public ResponseEntity<?> getRelatedRecipes(@PathVariable("recipe-id") Long recipeId,
+//                                               @RequestParam(name = "offset", defaultValue = "0") int offset) {
+//        List<RecipeDto.RelatedRecipeDto> relatedRecipes = recipeService.findRelatedRecipes(recipeId, offset);
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("relatedRecipes", relatedRecipes);
+//
+//        return ResponseEntity.ok(response);
+//    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
