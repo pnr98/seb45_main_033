@@ -4,13 +4,16 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import Modal from '../../components/Modal/Modal'
 
+const BASE_URL = process.env.REACT_APP_API_URL;
 export default function UpdateRecipe() {
     const [showModal, setShowModal] = useState(false);
     const [updateModal, setUpdateModal] = useState(false)
     const [ mainImageUrl, setMainImageUrl ] = useState('')
     const { recipe_id } = useParams();
-    const memberId = 1;
+    // const memberId = 1;
+    const memberId = sessionStorage.getItem('memberId');
     const AccessToken = sessionStorage.getItem('Token');
+
 
     const dummyData = {
         "foodTypes": "한식",
@@ -52,7 +55,7 @@ export default function UpdateRecipe() {
     const [recipeData, setRecipeData] = useState(null);
     // 레시피 데이터 get
     useEffect(() => {
-        axios.get(`/recipes/${recipe_id}`)
+        axios.get(`${BASE_URL}/recipes/${recipe_id}`)
             .then((response) => {
                 const { data } = response;
                 setRecipeData(data)
@@ -276,7 +279,8 @@ export default function UpdateRecipe() {
                     Authorization: `Bearer ${AccessToken}`
                 }
             }
-            const response = await axios.patch(`/recipes/${recipe_id}`, requestData, header)
+            // const response = await axios.patch(`/recipes/${recipe_id}`, requestData, header)
+            const response = await axios.patch(`${BASE_URL}/recipes/${recipe_id}`, requestData, header)
             if (response.status === 200) {
                 setUpdateModal(true)
             }
