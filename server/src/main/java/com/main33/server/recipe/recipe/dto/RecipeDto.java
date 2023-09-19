@@ -1,5 +1,6 @@
 package com.main33.server.recipe.recipe.dto;
 
+import com.main33.server.recipe.recipe.domain.Difficulty;
 import com.main33.server.recipe.recipe.domain.FoodType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,11 +25,11 @@ public class RecipeDto {
 
     // For POST /recipes
     @Getter
+    @Setter
     public static class Post {
-        @NotNull
         private FoodType foodType;
 
-        private String difficulty;
+        private Difficulty difficulty;
 
         @Size(min = 3, max = 100)
         private String recipeName;
@@ -41,7 +42,6 @@ public class RecipeDto {
         @Valid
         private List<Step> steps; // content에 가까움. 여러 step으로 나눔.
 
-        @NotEmpty
         private List<String> ingredients;
     }
 
