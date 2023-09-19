@@ -1,5 +1,4 @@
 import { useState,  useEffect } from "react";
-import { useSelector } from "react-redux";
 import axios from "axios";
 import { Container, InputContainer, EditContainer, Button } from "./Comment.styled";
 import Modal from '../../components/Modal/Modal'
@@ -43,8 +42,8 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
         // 댓글 불러오기
         const getComments = async () => {
             try {
-                const response = await axios.get(`/${recipeId}`)
-                // const response = await axios.get(`${BASE_URL}/${recipeId}`)
+                // const response = await axios.get(`comment/${recipeId}`)
+                const response = await axios.get(`${BASE_URL}/comment/${recipeId}`)
                 setComments(response.data.comments)
             } catch (err) {
                 console.error("댓글 조회 요청 실패: ", err)
@@ -64,8 +63,8 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
                 alert("댓글은 500자 이하여야 합니다.")
                 return;
             }
-            const response = await axios.post(`/${recipeId}`, 
-            // const response = await axios.post(`${BASE_URL}/${recipeId}`, 
+            // const response = await axios.post(`comment/${recipeId}`, 
+            const response = await axios.post(`${BASE_URL}/comment/${recipeId}`, 
                 { commentBody: commentBody }, 
                 { headers: { Authorization: `Bearer ${AccessToken}`,
                 },
@@ -83,8 +82,8 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     // 댓글 삭제
     const handleCommentDelete = async (commentId) => {
         try {
-            const response = await axios.delete(`/comment/${recipeId}/${commentId}`, {
-            // const response = await axios.delete(`${BASE_URL}/comment/${recipeId}/${commentId}`, {
+            // const response = await axios.delete(`/comment/${recipeId}/${commentId}`, {
+            const response = await axios.delete(`${BASE_URL}/comment/${recipeId}/${commentId}`, {
                 headers: {
                 Authorization: `Bearer ${AccessToken}`,
             },
@@ -101,8 +100,8 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     // 댓글 수정
     const handleCommentSave = async (commentId) => {
         try {
-            const response = await axios.patch(`/comment/${recipeId}`, 
-            // const response = await axios.patch(`${BASE_URL}/comment/${recipeId}`, 
+            // const response = await axios.patch(`/comment/${recipeId}`, 
+            const response = await axios.patch(`${BASE_URL}/comment/${recipeId}`, 
                 { commentBody: editingComment}, 
                 { headers: { 
                     Authorization: `Bearer ${AccessToken}`

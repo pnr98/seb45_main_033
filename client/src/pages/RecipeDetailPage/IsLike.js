@@ -23,8 +23,8 @@ export default function LikeButton({recipe_id, likes, onLikeChange}) {
         }
         
         if (isLiked) { // 이미 좋아요를 누른 경우
-            axios.post(`/like/${recipe_id}`, null, {
-            // axios.post(`${BASE_URL}/like/${recipe_id}`, null, {
+            // axios.post(`/like/${recipe_id}`, null, {
+            axios.post(`${BASE_URL}/like/${recipe_id}`, null, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`
                 },
@@ -39,8 +39,8 @@ export default function LikeButton({recipe_id, likes, onLikeChange}) {
                 console.error('좋아요 취소 요청 중 오류 발생.', err)
             })
         } else { // POST 요청을 통해 좋아요 추가                
-            axios.post(`/like/${recipe_id}`, null, {
-            // axios.post(`${BASE_URL}/like/${recipe_id}`, null, {
+            // axios.post(`/like/${recipe_id}`, null, {
+            axios.post(`${BASE_URL}/like/${recipe_id}`, null, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`
                 }

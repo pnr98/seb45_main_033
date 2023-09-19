@@ -58,11 +58,11 @@ export default function RecipeDetailPage() {
           ],
         "ingredients": [ "김치 10g", "두부 100g", "돼지고기 200g", "고추장 두스푼", "간장 1티스푼", "다진 마늘 4g" ]
       }
-    const currentUser = "전우치"
-    const memberId = 1
+    // const currentUser = "전우치"
+    // const memberId = 1
 
     // const tags = [ data.foodTypes, data.difficulty, data.cookingTime ];
-    const [ tag, setTag ] = useState({
+    const [ tags, setTags ] = useState({
         category: null,
         time: null,
         level: null,
@@ -72,14 +72,15 @@ export default function RecipeDetailPage() {
     const [ recipeData, setRecipeData ] = useState(null)
     const [separatedIngredients, setSeparatedIngredients] = useState([]);  
     const [ showModal, setShowModal ] = useState(false)
-    // const memberId = sessionStorage.getItem('memberId');
+    const memberId = sessionStorage.getItem('memberId');
+    const currentUser = sessionStorage.getItem('username');
 
     useEffect(() => {
       // 상세 레시피 데이터 가져오기
       const getRecipeData = async () => {
         try { 
-          const response = await axios.get(`/recipes/${recipe_id}`)
-          // const response = await axios.get(`${BASE_URL}/recipes/${recipe_id}`)
+          // const response = await axios.get(`/recipes/${recipe_id}`)
+          const response = await axios.get(`${BASE_URL}/recipes/${recipe_id}`)
           setRecipeData(response.data)
           console.log(response.data);
 
@@ -99,7 +100,7 @@ export default function RecipeDetailPage() {
             }
           });
           setSeparatedIngredients(separatedIngredient)
-          setTag({
+          setTags({
             category: response.data.foodTypes,
             time: response.data.cookingTime,
             level: response.data.difficulty,
@@ -107,25 +108,6 @@ export default function RecipeDetailPage() {
           console.log(separatedIngredient)
         } catch (err) {
           console.error("레시피 요청 실패: ", err)
-          //
-          setRecipeData(data)
-          const separatedIngredient = data.ingredients.map(ingredient => {
-            const regex = /(.+)\s+(\S+)$/; // 뒤에서부터 공백으로 나눔.
-            const matches = ingredient.match(regex)
-            if(matches && matches.length === 3) {
-              return {
-                name: matches[1], // 재료이름
-                quantity: matches[2] // 양
-              }
-            } else {
-              return {
-                name: '',
-                quantity: '',
-              }
-            }
-          });
-          setSeparatedIngredients(separatedIngredient)
-          console.log(separatedIngredient)
         }
       }
 
@@ -175,7 +157,7 @@ export default function RecipeDetailPage() {
                       </div>
                     </div>
                     <div className='tag'>
-                      <Tag tags={tag} /> 
+                      <Tag tags={tags} /> 
                     </div>
                     <div className='recipe-info'>
                       <div className='detail'>
