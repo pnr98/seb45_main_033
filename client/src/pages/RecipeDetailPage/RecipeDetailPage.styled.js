@@ -175,7 +175,7 @@ export const CommentsContainer = styled.div`
 `
 
 export const ScrollContainerCentered  = styled(ScrollContainer)`
-background-color: red;
+
 `
 
 

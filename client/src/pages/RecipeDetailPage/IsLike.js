@@ -37,6 +37,9 @@ export default function LikeButton({recipe_id, likes, onLikeChange}) {
             })
             .catch ((err) => {
                 console.error('좋아요 취소 요청 중 오류 발생.', err)
+                //
+                setIsLiked(false)
+                onLikeChange(-1)
             })
         } else { // POST 요청을 통해 좋아요 추가                
             axios.post(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/like/${recipe_id}`, null, {
@@ -53,6 +56,9 @@ export default function LikeButton({recipe_id, likes, onLikeChange}) {
                 })
             .catch ((err) => {
                 console.error('좋아요 요청 중 오류 발생.', err)
+                //
+                setIsLiked(true)
+                onLikeChange(1)
             })
         }
     }

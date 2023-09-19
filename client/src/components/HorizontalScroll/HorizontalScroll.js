@@ -8,10 +8,10 @@ import 'swiper/css';
 // import 'swiper/css/navigation';
 import { ScrollContainer, ScrollWrap, ArrowBtn, LodingImage } from './HorizontalScroll.styled';
 import Recipe from '../Recipe/Recipe'
-import {data} from './dummyData'
 import ArrowIcon from '../../common/image/ArrowIcon.png'
 import dummy from '../../common/data/dummy'
 
+const BASE_URL = process.env.REACT_APP_API_URL;
 export default function HorizontalScroll({ recipeId }) {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
@@ -38,7 +38,7 @@ export default function HorizontalScroll({ recipeId }) {
     // const getRelatedData = async () => {
     //     try{
     //         setLoading(true);
-    //         const response = await axios.get(`/${recipeId}/related?offset=${offset}`)
+    //         const response = await axios.get(`${BASE_URL}/recipes/${recipeId}/related?offset=${offset}`)
     //         if (response.status === 200) {
     //             setRelatedRecipes([...relatedRecipes, response.data.relatedRecipes])
     //             setLoading(false);
@@ -56,7 +56,7 @@ export default function HorizontalScroll({ recipeId }) {
     //     getRelatedData();
     // }, [swiperSetting, offset])
 
-    //
+    
     useEffect(() => {
         if(!swiperSetting) {
             setSwiperSetting(settings)
@@ -72,8 +72,7 @@ export default function HorizontalScroll({ recipeId }) {
                     modules={[Navigation]}
                     navigation
                     {...settings}
-                    // onReachEnd={() => {getRelatedData()}}
-                    onSlideChange={() => console.log('slide change')}
+                    // onSlideChange={() => console.log('slide change')}
                 >
                     {list.map((el) => (
                         <SwiperSlide key={el.id}>
@@ -102,7 +101,7 @@ export default function HorizontalScroll({ recipeId }) {
     //                 navigation
     //                 {...settings}
     //                 onReachEnd={() => {getRelatedData()}}
-    //                 onSlideChange={() => console.log('slide change')}
+    //                 // onSlideChange={() => console.log('slide change')}
     //             >
     //                 {relatedRecipes.map((el) => (
     //                     <SwiperSlide key={el.recipeId}> 

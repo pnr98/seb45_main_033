@@ -3,55 +3,24 @@ import { BodyContiner, MainContainer, FormContainer, Thumbnail, ButtonContainer,
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import Modal from '../../components/Modal/Modal'
+import dummyDetail from "../../common/data/dummyDetail"
 
+const BASE_URL = process.env.REACT_APP_API_URL;
 export default function UpdateRecipe() {
     const [showModal, setShowModal] = useState(false);
     const [updateModal, setUpdateModal] = useState(false)
     const [ mainImageUrl, setMainImageUrl ] = useState('')
     const { recipe_id } = useParams();
     const memberId = 1;
+    // const memberId = sessionStorage.getItem('memberId');
     const AccessToken = sessionStorage.getItem('Token');
 
-    const dummyData = {
-        "foodTypes": "한식",
-        "difficulty": "하",
-        "recipeName": "김치찌개",
-        "mainImageUrl": "https://source.unsplash.com/random/?Supper",
-        "recipeDescription": "두부로 만드는 건강하고 맛있는 한 끼 식사! 오늘은 정말 너~무 맛있어서 다들 맛보셨으면 하는 레시피를 들고 왔답니다! 바로 식물 단백질이 풍부한 두부로 만든 두부 덮밥인데요. 두부 덮밥은 먹음직스럽게 도톰하게 썬 두부를 간장 베이스로 졸여 밥 위에 얹으면 완성! 고추냉이와 다진 생강을 곁들이면 감칠맛이 나기 때문에 이건 꼭 같이 드셔보시길 추천할게요. 만들기도 간단하고 맛도 좋아 누구나 좋아할 두부 덮밥. 이런저런 요리하기 귀찮다면 반찬 필요 없는 두부 덮밥 한 번 만들어 보세요!",
-        "userName": "전우치",
-        "cookingTime": 30,
-        "views": 55,
-        "likes": 22,
-        "commentCount": 3,
-        "timestamp": "2023-08-15T15:49:20.753395",
-        "steps": [                     
-          {
-            "stepNumber": 1,
-            "recipeContent": "김치를 손질합니다.",
-          },
-          {
-            "stepNumber": 2,
-            "recipeContent": "물과 함께 끓입니다.",
-          },
-          {
-            "stepNumber": 3,
-            "recipeContent": "물과 함께 끓입니다.물과 함께 끓입니다.물과 함께 끓입니다.",
-          },
-          {
-            "stepNumber": 4,
-            "recipeContent": "물과 함께 끓입니다.물과 함께 끓입니다.물과물과 함께 끓입니다.물과 함께 끓입니다.물과 함께 끓입니다.물과 함께 끓입니다. 함께 끓입니다.물과 함께 끓입니다.물과 함께 끓입니다.",
-          },
-          {
-            "stepNumber": 5,
-            "recipeContent": "물과 함께 끓입니다.물과 함께 끓입니다.물과 함께 끓입니다.물과 함께 끓입니다.",
-          }
-          ],
-        "ingredients": [ "김치 10g", "두부 100g", "돼지고기 200g", "고추장 두스푼", "간장 1티스푼", "다진 마늘 4g" ]
-      }
     
     const [recipeData, setRecipeData] = useState(null);
     // 레시피 데이터 get
     useEffect(() => {
+        // axios.get(`${BASE_URL}/recipes/${recipe_id}`)
+
         axios.get(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/recipes/${recipe_id}`)
             .then((response) => {
                 const { data } = response;
@@ -65,7 +34,7 @@ export default function UpdateRecipe() {
                         stepContent: step.recipeContent,
                     })),
                 });
-                setIngredientList(dummyData.ingredients.map((ingredient) => {
+                setIngredientList(data.ingredients.map((ingredient) => {
                     const regex = /(.+)\s+(\S+)$/;
                     const matches = ingredient.match(regex);
                     if(matches && matches.length === 3) {
@@ -87,6 +56,38 @@ export default function UpdateRecipe() {
                 })
             }).catch((err) => {
                 console.error("레시피 정보 요청 실패: ", err)
+                //
+                //
+                setRecipeData(dummyDetail)
+                setMainImageUrl(dummyDetail.mainImageUrl)
+                setRecipeContents({
+                    title: dummyDetail.recipeName,
+                    description: dummyDetail.recipeDescription,
+                    steps: dummyDetail.steps.map((step) => ({
+                        stepNumber: step.stepNumber,
+                        stepContent: step.recipeContent,
+                    })),
+                });
+                setIngredientList(dummyDetail.ingredients.map((ingredient) => {
+                    const regex = /(.+)\s+(\S+)$/;
+                    const matches = ingredient.match(regex);
+                    if(matches && matches.length === 3) {
+                        return {
+                            name: matches[1], // 재료이름
+                            quantity: matches[2] // 양
+                        }
+                    } else {
+                        return {
+                            name: ''
+                        }
+                    }
+                    }
+                ))
+                setSelectedTags({
+                    category: dummyDetail.foodTypes,
+                    time: dummyDetail.cookingTime,
+                    level: dummyDetail.difficulty,
+                })
             })
     }, [])
 
@@ -276,12 +277,16 @@ export default function UpdateRecipe() {
                     Authorization: `Bearer ${AccessToken}`
                 }
             }
+            // const response = await axios.patch(`${BASE_URL}/recipes/${recipe_id}`, requestData, header)
             const response = await axios.patch(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/recipes/${recipe_id}`, requestData, header)
+
             if (response.status === 200) {
                 setUpdateModal(true)
             }
         } catch (err) {
             console.error("레시피 등록 요청 실패:", err);
+            //
+            setUpdateModal(true)
         }
     }
 
@@ -314,9 +319,17 @@ export default function UpdateRecipe() {
                     </Thumbnail>
 
                     <RecipeContainer>
-                        <input placeholder='레시피 이름을 입력해 주세요.' value={recipeContents.title} onChange={(e) => handleOnChange(e, 'title')} />
-                        <input placeholder='레시피 설명을 입력해 주세요.' value={recipeContents.description} onChange={(e) => handleOnChange(e, 'description')} />
+                        <div>
+                            <h3>레시피 이름</h3>
+                            <input placeholder='레시피 이름을 입력해 주세요.' value={recipeContents.title} onChange={(e) => handleOnChange(e, 'title')} />
+                        </div>
+                        <div>
+                            <h3>레시피 설명</h3>
+                            <input placeholder='레시피 설명을 입력해 주세요.' value={recipeContents.description} onChange={(e) => handleOnChange(e, 'description')} />
+                        </div>
+                        
                         <div className='step-container'>
+                            <h3>레시피 순서</h3>
                             <ul>
                                 {recipeContents.steps.map((step, idx) => (
                                     <li key={idx}>
@@ -331,6 +344,7 @@ export default function UpdateRecipe() {
                         </div>
 
                         <IngredientContianer>
+                            <h3>레시피 재료</h3>
                             <input 
                                 type='text'
                                 placeholder='슬래시(/)를 기준으로 필요한 재료명과 재료량을 입력해주세요. 예시) 감자/10g' 
