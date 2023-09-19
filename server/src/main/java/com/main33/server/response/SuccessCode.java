@@ -24,6 +24,9 @@ public enum SuccessCode {
     NO_MORE_RECIPES(SuccessStatus.CREATED, "더 이상 불러올 레시피가 없습니다."),
     SUCCESS_FIND_RELATED_RECIPES(SuccessStatus.OK, null),
 
+    // 재료 케이스
+    SUCCESS_UPDATE_REFRIGERATOR(SuccessStatus.CREATED, "재료가 성공적으로 등록되었습니다."),
+
     // 댓글 케이스
     SUCCESS_CREATE_COMMENT(SuccessStatus.CREATED, "null"),
 

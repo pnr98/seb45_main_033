@@ -10,4 +10,13 @@ import java.util.Optional;
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     List<Recipe> findByFoodTypeIn(List<FoodType> foodTypes);
     Optional<Recipe> findByRecipeId(Long recipeId);
+
+    // 최신 레시피 10개 가져오기
+    List<Recipe> findTop10ByOrderByCreatedAtDesc();
+
+    // 좋아요가 많은 10개 레시피 가져오기
+    List<Recipe> findTop10ByOrderByLikeCountDesc();
+
+    // 댓글이 많은 10개 레시피 가져오기
+    List<Recipe> findTop10ByOrderByCommentsDesc();
 }

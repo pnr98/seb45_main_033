@@ -75,4 +75,27 @@ public class Recipe {
 
     @UpdateTimestamp
     private Timestamp modifiedAt;
+
+    @Column(name = "ingredients_text")
+    private String ingredientsText; // 레시피의 재료 텍스트
+
+    @Column(name = "recommendation_score")
+    private int recommendationScore; // 추천 점수
+
+    // 게터와 세터 메서드 추가
+    public String getIngredientsText() {
+        return ingredientsText;
+    }
+
+    public void setIngredientsText(String ingredientsText) {
+        this.ingredientsText = ingredientsText;
+    }
+
+    public int getRecommendationScore() {
+        return recommendationScore;
+    }
+
+    public void setRecommendationScore(int recommendationScore) {
+        this.recommendationScore = recommendationScore;
+    }
 }

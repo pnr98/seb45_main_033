@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "refrigerator")
@@ -14,25 +16,26 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Refrigerator {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long refrigeratorId;
+    private Long id;
 
     @OneToOne
-    @JoinColumn(name="member_id", nullable = false)
+    @JoinColumn(name = "member_id", unique = true, nullable = false)
     private Member member;
 
-    @Column
-    private String preferredIngredient;
+    @ElementCollection
+    @CollectionTable(name = "preferred_ingredients", joinColumns = @JoinColumn(name = "refrigerator_id"))
+    @Column(name = "ingredient")
+    private Set<String> preferredIngredients = new HashSet<>();
 
-    @Column
-    private String dislikedIngredient;
+    @ElementCollection
+    @CollectionTable(name = "disliked_ingredients", joinColumns = @JoinColumn(name = "refrigerator_id"))
+    @Column(name = "ingredient")
+    private Set<String> dislikedIngredients = new HashSet<>();
 
-    @Column
-    private String allergyIngredient;
-
-    // Assuming many ingredients can be inside one refrigerator
-    @OneToMany(mappedBy = "refrigerator")
-    private List<RefrigeratorIngredient> refrigeratorIngredients;
+    @ElementCollection
+    @CollectionTable(name = "allergy_ingredients", joinColumns = @JoinColumn(name = "refrigerator_id"))
+    @Column(name = "ingredient")
+    private Set<String> allergyIngredients = new HashSet<>();
 }
