@@ -58,10 +58,6 @@ export default function CreateRecipe() {
             ...prevSelectedTags,
             [type]: value,
         }))
-        console.log("선택된 카테고리:", value);
-        console.log("선택된 카테고리:", selectedTags.category);
-        console.log("선택된 시간:", selectedTags.time);
-        console.log("선택된 레벨:", selectedTags.level);
     }
 
     // 재료
@@ -110,7 +106,6 @@ export default function CreateRecipe() {
         if (e.key === " " && gapRegex.test(ingredientInput.slice(0, ingredientInput.length - 1))) {
             if (!ingredientList.includes(ingredientInput.slice(0, ingredientInput.length - 1))) {
                 setIngredientList([...ingredientList, ingredientInput.slice(0, ingredientInput.length - 1)])
-                console.log(ingredientList)
                 setIngredientInput({
                     name: '',
                     quantity: '',
@@ -122,7 +117,6 @@ export default function CreateRecipe() {
         if (e.key === 'Enter' && gapRegex.test(ingredientInput.slice(0, ingredientInput.length - 1))) {
             if (!ingredientList.includes(ingredientInput)) {
                 setIngredientList([...ingredientList, ingredientInput])
-                console.log(ingredientList)
                 setIngredientInput({
                     name: '',
                     quantity: '',
@@ -154,7 +148,6 @@ export default function CreateRecipe() {
             ...recipeContents,
             [field]: e.target.value,
         })
-        console.log(`${field} : ${e.target.value}`)
     }
     // 레시피 내용 변경
     const handleStepChange = (e, idx) => {
@@ -197,18 +190,18 @@ export default function CreateRecipe() {
             }
         })
     };
-
-    // 등록버튼
+    
     const isSubmitEnabled = 
-        selectedTags.category !== null && 
-        selectedTags.time !== null && 
-        selectedTags.level !== null &&
-        recipeContents.title.trim() !== "" &&
-        recipeContents.description.trim() !== "" &&
-        mainImageUrl !== "" &&
-        recipeContents.steps.every((step) => step.stepContent.trim() !== "") &&
-        ingredientList.length > 0;
-
+            selectedTags.category !== null && 
+            selectedTags.time !== null && 
+            selectedTags.level !== null &&
+            recipeContents.title.trim() !== "" &&
+            recipeContents.description.trim() !== "" &&
+            mainImageUrl !== "" &&
+            recipeContents.steps.every((step) => step.stepContent.trim() !== "") &&
+            ingredientList.length > 0
+            
+    // 등록버튼
     const handleCreatePost = async (e) => {
         e.preventDefault();
         
@@ -227,11 +220,12 @@ export default function CreateRecipe() {
                 "stepContent": step.stepContent,
             }))
         };
-        if (isSubmitEnabled === false) {
-            console.log('err')
-            return alert('입력을 모두 해주세요')
-        }
-        try {
+
+        if (!isSubmitEnabled) {
+            alert('입력을 모두 해주세요')
+            return
+        } 
+            try {
                 const header = {
                     Headers: {
                         Authorization: `Bearer {Token}`
@@ -250,7 +244,6 @@ export default function CreateRecipe() {
         }
     }
 
-    console.log("isSubmitEnabled:", isSubmitEnabled);
     return (
         <BodyContiner>
             {showModal && <Modal type='Badextension' func={() => setShowModal(false)} />}
@@ -259,11 +252,11 @@ export default function CreateRecipe() {
                 <h1>Spread your recipe !</h1>
                 <FormContainer>
                     <Thumbnail>
-                        <div>
+                        <div onDrop={dropHandle} onDragOver={dragOverHandle} >
                             {mainImageUrl ?
-                                <img src={mainImageUrl} alt='thumbnail' onDrop={dropHandle} onDragOver={dragOverHandle} />
+                                <img src={mainImageUrl} alt='thumbnail'/>
                                 :
-                                <div id='fileinput' onDrop={dropHandle} onDragOver={dragOverHandle}>
+                                <div id='fileinput'>
                                     <div>썸네일 이미지를 드래그 앤 드롭 해보세요.</div>
                                     <div>썸네일 이미지는 jpg/png 확장자만 지원합니다.</div>
                                 </div>}
@@ -273,9 +266,9 @@ export default function CreateRecipe() {
                                 파일선택
                                 <input type='file' onChange={(e) => inputBtnhandle(e)} />
                             </CreateButton>
-                            <CreateButton onClick={resetMainImageUrl} >
+                            {/* <CreateButton onClick={resetMainImageUrl} >
                                 초기화
-                            </CreateButton>
+                            </CreateButton> */}
                         </ButtonContainer>
                     </Thumbnail>
 
@@ -370,7 +363,7 @@ export default function CreateRecipe() {
                         </div>
                     </TagContainer>
                     <div className='button-container'>
-                        <CreateButton onClick={(e) => handleCreatePost(e)} disabled={!isSubmitEnabled} boxColor="orange" size="big">레시피 등록</CreateButton>
+                        <CreateButton onClick={(e) => handleCreatePost(e)} boxColor="orange" size="big">레시피 등록</CreateButton>
                     </div>
                 </FormContainer>
             </MainContainer>
