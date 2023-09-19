@@ -37,7 +37,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     const [showModal, setShowModal] = useState(false);
     const isLogin = checkLogin()
     
-    const AccessToken = 'a'
+    const AccessToken = sessionStorage.getItem('Token');
 
     useEffect(() => {
         // 댓글 불러오기
@@ -86,7 +86,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
             const response = await axios.delete(`/comment/${recipeId}/${commentId}`, {
             // const response = await axios.delete(`${BASE_URL}/comment/${recipeId}/${commentId}`, {
                 headers: {
-                Authorization: `Bearer {access_token}`,
+                Authorization: `Bearer ${AccessToken}`,
             },
             })
             if (response.status === 204) {
