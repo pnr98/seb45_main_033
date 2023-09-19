@@ -1,5 +1,6 @@
 package com.main33.server.recipe.recipe.controller;
 
+import com.main33.server.dto.MultiResponseDto;
 import com.main33.server.dto.SingleResponseDto;
 import com.main33.server.recipe.recipe.dto.RecipeDto;
 import com.main33.server.recipe.recipe.entity.Recipe;
@@ -8,6 +9,9 @@ import com.main33.server.recipe.recipe.service.RecipeService;
 import com.main33.server.response.SuccessCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,6 +26,7 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/recipes")
@@ -93,16 +98,44 @@ public class RecipeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-//    @GetMapping("/recipes/{recipe-id}/related")
-//    public ResponseEntity<?> getRelatedRecipes(@PathVariable("recipe-id") Long recipeId,
-//                                               @RequestParam(name = "offset", defaultValue = "0") int offset) {
-//        List<RecipeDto.RelatedRecipeDto> relatedRecipes = recipeService.findRelatedRecipes(recipeId, offset);
-//
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("relatedRecipes", relatedRecipes);
-//
-//        return ResponseEntity.ok(response);
-//    }
+    @GetMapping("/list")
+    public ResponseEntity<?> getRecipes(
+            @RequestParam(value = "foodTypes") List<String> foodTypes,
+            @RequestParam(value = "orderBy") String orderBy,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "25") int size) {
+
+        // Service에서 Page 객체를 반환받는다.
+        Page<Recipe> recipePage = recipeService.findRecipesByFilters(foodTypes, orderBy, page, size);
+        List<Recipe> recipes = recipePage.getContent();
+
+        // 매퍼를 사용하여 Recipe 객체를 RecipeDto로 변환
+        List<RecipeDto.RecipeSummary> recipeDtos = recipes.stream()
+                .map(recipeMapper::recipeToRecipeSummary)
+                .collect(Collectors.toList());
+
+        MultiResponseDto<RecipeDto.RecipeSummary> response = new MultiResponseDto<>(recipeDtos, recipePage);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchRecipes(
+            @RequestParam(value = "searchWord") String searchWord,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "25") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Recipe> recipePage = recipeService.findRecipesBySearch(searchWord, pageable);
+
+        List<RecipeDto.RecipeSummary> recipeDtos = recipePage.getContent().stream()
+                .map(recipeMapper::recipeToRecipeSummary)
+                .collect(Collectors.toList());
+
+        MultiResponseDto<RecipeDto.RecipeSummary> response = new MultiResponseDto<>(recipeDtos, recipePage);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
