@@ -25,7 +25,7 @@ const MyPageModal = ({type,func}) => {
           console.log(Token)
           console.log(header)
      if(type==='Logout'){
-        axios.post(`/auth/logout`,'',header).then((res)=>{
+        axios.post(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/auth/logout`,'',header).then((res)=>{
             if(res.status===200){
                 sessionStorage.removeItem('Token')
                 sessionStorage.removeItem('username')
@@ -48,7 +48,7 @@ const MyPageModal = ({type,func}) => {
             setIsDelete(true)
         }else
         if(deleteText==='계정삭제'){
-            axios.delete(`/auth/deactivate`,header).then((res)=>{
+            axios.delete(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/auth/deactivate`,header).then((res)=>{
                 if(res.status===204){
                     sessionStorage.removeItem('Token')
                     sessionStorage.removeItem('username')
@@ -60,8 +60,6 @@ const MyPageModal = ({type,func}) => {
                 sessionStorage.removeItem('Token')
                 sessionStorage.removeItem('username')
                 sessionStorage.removeItem('memberId')
-                console.log(header)
-                console.log(res)
                })
         }else{
             setDeleteMessage(true)

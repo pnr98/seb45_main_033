@@ -23,8 +23,8 @@ export default function LikeButton({recipe_id, likes, onLikeChange}) {
         }
         
         if (isLiked) { // 이미 좋아요를 누른 경우
-            // axios.post(`/like/${recipe_id}`, null, {
-            axios.post(`${BASE_URL}/like/${recipe_id}`, null, {
+            axios.post(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/like/${recipe_id}`, null, {
+            // axios.post(`${BASE_URL}/like/${recipe_id}`, null, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`
                 },
@@ -42,8 +42,8 @@ export default function LikeButton({recipe_id, likes, onLikeChange}) {
                 onLikeChange(-1)
             })
         } else { // POST 요청을 통해 좋아요 추가                
-            // axios.post(`/like/${recipe_id}`, null, {
-            axios.post(`${BASE_URL}/like/${recipe_id}`, null, {
+            axios.post(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/like/${recipe_id}`, null, {
+            // axios.post(`${BASE_URL}/like/${recipe_id}`, null, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`
                 }
