@@ -1,15 +1,13 @@
-import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css';
 import { BodyContiner, MainContainer, FormContainer, Thumbnail, ButtonContainer, CurrentIngredients, RecipeContainer, IngredientContianer, TagContainer, TagBoxContainer, Tag, CreateButton, InformationMessage } from './CreateRecipe.styled'
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react'
 import Modal from '../../components/Modal/Modal'
 import axios from 'axios';
 
 export default function CreateRecipe() {
     const [showModal, setShowModal] = useState(false);
     const [createModal, setCreateModal] = useState(false)
-    const [thumbnail, setThumbnail] = useState('')
+    const [mainImageUrl, setMainImageUrl] = useState('')
     const [recipeId, setRecipeId] = useState(null)
 
     // 썸네일 업로드
@@ -22,7 +20,7 @@ export default function CreateRecipe() {
         if (file) {
             if (file.type === 'image/png' || file.type === 'image/jpeg') {
                 const imageUrl = URL.createObjectURL(file);
-                setThumbnail(imageUrl)
+                setMainImageUrl(imageUrl)
             } else {
                 setShowModal(true)
             }
@@ -33,14 +31,14 @@ export default function CreateRecipe() {
         if (file) {
             if (file.type === 'image/png' || file.type === 'image/jpeg') {
                 const imageUrl = URL.createObjectURL(file);
-                setThumbnail(imageUrl)
+                setMainImageUrl(imageUrl)
             } else {
                 setShowModal(true)
             }   
         }
     }
-    const resetThumbnail = () => {
-        setThumbnail('')
+    const resetMainImageUrl = () => {
+        setMainImageUrl('')
     }
 
     // 카테고리 선택
@@ -199,26 +197,26 @@ export default function CreateRecipe() {
             }
         })
     };
-    
 
     // 등록버튼
     const isSubmitEnabled = 
-        selectedTags.category && 
-        selectedTags.time && 
-        selectedTags.level &&
+        selectedTags.category !== null && 
+        selectedTags.time !== null && 
+        selectedTags.level !== null &&
         recipeContents.title.trim() !== "" &&
         recipeContents.description.trim() !== "" &&
-        thumbnail !== "" &&
-        recipeContents.steps.length > 1 &&
+        mainImageUrl !== "" &&
+        recipeContents.steps.every((step) => step.stepContent.trim() !== "") &&
         ingredientList.length > 0;
 
     const handleCreatePost = async (e) => {
         e.preventDefault();
+        
         const requestData = {
             "foodType": selectedTags.category,
             "difficulty": selectedTags.level,
             "recipeName": recipeContents.title,
-            "mainImageUrl": thumbnail,
+            "mainImageUrl": mainImageUrl,
             "recipeDescription": recipeContents.description,
             "cookingTime": selectedTags.time,
             "ingredients": ingredientList.map((ingredient) => (
@@ -229,41 +227,41 @@ export default function CreateRecipe() {
                 "stepContent": step.stepContent,
             }))
         };
-        console.log(requestData);
+        if (isSubmitEnabled === false) {
+            console.log('err')
+            return alert('입력을 모두 해주세요')
+        }
         try {
-            if (isSubmitEnabled) {
                 const header = {
                     Headers: {
                         Authorization: `Bearer {Token}`
                     }
                 }
-                const response = await axios.post(`/recipe`, requestData, header)
+                const response = await axios.post(`/recipes`, requestData, header)
                 if (response.status === 201) {
                     setRecipeId(response.data.recipeId)
                     setCreateModal(true)
                 }
-            }
+            
         } catch (err) {
             console.error("레시피 등록 요청 실패:", err);
             //
-            console.log(requestData)
             setCreateModal(true)
         }
     }
-    console.log(recipeContents);
-    console.log(ingredientList)
-    
+
+    console.log("isSubmitEnabled:", isSubmitEnabled);
     return (
         <BodyContiner>
             {showModal && <Modal type='Badextension' func={() => setShowModal(false)} />}
-            {createModal && <Modal type='Create' func={() => setShowModal(false)} recipe_id={recipeId}/>}
+            {createModal && <Modal type='Create' func={() => setCreateModal(false)} recipe_id={recipeId}/>}
             <MainContainer>
                 <h1>Spread your recipe !</h1>
-                <FormContainer onSubmit={handleCreatePost}>
+                <FormContainer>
                     <Thumbnail>
                         <div>
-                            {thumbnail ?
-                                <img src={thumbnail} alt='thumbnail' onDrop={dropHandle} onDragOver={dragOverHandle} />
+                            {mainImageUrl ?
+                                <img src={mainImageUrl} alt='thumbnail' onDrop={dropHandle} onDragOver={dragOverHandle} />
                                 :
                                 <div id='fileinput' onDrop={dropHandle} onDragOver={dragOverHandle}>
                                     <div>썸네일 이미지를 드래그 앤 드롭 해보세요.</div>
@@ -275,7 +273,7 @@ export default function CreateRecipe() {
                                 파일선택
                                 <input type='file' onChange={(e) => inputBtnhandle(e)} />
                             </CreateButton>
-                            <CreateButton onClick={resetThumbnail} >
+                            <CreateButton onClick={resetMainImageUrl} >
                                 초기화
                             </CreateButton>
                         </ButtonContainer>

@@ -57,6 +57,8 @@ export default function RecipeDetailPage() {
           ],
         "ingredients": [ "김치 10g", "두부 100g", "돼지고기 200g", "고추장 두스푼", "간장 1티스푼", "다진 마늘 4g" ]
       }
+    const currentUser = "전우치"
+    const memberId = 1
 
     const tags = [ data.foodTypes, data.difficulty, data.cookingTime ];
     const navigate = useNavigate()
@@ -64,21 +66,16 @@ export default function RecipeDetailPage() {
     const [ recipeData, setRecipeData ] = useState(null)
     const [separatedIngredients, setSeparatedIngredients] = useState([]);  
     const [ showModal, setShowModal ] = useState(false)
-    const memberId = 1
-
-    // 수정, 삭제 버튼 표시 여부
-    const currentUser = "전우치"
 
     useEffect(() => {
       // 상세 레시피 데이터 가져오기
       const getRecipeData = async () => {
         try { 
-          const response = await axios.get(`/${recipeId}`)
+          const response = await axios.get(`/recipes/${recipeId}`)
           setRecipeData(response.data)
           console.log(response.data);
 
           // 재료
-          const ingredients = response.data.ingredients;
           const separatedIngredient = recipeData.ingredients.map(ingredient => {
             const regex = /(.+)\s+(\S+)$/; // 뒤에서부터 공백으로 나눔.
             const matches = ingredient.match(regex)
@@ -141,20 +138,6 @@ export default function RecipeDetailPage() {
         likes: prevData.likes + likeChange,
       }))
     }
-
-    // 삭제 버튼 
-    // const handleDeleteClick = async () => {
-    //   try {
-    //     const response = await axios.delete(`/${recipeId}`);
-    //     if (response.status === 204) {
-    //       navigate(`/`)
-    //     } else if (response.status === 401) {
-    //       alert('로그인이 필요한 기능입니다.')
-    //     }
-    //   } catch (err) {
-    //     console.error('삭제 요청 오류: ', err)
-    //   }
-    // }
 
     const handleModal = () => {
       setShowModal(true)

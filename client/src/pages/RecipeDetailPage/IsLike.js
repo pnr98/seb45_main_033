@@ -1,10 +1,9 @@
-import { useState,  useEffect } from "react";
+import { useState } from "react";
 import like from '../../common/image/like.png'
 import unlike from '../../common/image/unlike.png'
 import { BtnContainer } from "./IsLike.styled";
 import axios from "axios";
 import Modal from '../../components/Modal/Modal'
-import { useSelector } from "react-redux";
 import { checkLogin } from "../../checkLogin/checkLogin";
 
 export default function LikeButton({recipeId, likes, onLikeChange}) {
@@ -16,14 +15,13 @@ export default function LikeButton({recipeId, likes, onLikeChange}) {
 
     // 좋아요 클릭
     const handleOnClick = async () => {
-        //
-        if (isLogin) { // 로그인되지 않은 경우 모달 열기
+        if (!isLogin) { // 로그인되지 않은 경우 모달 열기
             setShowModal(true)
             return;
         }
         
-        if (isLiked) { // 이미 좋아요를 누른 경우 DELETE
-            axios.delete(`/${recipeId}`, {
+        if (isLiked) { // 이미 좋아요를 누른 경우
+            axios.post(`/like/${recipeId}`, null, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`
                 },
@@ -43,7 +41,7 @@ export default function LikeButton({recipeId, likes, onLikeChange}) {
                 console.error('좋아요 취소 요청 중 오류 발생.', err)
             })
         } else { // POST 요청을 통해 좋아요 추가                
-            axios.post(`/${recipeId}`, null, {
+            axios.post(`/like/${recipeId}`, null, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`
                 }
