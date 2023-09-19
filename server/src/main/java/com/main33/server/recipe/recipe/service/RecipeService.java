@@ -8,8 +8,11 @@ import com.main33.server.recipe.recipe.repository.RecipeRepository;
 import com.main33.server.response.BusinessLogicException;
 import com.main33.server.response.ExceptionCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -80,8 +83,8 @@ public class RecipeService {
                 .ifPresent(difficulty -> currentRecipe.setDifficulty(difficulty));
         Optional.ofNullable(newRecipeData.getRecipeStep())
                 .ifPresent(steps -> currentRecipe.setRecipeStep(steps));
-        Optional.ofNullable(newRecipeData.getIngredients())
-                .ifPresent(ingredients -> currentRecipe.setIngredients(ingredients));
+        Optional.ofNullable(newRecipeData.getRecipeIngredients())
+                .ifPresent(ingredients -> currentRecipe.setRecipeIngredients(ingredients));
 
         return recipeRepository.save(currentRecipe);
     }
@@ -101,6 +104,34 @@ public class RecipeService {
     @Transactional
     public void deleteRecipeById(Long recipeId) {
         recipeRepository.deleteById(recipeId);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Recipe> findRecipesByFilters(List<String> foodTypes, String orderBy, int page, int size) {
+        Pageable pageable;
+
+        if ("asc".equalsIgnoreCase(orderBy)) {
+            pageable = PageRequest.of(page, size, Sort.by("recipeName").ascending());
+        } else {
+            pageable = PageRequest.of(page, size, Sort.by("recipeName").descending());
+        }
+
+        Specification<Recipe> spec = Specification.where(null);
+
+        if (foodTypes != null && !foodTypes.isEmpty()) {
+            // "foodType"는 Recipe 엔터티의 해당 필드입니다. 이 이름을 적절히 변경해 주세요.
+            spec = spec.and((root, query, cb) -> root.get("foodType").in(foodTypes));
+        }
+
+        return recipeRepository.findAll(spec, pageable);
+    }
+
+    @Transactional
+    public Page<Recipe> findRecipesBySearch(String searchWord, Pageable pageable) {
+        Specification<Recipe> spec = Specification.where((root, query, cb) ->
+                cb.like(root.get("recipeName"), "%" + searchWord + "%")
+        );
+        return recipeRepository.findAll(spec, pageable);
     }
 
 //    public List<RecipeDto.RelatedRecipeDto> findRelatedRecipes(Long recipeId, int offset) {
