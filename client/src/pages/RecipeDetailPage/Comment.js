@@ -1,32 +1,12 @@
 import { useState,  useEffect } from "react";
-import { useSelector } from "react-redux";
 import axios from "axios";
 import { Container, InputContainer, EditContainer, Button } from "./Comment.styled";
 import Modal from '../../components/Modal/Modal'
 import { checkLogin } from "../../checkLogin/checkLogin";
-
+import dummyComment from "../../common/data/dummyComment"
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function CommentHandler({ recipeId, timeSlice, memberId }) {
-    const comment = {
-        "comments":
-        [
-            {
-                "commentId": 1,
-                "commentBody": "Updated comment content.",
-                "timestamp": "2023-08-16T15:49:20.753395",
-                "memberId": 1,
-                "userName": "홍길동"
-            },
-            {
-                "commentId": 2,
-                "commentBody": "Updated comment content.",
-                "timestamp": "2023-08-16T15:49:20.753395",
-                "memberId": 2,
-                "userName": "홍길동2"
-            },
-        ]
-    }
     const [ comments, setComments ] = useState([])
     const [ commentBody, setCommentBody ] = useState("");
     // 댓글 수정
@@ -43,11 +23,13 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
         // 댓글 불러오기
         const getComments = async () => {
             try {
-                const response = await axios.get(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/${recipeId}`)
-                // const response = await axios.get(`${BASE_URL}/${recipeId}`)
+                const response = await axios.get(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/comment/${recipeId}`)
+                // const response = await axios.get(`${BASE_URL}/comment/${recipeId}`)
                 setComments(response.data.comments)
             } catch (err) {
                 console.error("댓글 조회 요청 실패: ", err)
+                //
+                setComments(dummyComment.comments)
             }
             };
             getComments()
@@ -64,19 +46,33 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
                 alert("댓글은 500자 이하여야 합니다.")
                 return;
             }
-            const response = await axios.post(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/${recipeId}`, 
-            // const response = await axios.post(`${BASE_URL}/${recipeId}`, 
+
+            const response = await axios.post(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/comment/${recipeId}`, 
+            // const response = await axios.post(`${BASE_URL}/comment/${recipeId}`, 
+
                 { commentBody: commentBody }, 
                 { headers: { Authorization: `Bearer ${AccessToken}`,
                 },
             });
             if (response.status === 200) {
                 const newComment = response.data
-                setComments((prevComments) => [...prevComments, newComment]);
+                setComments((prevComments) => [...prevComments, ...newComment]);
                 setCommentBody("");
             } 
         } catch (error) {
             console.error("댓글 등록 요청 실패:", error);
+            //
+            const newComment = [{
+                commentId: comments.length + 1,
+                commentBody: commentBody,
+                timestamp: "2023-08-19T15:49:20.753395",
+                memberId: 1,
+                userName: "김코딩",
+            }];
+            setComments((prevComments) => [...prevComments, ...newComment]);
+            setCommentBody("");
+            console.log(comments)
+            console.log(newComment)
         }
     }
 
@@ -95,6 +91,9 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
             }
         } catch (error) {
             console.error("댓글 삭제 오류:", error);
+            //
+            const updateComments = comments.filter((comment) => comment.commentId !== commentId)
+            setComments(updateComments)
         }
     }
 
@@ -123,12 +122,23 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
             } 
         } catch (error) {
             console.error("댓글 수정 저장 오류:", error)
+            //
+            const updatedComments = comments.map((comment) => {
+                if (comment.commentId === commentId) {
+                return { ...comment, commentBody: editingComment };
+                }
+                return comment;
+            });
+            setComments(updatedComments);
+            setCommentIdToEdit(null);
+            setIsEditing(false);
+            setEditingComment("");
         }
     }
     // 로그인 요청 모달
     const handleModal = () => {
         //
-        if (isLogin) {
+        if (!isLogin) {
             setShowModal(true)
         }
     }

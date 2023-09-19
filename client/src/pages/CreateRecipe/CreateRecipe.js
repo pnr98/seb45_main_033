@@ -233,8 +233,10 @@ export default function CreateRecipe() {
                         Authorization: `Bearer ${AccessToken}`
                     }
                 }
+
                 const response = await axios.post(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/recipes`, requestData, header)
                 // const response = await axios.post(`${BASE_URL}/recipes`, requestData, header)
+
                 if (response.status === 201) {
                     setRecipeId(response.data.recipeId)
                     setCreateModal(true)
@@ -242,6 +244,8 @@ export default function CreateRecipe() {
             
         } catch (err) {
             console.error("레시피 등록 요청 실패:", err);
+            //
+            setCreateModal(true)
         }
     }
 
@@ -274,9 +278,17 @@ export default function CreateRecipe() {
                     </Thumbnail>
 
                     <RecipeContainer>
-                        <input placeholder='레시피 이름을 입력해 주세요.' value={recipeContents.title} onChange={(e) => handleOnChange(e, 'title')} />
-                        <input placeholder='레시피 설명을 입력해 주세요.' value={recipeContents.description} onChange={(e) => handleOnChange(e, 'description')} />
+                        <div>
+                            <h3>레시피 이름</h3>
+                            <input placeholder='레시피 이름을 입력해 주세요.' value={recipeContents.title} onChange={(e) => handleOnChange(e, 'title')} />
+                        </div>
+                        <div>
+                            <h3>레시피 설명</h3>
+                            <input placeholder='레시피 설명을 입력해 주세요.' value={recipeContents.description} onChange={(e) => handleOnChange(e, 'description')} />
+                        </div>
+                        
                         <div className='step-container'>
+                            <h3>레시피 순서</h3>
                             <ul>
                                 {recipeContents.steps.map((step, idx) => (
                                     <li key={idx}>
@@ -291,6 +303,7 @@ export default function CreateRecipe() {
                         </div>
 
                         <IngredientContianer>
+                            <h3>레시피 재료</h3>
                             <input 
                                 type='text'
                                 placeholder='슬래시(/)를 기준으로 필요한 재료명과 재료량을 입력해주세요. 예시) 감자/10g' 
