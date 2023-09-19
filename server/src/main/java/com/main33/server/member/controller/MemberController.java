@@ -162,10 +162,10 @@ public class MemberController {
 
     // 닉네임 중복체크
     @GetMapping("/checkname")
-    public ResponseEntity<MemberConflictResponseDto> checkName(@RequestParam String name) {
+    public ResponseEntity<MemberConflictResponseDto> checkName(@RequestParam String username) {
         MemberConflictResponseDto response = new MemberConflictResponseDto();
         try {
-            memberService.verifyExistsUsername(name);
+            memberService.verifyExistsUsername(username);
             // 예외가 발생하지 않았다면, 유저네임은 사용 가능합니다.
             response.setValid(true);
             response.setMessage("사용 가능한 닉네임입니다.");
