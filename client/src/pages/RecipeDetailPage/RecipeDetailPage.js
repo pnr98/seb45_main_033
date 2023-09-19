@@ -22,8 +22,6 @@ import Modal from '../../components/Modal/Modal'
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function RecipeDetailPage() {
-
-  //
     const data = {
         "foodTypes": "한식",
         "difficulty": "하",
@@ -63,12 +61,18 @@ export default function RecipeDetailPage() {
     const currentUser = "전우치"
     const memberId = 1
 
-    const tags = [ data.foodTypes, data.difficulty, data.cookingTime ];
+    // const tags = [ data.foodTypes, data.difficulty, data.cookingTime ];
+    const [ tag, setTag ] = useState({
+        category: null,
+        time: null,
+        level: null,
+    })
     const navigate = useNavigate()
     const { recipe_id } = useParams()
     const [ recipeData, setRecipeData ] = useState(null)
     const [separatedIngredients, setSeparatedIngredients] = useState([]);  
     const [ showModal, setShowModal ] = useState(false)
+    // const memberId = sessionStorage.getItem('memberId');
 
     useEffect(() => {
       // 상세 레시피 데이터 가져오기
@@ -95,6 +99,11 @@ export default function RecipeDetailPage() {
             }
           });
           setSeparatedIngredients(separatedIngredient)
+          setTag({
+            category: response.data.foodTypes,
+            time: response.data.cookingTime,
+            level: response.data.difficulty,
+          })
           console.log(separatedIngredient)
         } catch (err) {
           console.error("레시피 요청 실패: ", err)
@@ -166,7 +175,7 @@ export default function RecipeDetailPage() {
                       </div>
                     </div>
                     <div className='tag'>
-                      <Tag tags={tags} /> 
+                      <Tag tags={tag} /> 
                     </div>
                     <div className='recipe-info'>
                       <div className='detail'>
