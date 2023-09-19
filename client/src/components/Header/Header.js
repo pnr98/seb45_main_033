@@ -42,6 +42,8 @@ const Header = () => {
   const handleLogout = () => {
     dispatch({ type: 'SET_LOGIN_STATUS', payload: false });
     sessionStorage.removeItem('Token')
+    sessionStorage.removeItem('username')
+    sessionStorage.removeItem('memberId')
     setIsLogin(checkLogin())
     closeDropdown();
     navigate("/");

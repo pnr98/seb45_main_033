@@ -26,12 +26,14 @@ export default function UserInfo() {
     /^(?=.*[A-Za-z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z@$!%*?&\d]{7,20}$/i;
   const navi = useNavigate()
   useEffect(()=>{
+    const user_id = sessionStorage.getItem('memberId')
+    const Token = sessionStorage.getItem('Token')
     const header = {
       Headers:{
-        Authorization: `Bearer {Token}`
+        Authorization: `Bearer ${Token}`
       }
     }
-    axios.get(`/profile/{user_id}`,'',header).then((res)=>{
+    axios.get(`/profile/${user_id}`,'',header).then((res)=>{
       if(res.status===200){
         setUserData(res.data)
         setUserName(res.data.userName)
@@ -77,8 +79,8 @@ export default function UserInfo() {
     setPwErr(false)
     setChangeErr(false)
   }
-  const axiosPatchData = (data,header) =>{
-    axios.patch(`/profile/{user-id}`,data,header).then((res)=>{
+  const axiosPatchData = (data,header,user_Id) =>{
+    axios.patch(`/profile/${user_Id}`,data,header).then((res)=>{
       if(res.status===200){
         console.log(res.data.message)
         navi('/')
@@ -90,6 +92,8 @@ export default function UserInfo() {
   }
   const submitHandle = () =>{
     if(!pwChange && !nameChange){
+      const access_token = sessionStorage.getItem('Token')
+      const userId = sessionStorage.getItem('memberId')
       if(userPassWord){
         const data = {
           "profileImageUrl": userImage,
@@ -98,10 +102,10 @@ export default function UserInfo() {
         }
         const header = {
           Headers : {
-            Authorization: `Bearer {access_token}`
+            Authorization: `Bearer ${access_token}`
           }
         }
-        axiosPatchData(data,header)
+        axiosPatchData(data,header,userId)
       }else{
         const data = {
           "profileImageUrl": userImage,
@@ -109,10 +113,10 @@ export default function UserInfo() {
         }
         const header = {
           Headers : {
-            Authorization: `Bearer {access_token}`
+            Authorization: `Bearer ${access_token}`
           }
         }
-        axiosPatchData(data,header)
+        axiosPatchData(data,header,userId)
       }    
     }else{
       setChangeErr(true)

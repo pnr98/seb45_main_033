@@ -4,40 +4,38 @@ import { ModalBackground , ModalBody , ModalText , ModalBtnBox , ModalBtn, Delet
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import { setAccessToken, setLoginStatus } from "../../redux/action/action"
-import Cookies from "js-cookie"
 
 const MyPageModal = ({type,func}) => {
     const [isDelete , setIsDelete] = useState(false)
     const [deleteText,setDeleteText] = useState('')
     const [deleteMessage,setDeleteMessage] = useState(false)
     const [deleteComplete,setDeleteComplete] = useState(false)
-    const dispatch = useDispatch()
     const navi = useNavigate()
     const setStateHandle = () =>{
         func()
     }
-
+    
     const ModalHandle = () => {
+        const Token = sessionStorage.getItem('Token')
         const header = {
-            Headers : {
-                Authorization: `Bearer {Token}`
-            }
-        }
+            headers: {
+                "Authorization":`Bearer ${Token}`
+            },
+          };
+          console.log(Token)
+          console.log(header)
      if(type==='Logout'){
         axios.post(`/auth/logout`,'',header).then((res)=>{
             if(res.status===200){
-                dispatch(setAccessToken(''))
-                dispatch(setLoginStatus(false))
                 sessionStorage.removeItem('Token')
-                Cookies.remove('Token')
+                sessionStorage.removeItem('username')
+                sessionStorage.removeItem('memberId')
                 navi('/')
             }
         }).catch((res)=>{
-            dispatch(setAccessToken(''))
-                dispatch(setLoginStatus(false))
                 sessionStorage.removeItem('Token')
-                Cookies.remove('Token')
+                sessionStorage.removeItem('username')
+                sessionStorage.removeItem('memberId')
                 navi('/')
         })
      }
@@ -50,17 +48,20 @@ const MyPageModal = ({type,func}) => {
             setIsDelete(true)
         }else
         if(deleteText==='계정삭제'){
-            axios.delete(`/auth/deactivate`,'',header).then((res)=>{
+            axios.delete(`/auth/deactivate`,header).then((res)=>{
                 if(res.status===204){
-                    dispatch(setAccessToken(''))
-                    dispatch(setLoginStatus(false))
                     sessionStorage.removeItem('Token')
+                    sessionStorage.removeItem('username')
+                    sessionStorage.removeItem('memberId')
                     setDeleteComplete(true)
                 }
                }).catch((res)=>{
-                console.log('계정삭제 성공')
                 setDeleteComplete(true)
                 sessionStorage.removeItem('Token')
+                sessionStorage.removeItem('username')
+                sessionStorage.removeItem('memberId')
+                console.log(header)
+                console.log(res)
                })
         }else{
             setDeleteMessage(true)

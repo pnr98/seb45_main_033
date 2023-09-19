@@ -135,12 +135,14 @@ const MyFrige = () => {
     const gapRegex = /^\S+$/;
 
     const axiosData = () => {
+      const access_token = sessionStorage.getItem('Token')
+      const userId = sessionStorage.getItem('memberId')
       const header = {
         Headers : {
-            Authorization: `Bearer {access_token}`
+            Authorization: 'Bearer'+' '+`${access_token}`
         }
     }
-    axios.get(`/mypage/refrigerator/{user-id}`,'', header).then((res)=>{
+    axios.get(`/mypage/refrigerator/${userId}`,'', header).then((res)=>{
         setLike(res.data.preferredIngredients)
         setDisLike(res.data.dislikedIngredients)
         setAllergy(res.data.allergyIngredients)
@@ -241,9 +243,11 @@ const MyFrige = () => {
       }
     }
     const submitHandle = () =>{
+      const Token = sessionStorage.getItem('Token')
+      const memberId = sessionStorage.getItem('memberId')
       const header = {
         Headers:{
-          Authorization: `Bearer {Token}`
+          Authorization: `Bearer ${Token}`
         }
       }
       const data = {
@@ -251,7 +255,7 @@ const MyFrige = () => {
         "dislikedIngredients": disLike,
         "allergyIngredients": allergy
       }
-      axios.patch(`/mypage/refrigerator/{member-id}`,data,header).then((res)=>{
+      axios.patch(`/mypage/refrigerator/${memberId}`,data,header).then((res)=>{
         if(res.status === 200){
           axiosData()
         }

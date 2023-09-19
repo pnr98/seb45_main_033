@@ -92,14 +92,15 @@ const SignUp = () => {
     setNameText('');
     if (name.length >= 2 && name.length <= 12) {
       setNameErr(false);
-      const data = {
-        userName: name
+      const params = {
+        username: name
       }
-      axios.get(`/auth/checkname`,data).then((res)=>{
+      axios.get(`/auth/checkname`,{params : params}).then((res)=>{
         if(res.status===200){
           setSuccecsName(true); 
           setDupicateName(false); 
           setNameText('사용가능한 유저네임 입니다.')
+          console.log('성공')
         } 
       }).catch(((res)=>{
         if(res.status===409){
@@ -108,9 +109,13 @@ const SignUp = () => {
           setNameErr(true)
           setNameText('이미 존재하는 유저네임 입니다.')
         }else{
-          setSuccecsName(true); 
-          setDupicateName(false); 
-          setNameText('사용가능한 유저네임 입니다.')
+          // setSuccecsName(true); 
+          // setDupicateName(false); 
+          // setNameText('사용가능한 유저네임 입니다.')
+          setSuccecsName(false)
+          setDupicateName(true)
+          setNameErr(true)
+          setNameText('이미 존재하는 유저네임 입니다.')
         }
       }))
     }else{
@@ -123,11 +128,12 @@ const SignUp = () => {
       const data = {
         email:email
       }
-      axios.get(`/auth/checkemail`,data).then((res)=>{
+      axios.get(`/auth/checkemail`,{params : data}).then((res)=>{
         if(res.status === 200){
           setDuplacteEmail(true)
           setEmailText('사용가능한 이메일 입니다.')
           setEmailErr(false)
+          console.log('성공')
         }
       }).catch((res)=>{
         if(res.status===409){
@@ -135,9 +141,9 @@ const SignUp = () => {
           setEmailText('이미 사용중인 이메일입니다.')
           setEmailErr(true)
         }else{
-          setDuplacteEmail(true)
-          setEmailText('사용가능한 이메일 입니다.')
-          setEmailErr(false)
+          setDuplacteEmail(false)
+          setEmailText('이미 사용중인 이메일입니다.')
+          setEmailErr(true)
         }
       })
     }
@@ -152,8 +158,6 @@ const SignUp = () => {
     }
   };
   const submitHandle = () => {
-    console.log(name, email, pw, verifyPw);
-    console.log(succecsName, duplicateEmail, succecsPw, succecsSamePw);
     if (succecsName && duplicateEmail && succecsPw && succecsSamePw) {
       const data = {
         username:name,
@@ -162,6 +166,7 @@ const SignUp = () => {
       }
       axios.post('/auth/signup',data).then((res)=>{
         if(res.status === 201){
+          console.log('요청성공')
           const logindata = {
             email:email,
             passwrod:pw

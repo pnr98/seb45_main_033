@@ -18,7 +18,7 @@ const Main = () => {
       useEffect(() => {
         const loginStatus = sessionStorage.getItem('Token') !== null;
         setIsLogin(loginStatus);
-    }, []);
+    }, [sessionStorage.getItem('Token')]);
 
   const loadMoreRecipes = () => {
     if (loadedRecipesCount < dummy.length) {
