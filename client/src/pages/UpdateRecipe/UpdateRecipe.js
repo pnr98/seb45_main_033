@@ -64,7 +64,21 @@ export default function UpdateRecipe() {
                         stepContent: step.recipeContent,
                     })),
                 });
-                setIngredientList([data.ingredients]);
+                setIngredientList(dummyData.ingredients.map((ingredient) => {
+                    const regex = /(.+)\s+(\S+)$/;
+                    const matches = ingredient.match(regex);
+                    if(matches && matches.length === 3) {
+                        return {
+                            name: matches[1], // 재료이름
+                            quantity: matches[2] // 양
+                        }
+                    } else {
+                        return {
+                            name: ''
+                        }
+                    }
+                    }
+                ))
                 setSelectedTags({
                     category: data.foodTypes,
                     time: data.cookingTime,
