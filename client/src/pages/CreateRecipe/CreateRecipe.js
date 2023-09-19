@@ -233,7 +233,7 @@ export default function CreateRecipe() {
                         Authorization: `Bearer ${AccessToken}`
                     }
                 }
-                const response = await axios.post(`/recipes`, requestData, header)
+                const response = await axios.post(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/recipes`, requestData, header)
                 // const response = await axios.post(`${BASE_URL}/recipes`, requestData, header)
                 if (response.status === 201) {
                     setRecipeId(response.data.recipeId)

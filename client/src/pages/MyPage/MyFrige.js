@@ -139,10 +139,10 @@ const MyFrige = () => {
       const userId = sessionStorage.getItem('memberId')
       const header = {
         Headers : {
-            Authorization: 'Bearer'+' '+`${access_token}`
+            Authorization:`Bearer ${access_token}`
         }
     }
-    axios.get(`/mypage/refrigerator/${userId}`,'', header).then((res)=>{
+    axios.get(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/mypage/refrigerator/${userId}`, header).then((res)=>{
         setLike(res.data.preferredIngredients)
         setDisLike(res.data.dislikedIngredients)
         setAllergy(res.data.allergyIngredients)
@@ -255,7 +255,7 @@ const MyFrige = () => {
         "dislikedIngredients": disLike,
         "allergyIngredients": allergy
       }
-      axios.patch(`/mypage/refrigerator/${memberId}`,data,header).then((res)=>{
+      axios.patch(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/mypage/refrigerator/${memberId}`,data,header).then((res)=>{
         if(res.status === 200){
           axiosData()
         }

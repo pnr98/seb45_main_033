@@ -52,7 +52,7 @@ export default function UpdateRecipe() {
     const [recipeData, setRecipeData] = useState(null);
     // 레시피 데이터 get
     useEffect(() => {
-        axios.get(`/recipes/${recipe_id}`)
+        axios.get(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/recipes/${recipe_id}`)
             .then((response) => {
                 const { data } = response;
                 setRecipeData(data)
@@ -276,7 +276,7 @@ export default function UpdateRecipe() {
                     Authorization: `Bearer ${AccessToken}`
                 }
             }
-            const response = await axios.patch(`/recipes/${recipe_id}`, requestData, header)
+            const response = await axios.patch(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/recipes/${recipe_id}`, requestData, header)
             if (response.status === 200) {
                 setUpdateModal(true)
             }

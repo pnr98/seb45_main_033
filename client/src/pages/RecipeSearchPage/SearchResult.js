@@ -12,10 +12,11 @@ const SearchResult = () => {
     const [currentList,setCurrentList] = useState([])
 
     useEffect(()=>{
-        axios.get(`/recipe/search?searchWord=${searchText}`).then((res)=>{
+        axios.get(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/recipe/search?searchWord=${searchText}`).then((res)=>{
             if(res.status === 200){
                 setSearchList(res.data.recipes)
                 setCurrentPage(res.data.recipes.slice(0,25))
+                console.log('성공')
             }
         }).catch((res)=>{
             setSearchList(dummy)

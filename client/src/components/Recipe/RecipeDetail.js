@@ -35,7 +35,7 @@ const RecipeDetail = () =>{
     const recipe_id = useParams()
     const [recipeData,setRecipeData] = useState(null)
     useEffect(()=>{
-        axios.get(`/recipes/${recipe_id}`).then((res)=>{
+        axios.get(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/recipes/${recipe_id}`).then((res)=>{
             if(res.status === 200){
                 setRecipeData(res.data)
             }

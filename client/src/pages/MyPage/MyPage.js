@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import MyFrige from "./MyFrige";
 import UserInfo from "./UserInfo";
 import { MypageContainer,TapContainer,Tap } from "./MyPage.Styled";
-import { useDispatch } from "react-redux";
-import { setAccessToken, setLoginStatus } from "../../redux/action/action";
 import MyPageModal from "../../components/Modal/MypageModal";
 import { checkLogin } from "../../checkLogin/checkLogin";
 const dummyData = {
@@ -26,7 +23,6 @@ export default function MyPage() {
     }
   },[])
   
-  const dispatch = useDispatch()
   const TapEvent = (type) =>{
     setCurrentTap(type)
   }
