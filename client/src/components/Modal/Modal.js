@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom"
    ('Welcome',환영합니다)('Create,글 작성 확인),('Update',글 수정 확인)         */
 /* func = 상위 컴포넌트 상태 변경 함수 */
 /* recipe_id = 호출 컴포넌트 recipe_id */
-const Modal = ({type,func, recipe_id}) => {
+const Modal = ({type,func, recipe_id , username}) => {
   const navi = useNavigate()
   const token = useSelector(state=>state.access_Token)
   
@@ -60,7 +60,7 @@ const Modal = ({type,func, recipe_id}) => {
       {type==='Delete' && '삭제하시겠습니까?'}
       {type==='Guest' && '게스트로 로그인 하시겠습니까?'}
       {type==='LoginPlz' && '로그인 후 이용해주세요.'}
-      {type==='Welcome' && `환영합니다.`}
+      {type==='Welcome' && `환영합니다 ${username}님.`}
       {type==='Create' && '레시피 등록을 완료했습니다.'}
       {type==='Update' && '레시피 수정을 완료했습니다.'}
       {type==='Badextension' && 'jpg/png 파일만 업로드 가능합니다.'}
