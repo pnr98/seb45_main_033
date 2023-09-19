@@ -1,5 +1,4 @@
 import axios from "axios";
-import 'react-quill/dist/quill.snow.css';
 import { BodyContiner, MainContainer, FormContainer, Thumbnail, ButtonContainer, CurrentIngredients, RecipeContainer, IngredientContianer, TagContainer, TagBoxContainer, Tag, CreateButton, InformationMessage } from './UpdateRecipe.styled'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
@@ -9,7 +8,9 @@ export default function UpdateRecipe() {
     const [showModal, setShowModal] = useState(false);
     const [updateModal, setUpdateModal] = useState(false)
     const [ mainImageUrl, setMainImageUrl ] = useState('')
-    const { recipeId } = useParams();
+    const { recipe_id } = useParams();
+    const memberId = 1;
+    const AccessToken = sessionStorage.getItem('Token');
 
     const dummyData = {
         "foodTypes": "한식",
@@ -51,7 +52,7 @@ export default function UpdateRecipe() {
     const [recipeData, setRecipeData] = useState(null);
     // 레시피 데이터 get
     useEffect(() => {
-        axios.get(`/recipes/${recipeId}`)
+        axios.get(`/recipes/${recipe_id}`)
             .then((response) => {
                 const { data } = response;
                 setRecipeData(data)
@@ -60,25 +61,6 @@ export default function UpdateRecipe() {
                     title: data.recipeName,
                     description: data.recipeDescription,
                     steps: data.steps.map((step) => ({
-                        stepNumber: step.stepNumber,
-                        stepContent: step.recipeContent,
-                    })),
-                });
-                setIngredientList([data.ingredients]);
-                setSelectedTags({
-                    category: data.foodTypes,
-                    time: data.cookingTime,
-                    level: data.difficulty,
-                })
-            }).catch((err) => {
-                console.error("레시피 정보 요청 실패: ", err)
-                //
-                setRecipeData(dummyData)
-                setMainImageUrl(dummyData.mainImageUrl)
-                setRecipeContents({
-                    title: dummyData.recipeName,
-                    description: dummyData.recipeDescription,
-                    steps: dummyData.steps.map((step) => ({
                         stepNumber: step.stepNumber,
                         stepContent: step.recipeContent,
                     })),
@@ -99,10 +81,12 @@ export default function UpdateRecipe() {
                     }
                 ))
                 setSelectedTags({
-                    category: dummyData.foodTypes,
-                    time: dummyData.cookingTime,
-                    level: dummyData.difficulty,
+                    category: data.foodTypes,
+                    time: data.cookingTime,
+                    level: data.difficulty,
                 })
+            }).catch((err) => {
+                console.error("레시피 정보 요청 실패: ", err)
             })
     }, [])
 
@@ -267,7 +251,7 @@ export default function UpdateRecipe() {
     const handleUpdatePost = async (e) => {
         e.preventDefault();
         const requestData = {
-            "memberId": selectedTags, //
+            "memberId": memberId, //
             "foodType": selectedTags.category,
             "difficulty": selectedTags.level,
             "recipeName": recipeContents.title,
@@ -289,24 +273,22 @@ export default function UpdateRecipe() {
         try {
             const header = {
                 Headers: {
-                    Authorization: `Bearer {Token}`
+                    Authorization: `Bearer ${AccessToken}`
                 }
             }
-            const response = await axios.patch(`/recipes/${recipeId}`, requestData, header)
+            const response = await axios.patch(`/recipes/${recipe_id}`, requestData, header)
             if (response.status === 200) {
                 setUpdateModal(true)
             }
         } catch (err) {
             console.error("레시피 등록 요청 실패:", err);
-            //
-            setUpdateModal(true)
         }
     }
 
     return (
         <BodyContiner>
             {showModal && <Modal type='Badextension' func={() => setShowModal(false)} />}
-            {updateModal && <Modal type='Update' func={() => setUpdateModal(false)} recipe_id={recipeId}/>}
+            {updateModal && <Modal type='Update' func={() => setUpdateModal(false)} recipe_id={recipe_id}/>}
             <MainContainer>
                 <h1>Edit your recipe !</h1>
                 <FormContainer onSubmit={handleUpdatePost}>

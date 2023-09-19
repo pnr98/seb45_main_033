@@ -5,6 +5,8 @@ import { Container, InputContainer, EditContainer, Button } from "./Comment.styl
 import Modal from '../../components/Modal/Modal'
 import { checkLogin } from "../../checkLogin/checkLogin";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     const comment = {
         "comments":
@@ -42,10 +44,10 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
         const getComments = async () => {
             try {
                 const response = await axios.get(`/${recipeId}`)
+                // const response = await axios.get(`${BASE_URL}/${recipeId}`)
                 setComments(response.data.comments)
             } catch (err) {
-                console.error(err)
-                setComments(comment.comments)
+                console.error("댓글 조회 요청 실패: ", err)
             }
             };
             getComments()
@@ -63,6 +65,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
                 return;
             }
             const response = await axios.post(`/${recipeId}`, 
+            // const response = await axios.post(`${BASE_URL}/${recipeId}`, 
                 { commentBody: commentBody }, 
                 { headers: { Authorization: `Bearer ${AccessToken}`,
                 },
@@ -74,18 +77,6 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
             } 
         } catch (error) {
             console.error("댓글 등록 요청 실패:", error);
-            //
-            const newComment = [{
-                commentId: comments.length + 1,
-                commentBody: commentBody,
-                timestamp: "2023-08-16T15:49:20.753395",
-                memberId: 1,
-                userName: "홍길동3",
-            }];
-            console.log(comments)
-            console.log(newComment)
-            setComments((prevComments) => [...prevComments, newComment]);
-            setCommentBody("");
         }
     }
 
@@ -93,6 +84,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     const handleCommentDelete = async (commentId) => {
         try {
             const response = await axios.delete(`/comment/${recipeId}/${commentId}`, {
+            // const response = await axios.delete(`${BASE_URL}/comment/${recipeId}/${commentId}`, {
                 headers: {
                 Authorization: `Bearer {access_token}`,
             },
@@ -103,9 +95,6 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
             }
         } catch (error) {
             console.error("댓글 삭제 오류:", error);
-            //
-            const updateComments = comments.filter((comment) => comment.commentId !== commentId)
-            setComments(updateComments)
         }
     }
 
@@ -113,6 +102,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     const handleCommentSave = async (commentId) => {
         try {
             const response = await axios.patch(`/comment/${recipeId}`, 
+            // const response = await axios.patch(`${BASE_URL}/comment/${recipeId}`, 
                 { commentBody: editingComment}, 
                 { headers: { 
                     Authorization: `Bearer ${AccessToken}`
@@ -133,19 +123,6 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
             } 
         } catch (error) {
             console.error("댓글 수정 저장 오류:", error)
-
-            // 새로운 댓글 목록을 생성합니다.
-            const updatedComments = comments.map((comment) => {
-                if (comment.commentId === commentId) {
-                return { ...comment, commentBody: editingComment };
-                }
-                return comment;
-            });
-            // 업데이트된 댓글 목록을 적용합니다.
-            setComments(updatedComments);
-            setCommentIdToEdit(null);
-            setIsEditing(false);
-            setEditingComment("");
         }
     }
     // 로그인 요청 모달

@@ -19,8 +19,11 @@ import CommentHandler from './Comment'
 import { Button } from './Comment.styled'
 import Modal from '../../components/Modal/Modal'
 
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function RecipeDetailPage() {
+
+  //
     const data = {
         "foodTypes": "한식",
         "difficulty": "하",
@@ -62,7 +65,7 @@ export default function RecipeDetailPage() {
 
     const tags = [ data.foodTypes, data.difficulty, data.cookingTime ];
     const navigate = useNavigate()
-    const { recipeId } = useParams()
+    const { recipe_id } = useParams()
     const [ recipeData, setRecipeData ] = useState(null)
     const [separatedIngredients, setSeparatedIngredients] = useState([]);  
     const [ showModal, setShowModal ] = useState(false)
@@ -71,7 +74,8 @@ export default function RecipeDetailPage() {
       // 상세 레시피 데이터 가져오기
       const getRecipeData = async () => {
         try { 
-          const response = await axios.get(`/recipes/${recipeId}`)
+          const response = await axios.get(`/recipes/${recipe_id}`)
+          // const response = await axios.get(`${BASE_URL}/recipes/${recipe_id}`)
           setRecipeData(response.data)
           console.log(response.data);
 
@@ -93,8 +97,9 @@ export default function RecipeDetailPage() {
           setSeparatedIngredients(separatedIngredient)
           console.log(separatedIngredient)
         } catch (err) {
+          console.error("레시피 요청 실패: ", err)
+          //
           setRecipeData(data)
-          
           const separatedIngredient = data.ingredients.map(ingredient => {
             const regex = /(.+)\s+(\S+)$/; // 뒤에서부터 공백으로 나눔.
             const matches = ingredient.match(regex)
@@ -112,7 +117,6 @@ export default function RecipeDetailPage() {
           });
           setSeparatedIngredients(separatedIngredient)
           console.log(separatedIngredient)
-          console.error(err)
         }
       }
 
@@ -144,9 +148,8 @@ export default function RecipeDetailPage() {
     }
     // 수정 버튼
     const handleEdit = () => {
-      navigate(`update-recipe/${recipeId}`)
+      navigate(`update-recipe/${recipe_id}`)
     }
-
 
     return (
         <Container>
@@ -159,7 +162,7 @@ export default function RecipeDetailPage() {
                     <div className='header'>
                       <div className='recipe-title'>{recipeData.recipeName}</div>
                       <div className='like-button'>
-                        <LikeButton recipeId={recipeId} likes={recipeData.likes} onLikeChange={handleLikeChange}/>
+                        <LikeButton recipe_id={recipe_id} likes={recipeData.likes} onLikeChange={handleLikeChange}/>
                       </div>
                     </div>
                     <div className='tag'>
@@ -219,19 +222,19 @@ export default function RecipeDetailPage() {
                       <Modal 
                           type="Delete"
                           func={() => setShowModal(false)}
-                          recipe_id={recipeId}
+                          recipe_id={recipe_id}
                       />
                     )}
                   </BtnContainer>)}
                 <RelatedRecipe>
                   <div className='discription-title'>관련 레시피</div>
                   <div>
-                    <HorizontalScroll recipeId={recipeId}/>
+                    <HorizontalScroll recipe_id={recipe_id}/>
                   </div>
                 </RelatedRecipe>
                 <CommentsContainer>
                   <div className='discription-title'>댓글</div>
-                  <CommentHandler timeSlice={timeSlice} recipeId={recipeId} memberId={memberId}/>
+                  <CommentHandler timeSlice={timeSlice} recipe_id={recipe_id} memberId={memberId}/>
                 </CommentsContainer>
             </RecipeWrap>
 

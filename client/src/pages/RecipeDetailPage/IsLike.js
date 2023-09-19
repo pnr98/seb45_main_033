@@ -6,8 +6,10 @@ import axios from "axios";
 import Modal from '../../components/Modal/Modal'
 import { checkLogin } from "../../checkLogin/checkLogin";
 
-export default function LikeButton({recipeId, likes, onLikeChange}) {
-    const AccessToken = `ACCESS_TOKEN`
+const BASE_URL = process.env.REACT_APP_API_URL;
+
+export default function LikeButton({recipe_id, likes, onLikeChange}) {
+    const AccessToken = sessionStorage.getItem('Token');
     const [ isLiked, setIsLiked ] = useState(false)
     const [ showModal, setShowModal ] = useState(false);
 
@@ -21,27 +23,24 @@ export default function LikeButton({recipeId, likes, onLikeChange}) {
         }
         
         if (isLiked) { // 이미 좋아요를 누른 경우
-            axios.post(`/like/${recipeId}`, null, {
+            axios.post(`/like/${recipe_id}`, null, {
+            // axios.post(`${BASE_URL}/like/${recipe_id}`, null, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`
                 },
             })
                 .then((res) => {
-                    if (res.status === 204) {
+                    if (res.status === 200) {
                         setIsLiked(false)
                         onLikeChange(-1)
-                } else {
-                    console.error('좋아요 취소 요청이 실패했습니다.')
                 }
             })
             .catch ((err) => {
-                //
-                setIsLiked(false)
-                onLikeChange(-1)
                 console.error('좋아요 취소 요청 중 오류 발생.', err)
             })
         } else { // POST 요청을 통해 좋아요 추가                
-            axios.post(`/like/${recipeId}`, null, {
+            axios.post(`/like/${recipe_id}`, null, {
+            // axios.post(`${BASE_URL}/like/${recipe_id}`, null, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`
                 }
@@ -50,14 +49,9 @@ export default function LikeButton({recipeId, likes, onLikeChange}) {
                     if (res.status === 200) {
                         setIsLiked(true)
                         onLikeChange(1) // 좋아요 수 업데이트
-                } else {
-                    console.error('좋아요 요청이 실패했습니다.')
                 }
                 })
             .catch ((err) => {
-                //
-                setIsLiked(true)
-                onLikeChange(1)
                 console.error('좋아요 요청 중 오류 발생.', err)
             })
         }
@@ -69,7 +63,7 @@ export default function LikeButton({recipeId, likes, onLikeChange}) {
                 <Modal 
                     type="LoginPlz"
                     func={() => setShowModal(false)}
-                    recipe_id={recipeId}
+                    recipe_id={recipe_id}
                 />
             )}
             <button onClick={handleOnClick}>

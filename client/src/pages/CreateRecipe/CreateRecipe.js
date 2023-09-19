@@ -1,14 +1,16 @@
-import 'react-quill/dist/quill.snow.css';
 import { BodyContiner, MainContainer, FormContainer, Thumbnail, ButtonContainer, CurrentIngredients, RecipeContainer, IngredientContianer, TagContainer, TagBoxContainer, Tag, CreateButton, InformationMessage } from './CreateRecipe.styled'
 import { useState } from 'react'
 import Modal from '../../components/Modal/Modal'
 import axios from 'axios';
+
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function CreateRecipe() {
     const [showModal, setShowModal] = useState(false);
     const [createModal, setCreateModal] = useState(false)
     const [mainImageUrl, setMainImageUrl] = useState('')
     const [recipeId, setRecipeId] = useState(null)
+    const AccessToken = sessionStorage.getItem('Token');
 
     // 썸네일 업로드
     const dragOverHandle = (e) => {
@@ -37,9 +39,9 @@ export default function CreateRecipe() {
             }   
         }
     }
-    const resetMainImageUrl = () => {
-        setMainImageUrl('')
-    }
+    // const resetMainImageUrl = () => {
+    //     setMainImageUrl('')
+    // }
 
     // 카테고리 선택
     const categories = {
@@ -100,39 +102,39 @@ export default function CreateRecipe() {
         setIngredientList(updatedIngredients)
     }
     
-    const [ingredients, setIngredients] = useState([])
-    const [ingredientsInput, setIngredientsInput] = useState('')
-    const spaceHandle1 = (e) => {
-        if (e.key === " " && gapRegex.test(ingredientInput.slice(0, ingredientInput.length - 1))) {
-            if (!ingredientList.includes(ingredientInput.slice(0, ingredientInput.length - 1))) {
-                setIngredientList([...ingredientList, ingredientInput.slice(0, ingredientInput.length - 1)])
-                setIngredientInput({
-                    name: '',
-                    quantity: '',
-                })
-            } else {
-                setDuplicationErr(true)
-            }
-        }
-        if (e.key === 'Enter' && gapRegex.test(ingredientInput.slice(0, ingredientInput.length - 1))) {
-            if (!ingredientList.includes(ingredientInput)) {
-                setIngredientList([...ingredientList, ingredientInput])
-                setIngredientInput({
-                    name: '',
-                    quantity: '',
-                })
-            } else {
-                setDuplicationErr(true)
-            }
-        }
-        if (e.key === 'Backspace') {
-            setDuplicationErr(false)
-        }
-    }
-    const deleteTag1 = (tag) => {
-        const newArr = ingredientList.filter((el) => el !== tag)
-        setIngredientList(newArr)
-    }
+    // const [ingredients, setIngredients] = useState([])
+    // const [ingredientsInput, setIngredientsInput] = useState('')
+    // const spaceHandle1 = (e) => {
+    //     if (e.key === " " && gapRegex.test(ingredientInput.slice(0, ingredientInput.length - 1))) {
+    //         if (!ingredientList.includes(ingredientInput.slice(0, ingredientInput.length - 1))) {
+    //             setIngredientList([...ingredientList, ingredientInput.slice(0, ingredientInput.length - 1)])
+    //             setIngredientInput({
+    //                 name: '',
+    //                 quantity: '',
+    //             })
+    //         } else {
+    //             setDuplicationErr(true)
+    //         }
+    //     }
+    //     if (e.key === 'Enter' && gapRegex.test(ingredientInput.slice(0, ingredientInput.length - 1))) {
+    //         if (!ingredientList.includes(ingredientInput)) {
+    //             setIngredientList([...ingredientList, ingredientInput])
+    //             setIngredientInput({
+    //                 name: '',
+    //                 quantity: '',
+    //             })
+    //         } else {
+    //             setDuplicationErr(true)
+    //         }
+    //     }
+    //     if (e.key === 'Backspace') {
+    //         setDuplicationErr(false)
+    //     }
+    // }
+    // const deleteTag1 = (tag) => {
+    //     const newArr = ingredientList.filter((el) => el !== tag)
+    //     setIngredientList(newArr)
+    // }
 
     // recipe step
     const [recipeContents, setRecipeContents] = useState({
@@ -228,10 +230,11 @@ export default function CreateRecipe() {
             try {
                 const header = {
                     Headers: {
-                        Authorization: `Bearer {Token}`
+                        Authorization: `Bearer ${AccessToken}`
                     }
                 }
                 const response = await axios.post(`/recipes`, requestData, header)
+                // const response = await axios.post(`${BASE_URL}/recipes`, requestData, header)
                 if (response.status === 201) {
                     setRecipeId(response.data.recipeId)
                     setCreateModal(true)
@@ -239,8 +242,6 @@ export default function CreateRecipe() {
             
         } catch (err) {
             console.error("레시피 등록 요청 실패:", err);
-            //
-            setCreateModal(true)
         }
     }
 
