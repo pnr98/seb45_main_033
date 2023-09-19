@@ -78,3 +78,16 @@ export const PaginationContainer = styled.div`
     margin: 80px 0 70px 0;
     text-align: center;
 `;
+
+export const SearchText = styled.div`
+  font-size: 2em;
+  font-weight: 100;
+  padding: 26px 15px;
+`
+
+export const NoReulst = styled.section`
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+`
