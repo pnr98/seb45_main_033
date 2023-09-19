@@ -33,7 +33,7 @@ export default function UserInfo() {
         Authorization: `Bearer ${Token}`
       }
     }
-    axios.get(`/profile/${user_id}`,header).then((res)=>{
+    axios.get(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/profile/${user_id}`,header).then((res)=>{
       if(res.status===200){
         setUserData(res.data)
         setUserName(res.data.userName)

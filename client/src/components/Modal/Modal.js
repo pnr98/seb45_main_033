@@ -23,7 +23,7 @@ const Modal = ({type,func, recipe_id , username}) => {
           Authorization: `Bearer ${AccessToken}`
         }
       }
-      axios.delete(`/recipes/${recipe_id}`,header).then((res)=>{ 
+      axios.delete(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/recipes/${recipe_id}`,header).then((res)=>{ 
         if(res.status === 204){
           navi('/')
         }

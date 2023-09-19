@@ -43,7 +43,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
         // 댓글 불러오기
         const getComments = async () => {
             try {
-                const response = await axios.get(`/${recipeId}`)
+                const response = await axios.get(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/${recipeId}`)
                 // const response = await axios.get(`${BASE_URL}/${recipeId}`)
                 setComments(response.data.comments)
             } catch (err) {
@@ -64,7 +64,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
                 alert("댓글은 500자 이하여야 합니다.")
                 return;
             }
-            const response = await axios.post(`/${recipeId}`, 
+            const response = await axios.post(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/${recipeId}`, 
             // const response = await axios.post(`${BASE_URL}/${recipeId}`, 
                 { commentBody: commentBody }, 
                 { headers: { Authorization: `Bearer ${AccessToken}`,
@@ -83,7 +83,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     // 댓글 삭제
     const handleCommentDelete = async (commentId) => {
         try {
-            const response = await axios.delete(`/comment/${recipeId}/${commentId}`, {
+            const response = await axios.delete(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/comment/${recipeId}/${commentId}`, {
             // const response = await axios.delete(`${BASE_URL}/comment/${recipeId}/${commentId}`, {
                 headers: {
                 Authorization: `Bearer ${AccessToken}`,
@@ -101,7 +101,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     // 댓글 수정
     const handleCommentSave = async (commentId) => {
         try {
-            const response = await axios.patch(`/comment/${recipeId}`, 
+            const response = await axios.patch(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/comment/${recipeId}`, 
             // const response = await axios.patch(`${BASE_URL}/comment/${recipeId}`, 
                 { commentBody: editingComment}, 
                 { headers: { 

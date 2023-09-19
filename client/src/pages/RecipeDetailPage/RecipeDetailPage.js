@@ -78,7 +78,7 @@ export default function RecipeDetailPage() {
       // 상세 레시피 데이터 가져오기
       const getRecipeData = async () => {
         try { 
-          const response = await axios.get(`/recipes/${recipe_id}`)
+          const response = await axios.get(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/recipes/${recipe_id}`)
           // const response = await axios.get(`${BASE_URL}/recipes/${recipe_id}`)
           setRecipeData(response.data)
           console.log(response.data);
