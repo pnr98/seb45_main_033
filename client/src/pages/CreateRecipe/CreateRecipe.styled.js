@@ -15,6 +15,11 @@ export const MainContainer = styled.section`
     font-size: 48px;
     margin-bottom: 10px;
   }
+  h3 {
+    font-size: var(--font-size-20);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
 `
 export const FormContainer = styled.form`
   display: flex;
@@ -128,20 +133,16 @@ export const TagContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   gap:20px;
-  margin-bottom: 40px;
-  h3 {
-    font-size: var(--font-size-20);
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
+  margin-bottom: 40px;  
 `
 export const TagBoxContainer = styled.div`
   display: flex;
   align-items: center;
-  height: 45px;
+  height: auto;
   border: 2px solid #DFDFDF;
   padding: 10px;
   gap: 5px;
+  flex-wrap: wrap;
 `
 export const Tag = styled(TagBox)`
   margin: 0;
