@@ -41,7 +41,7 @@ public class Recipe {
     private FoodType foodType;
 
     @Column(nullable = false)
-    private Integer cookTime;
+    private Integer cookingTime;
 
     @Column
     private String mainImageUrl;

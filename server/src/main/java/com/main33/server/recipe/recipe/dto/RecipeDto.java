@@ -25,7 +25,6 @@ public class RecipeDto {
 
     // For POST /recipes
     @Getter
-    @Setter
     public static class Post {
         private FoodType foodType;
 
@@ -36,7 +35,7 @@ public class RecipeDto {
 
         private String mainImageUrl;
         private String recipeDescription;
-        private Integer cookTime;
+        private Integer cookingTime;
 
         @NotEmpty
         @Valid
@@ -58,7 +57,7 @@ public class RecipeDto {
 
         private String mainImageUrl;
         private String recipeDescription;
-        private Integer cookTime;
+        private Integer cookingTime;
 
         @NotEmpty
         @Valid
@@ -86,7 +85,7 @@ public class RecipeDto {
         @NotBlank
         private String userName;
 
-        private Integer cookTime;
+        private Integer cookingTime;
         private Long views;
         private Long likes;
         private Long commentCount;
@@ -119,7 +118,7 @@ public class RecipeDto {
         private FoodType foodType;
 
         private String difficulty;
-        private Integer cookTime;
+        private Integer cookingTime;
     }
 
     // For DELETE /recipes/{recipe-id} (DTO에 추가할 필요가 없음)
@@ -156,7 +155,7 @@ public class RecipeDto {
         @NotBlank
         private String userName;
 
-        private Integer cookingTime;
+        private Integer cookingTsssssime;
 
         private Long views;
 
@@ -183,6 +182,6 @@ public class RecipeDto {
         private String mainImageUrl;
         private String foodType;
         private String difficulty;
-        private Integer cookTime;
+        private Integer cookingTime;
     }
 }

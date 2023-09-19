@@ -72,7 +72,7 @@ public class RecipeService {
 
         // 레시피 수정 로직
         currentRecipe.setRecipeName(newRecipeData.getRecipeName());
-        currentRecipe.setCookTime(newRecipeData.getCookTime());
+        currentRecipe.setCookingTime(newRecipeData.getCookingTime());
         currentRecipe.setRecipeDescription(newRecipeData.getRecipeDescription());
 
         Optional.ofNullable(newRecipeData.getFoodType())

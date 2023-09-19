@@ -1,5 +1,5 @@
 package com.main33.server.recipe.recipe.domain;
 
 public enum FoodType {
-    KOREAN, JAPANESE, CHINESE, WESTERN, ETC
+    한식, 일식, 중식, 양식, 디저트, 다이어트
 }
