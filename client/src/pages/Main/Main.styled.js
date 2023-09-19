@@ -26,8 +26,8 @@ export const MyFrigeWrapper = styled.div`
     margin: 0 0 50px 0;
     width: 100%;
     background-image: ${({ isLogin }) =>
-        isLogin ? "url('https://source.unsplash.com/random/?meal')" : 'none'};
-    background-color: ${({ isLogin }) => (isLogin ? 'none' : '#D9D9D9')};
+        isLogin ? 'none' : "url('https://source.unsplash.com/random/?meal')"};
+    background-color: ${({ isLogin }) => (isLogin ? '#D9D9D9' : 'none')};
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -68,7 +68,7 @@ export const MyFrige = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: ${({ isLogin }) => (isLogin ? '20px 0 0 0' : '60px 0 50px 0')};
+    padding: ${({ isLogin }) => (isLogin ? '20px 0 0 0' : '50px 0 50px 0')};
     font-size: 1.3rem;
     font-weight: bold;
     text-shadow: 0px 0px 50px rgba(255, 255, 255, 1);

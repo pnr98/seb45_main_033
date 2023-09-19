@@ -107,8 +107,7 @@ export const Emoji = styled.span`
 display: flex;
 align-items: center;
 position: absolute;
-margin-top: 15px;
-margin-left: 380px;
+margin-left: 350px;
 `
 
 export const Postionbtn = styled.button`
@@ -160,4 +159,11 @@ gap:30px;
 
 export const AutoLoginContainer = styled.div`
 width: 350px;
+`
+
+export const TestPlz = styled.div`
+display: flex;
+justify-content: center;
+color: red;
+font-size: 0.8em;
 `

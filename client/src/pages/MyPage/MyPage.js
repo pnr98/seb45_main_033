@@ -44,8 +44,8 @@ export default function MyPage() {
   }
   return <MypageContainer>
     <TapContainer>
-    <Tap stroke={currentTap==='냉장고' && true} onClick={()=>TapEvent('냉장고')} >나만의 냉장고</Tap>
-    <Tap stroke={currentTap!=='냉장고' && true} onClick={()=>TapEvent('회원정보')}>회원정보 수정</Tap>
+    <Tap stroke={currentTap==='냉장고' ? "stroke" : undefined } onClick={()=>TapEvent('냉장고')} >나만의 냉장고</Tap>
+    <Tap stroke={currentTap!=='냉장고' ? "stroke"  : undefined} onClick={()=>TapEvent('회원정보')}>회원정보 수정</Tap>
     <Tap onClick={logoutModalOn}>로그아웃</Tap>
     <Tap onClick={withdrawalModalOn}>회원탈퇴</Tap>
     </TapContainer>

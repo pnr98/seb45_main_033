@@ -117,3 +117,8 @@ width: fit-content;
 export const Tag = styled(TagBox)`
 cursor: pointer;
 `
+
+export const HelpText = styled.div`
+color: #7392B7;
+font-size: 0.8em;
+`

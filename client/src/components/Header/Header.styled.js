@@ -14,7 +14,7 @@ export const HeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  padding-left: 100px; 
+  padding-left: 100px;
   padding-right: 100px;
   box-sizing: border-box;
   flex-direction: row;
@@ -50,6 +50,15 @@ export const ButtonLink = styled(Link)`
   margin-left: 50px;
   text-decoration: none;
   visibility: visible;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  color: #000;
+  
+  &:hover {
+    background-color: #f1f1f1;
+    color: #E2990b;
+  }
 
   @media (max-width: 710px) {
     visibility: visible;
@@ -57,6 +66,7 @@ export const ButtonLink = styled(Link)`
     border-top: 1px solid lightgray;
   }
 `;
+
 
 export const HamburgerBar = styled.div`
   cursor: pointer;
@@ -79,13 +89,5 @@ export const DropdownMenu = styled.div`
     background-color: white;
     border: 1px solid #ccc;
     display: ${props => (props.show ? 'block' : 'none')};
-  }
-
-  a, div {
-    padding: 12px 12px;
-    display: block;
-  }
-  a:hover, div:hover {
-    background-color: #f1f1f1;
   }
 `;

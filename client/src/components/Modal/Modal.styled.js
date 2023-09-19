@@ -37,6 +37,8 @@ export const ModalText = styled.div`
   align-items: center;
   flex-grow: 1;
   padding-top: 10px;
+  font-size: medium;
+  font-weight: normal;
 `;
 
 
@@ -54,13 +56,21 @@ export const ModalBtnBox = styled.div`
 export const ModalBtn = styled.button`
   background-color: #D0C5B0;
   color: #FFFFFF;
-  border: none;
+  border: none !important;
   border-radius: 8px;
-  padding: 9px 15px; // 좀 더 넓은 패딩으로 버튼 크기 조절 // 원래는 9px 11px
+  padding: 9px 15px;
   cursor: pointer;
-
+  width: 62px;
+  height: 39px;
+  outline: none;
+  font-size: 16px;
+  font-weight: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
   &:hover {
-    
+    background-color: #D0C5B0 !important;
   }
 `;
 
@@ -93,4 +103,6 @@ export const DeleteMessageContainer = styled(InputContainer)`
 
 export const DeleteInput = styled.input`
 width: 90%;
+border: 1px solid black;
+padding: 0 10px;
 `

@@ -11,6 +11,8 @@ import RecipeDetailPage from './pages/RecipeDetailPage/RecipeDetailPage';
 import RecipeSearchPage from './pages/RecipeSearchPage/RecipeSearchPage';
 import CreateRecipe from './pages/CreateRecipe/CreateRecipe';
 import UpdateRecipe from './pages/UpdateRecipe/UpdateRecipe';
+import SearchResult from './pages/RecipeSearchPage/SearchResult';
+
 import { useDispatch } from 'react-redux';
 import { setLoginStatus } from './redux/action/action';
 import UpBtn from './components/UpBtn/UpBtn';
@@ -39,6 +41,7 @@ function App() {
         <Route path="/recipe/:recipe_id" element={<RecipeDetailPage />} />
         <Route path="/search" element={<RecipeSearchPage />} />
         <Route path="/create-recipe" element={<CreateRecipe />} />
+        <Route path="/search/:searchText" element={<SearchResult />} />
       </Routes>
       <UpBtn />
       <Footer />

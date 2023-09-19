@@ -12,13 +12,15 @@ import {
   Postionbtn,
   SignLink,
   Title,
-  PwErrText
+  PwErrText,
+  TestPlz
 } from './SignUp.Styled'
 import TitleIcon from '../../common/image/signupLogo.svg'
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { checkLogin } from '../../checkLogin/checkLogin';
+import Modal from '../../components/Modal/Modal';
 const SignUp = () => {
   const [name, setName] = useState('');
   const [nameText, setNameText] = useState('');
@@ -36,6 +38,8 @@ const SignUp = () => {
   const [succecsEmail, setSuccecsEmail] = useState(false);
   const [succecsPw, setSuccecsPw] = useState(false);
   const [succecsSamePw, setSuccecsSamePw] = useState(false);
+  const [onModal, setOnModal] = useState(false)
+  const [testPlz , setTestPlz] = useState(false)
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const passwordRegex =
     /^(?=.*[A-Za-z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z@$!%*?&\d]{7,20}$/i;
@@ -104,10 +108,9 @@ const SignUp = () => {
           setNameErr(true)
           setNameText('이미 존재하는 유저네임 입니다.')
         }else{
-          setSuccecsName(false)
-          setDupicateName(true)
-          setNameErr(true)
-          setNameText('이미 존재하는 유저네임 입니다.')
+          setSuccecsName(true); 
+          setDupicateName(false); 
+          setNameText('사용가능한 유저네임 입니다.')
         }
       }))
     }else{
@@ -131,6 +134,10 @@ const SignUp = () => {
           setDuplacteEmail(false)
           setEmailText('이미 사용중인 이메일입니다.')
           setEmailErr(true)
+        }else{
+          setDuplacteEmail(true)
+          setEmailText('사용가능한 이메일 입니다.')
+          setEmailErr(false)
         }
       })
     }
@@ -155,10 +162,23 @@ const SignUp = () => {
       }
       axios.post('/auth/signup',data).then((res)=>{
         if(res.status === 201){
-          navi('/login')
-          console.log('회원가입 성공');
+          const logindata = {
+            email:email,
+            passwrod:pw
+          }
+          axios.post(`/auth/login`,logindata).then((res)=>{
+           if(res.status === 200){
+            sessionStorage.setItem('Token',res.data.token)
+           }
+          }
+          ).catch((res)=>sessionStorage.setItem('Token' , 'Bearer abcd'))
+          setOnModal(true)
         }
-      }).catch((res)=>console.log(res))
+      }).catch((res)=>{
+        sessionStorage.setItem('Token' , 'Bearer abcd')
+        setOnModal(true)})
+    }else{
+      setTestPlz(true)
     }
   };
   return (
@@ -248,7 +268,7 @@ const SignUp = () => {
             {verifyPwErr && <ErrText>비밀번호를 확인해주세요</ErrText>}
           </div>
 
-
+          {testPlz && <TestPlz>모든 검사가 통과되어야 회원가입이 가능합니다.</TestPlz>}
           <SignBtnContainer>
           <SignBtn onClick={submitHandle}>회원가입</SignBtn>
           </SignBtnContainer>
@@ -260,6 +280,7 @@ const SignUp = () => {
 
 
         </FormContainer>
+        {onModal && <Modal type="Welcome" username={name}/>}
       </BodyContainer>
   );
 };
