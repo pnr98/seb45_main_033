@@ -11,18 +11,16 @@ import { useNavigate } from "react-router-dom"
 /* recipe_id = 호출 컴포넌트 recipe_id */
 const Modal = ({type,func, recipe_id , username}) => {
   const navi = useNavigate()
-  const token = useSelector(state=>state.access_Token)
-  
+  const AccessToken = sessionStorage.getItem('Token');
   const setStateHandle = () => {
     func()
   }
 
   const ModalHandle = () => {
     if(type==='Delete'){
-      const access_token = token
       const header = {
         Headers : {
-          Authorization: `Bearer ${access_token}`
+          Authorization: `Bearer ${AccessToken}`
         }
       }
       axios.delete(`/recipes/${recipe_id}`,'',header).then((res)=>{ 
