@@ -60,7 +60,7 @@ export default function Login() {
         email:email,
         password:pw
       }
-      axios.post('http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/auth/login',data).then((res)=>{
+      axios.post('/auth/login',data).then((res)=>{
         if(res.status===200){
           sessionStorage.setItem('Token',res.data.token)
           sessionStorage.setItem('username', res.data.username)

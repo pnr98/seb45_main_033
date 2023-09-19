@@ -48,10 +48,11 @@ export default function UserInfo() {
     })
   },[])
   const imageChange = (e) =>{
-    setSelectImage(e.target.files[0])
+    if(e.target.files[0].type==='image/jpeg' || e.target.files[0].type==='image/png'){
+      setSelectImage(e.target.files[0])
     const imageUrl = URL.createObjectURL(e.target.files[0])
     setUserImage(imageUrl)
-    console.log(e.target.files)
+    }
   }
   const nameHandle = (e) =>{
     setUserName(e.target.value)
