@@ -95,7 +95,7 @@ const SignUp = () => {
       const params = {
         username: name
       }
-      axios.get(`/auth/checkname`,{params : params}).then((res)=>{
+      axios.get(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/auth/checkname`,{params : params}).then((res)=>{
         if(res.status===200){
           setSuccecsName(true); 
           setDupicateName(false); 
@@ -128,7 +128,7 @@ const SignUp = () => {
       const data = {
         email:email
       }
-      axios.get(`/auth/checkemail`,{params : data}).then((res)=>{
+      axios.get(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/auth/checkemail`,{params : data}).then((res)=>{
         if(res.status === 200){
           setDuplacteEmail(true)
           setEmailText('사용가능한 이메일 입니다.')
@@ -164,14 +164,14 @@ const SignUp = () => {
         email:email,
         password:pw
       }
-      axios.post('/auth/signup',data).then((res)=>{
+      axios.post('http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/auth/signup',data).then((res)=>{
         if(res.status === 201){
           console.log('요청성공')
           const logindata = {
             email:email,
             passwrod:pw
           }
-          axios.post(`/auth/login`,logindata).then((res)=>{
+          axios.post(`http://ec2-13-124-153-3.ap-northeast-2.compute.amazonaws.com:8080/auth/login`,logindata).then((res)=>{
            if(res.status === 200){
             sessionStorage.setItem('Token',res.data.token)
            }
