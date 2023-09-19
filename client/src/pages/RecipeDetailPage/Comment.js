@@ -92,7 +92,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     // 댓글 삭제
     const handleCommentDelete = async (commentId) => {
         try {
-            const response = await axios.delete(`/${recipeId}/${commentId}`, {
+            const response = await axios.delete(`/comment/${recipeId}/${commentId}`, {
                 headers: {
                 Authorization: `Bearer {access_token}`,
             },
