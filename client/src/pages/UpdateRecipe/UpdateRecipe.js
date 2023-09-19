@@ -7,8 +7,8 @@ import Modal from '../../components/Modal/Modal'
 
 export default function UpdateRecipe() {
     const [showModal, setShowModal] = useState(false);
-    const [createModal, setUpdateModal] = useState(false)
-    const [ thumbnail, setThumbnail ] = useState('')
+    const [updateModal, setUpdateModal] = useState(false)
+    const [ mainImageUrl, setMainImageUrl ] = useState('')
     const { recipeId } = useParams();
 
     const dummyData = {
@@ -49,29 +49,20 @@ export default function UpdateRecipe() {
       }
     
     const [recipeData, setRecipeData] = useState(null);
-    // const [initialRecipeData, setInitialRecipeData] = useState({
-    //     memberId: recipeData ? recipeData.memberId : null,
-    //     foodType: recipeData ? recipeData.foodType : "",
-    //     difficulty: recipeData ? recipeData.difficulty : "",
-    //     recipeName: recipeData ? recipeData.recipeName : "",
-    //     mainImageUrl: recipeData ? recipeData.mainImageUrl : "",
-    //     recipeDescription: recipeData ? recipeData.recipeDescription : "",
-    //     cookingTime: recipeData ? recipeData.cookingTime : null,
-    //     steps: recipeData ? recipeData.steps : [],
-    //     ingredients: recipeData ? recipeData.ingredients : []
-    // });
-
     // 레시피 데이터 get
     useEffect(() => {
         axios.get(`/recipes/${recipeId}`)
             .then((response) => {
                 const { data } = response;
                 setRecipeData(data)
-                setThumbnail(data.mainImageUrl)
+                setMainImageUrl(data.mainImageUrl)
                 setRecipeContents({
                     title: data.recipeName,
                     description: data.recipeDescription,
-                    steps: [...data.steps],
+                    steps: data.steps.map((step) => ({
+                        stepNumber: step.stepNumber,
+                        stepContent: step.recipeContent,
+                    })),
                 });
                 setIngredientList([data.ingredients]);
                 setSelectedTags({
@@ -83,21 +74,38 @@ export default function UpdateRecipe() {
                 console.error("레시피 정보 요청 실패: ", err)
                 //
                 setRecipeData(dummyData)
-                setThumbnail(dummyData.mainImageUrl)
+                setMainImageUrl(dummyData.mainImageUrl)
                 setRecipeContents({
                     title: dummyData.recipeName,
                     description: dummyData.recipeDescription,
-                    steps: [...dummyData.steps],
+                    steps: dummyData.steps.map((step) => ({
+                        stepNumber: step.stepNumber,
+                        stepContent: step.recipeContent,
+                    })),
                 });
-                setIngredientList(dummyData.ingredients)
+                setIngredientList(dummyData.ingredients.map((ingredient) => {
+                    const regex = /(.+)\s+(\S+)$/;
+                    const matches = ingredient.match(regex);
+                    if(matches && matches.length === 3) {
+                        return {
+                            name: matches[1], // 재료이름
+                            quantity: matches[2] // 양
+                        }
+                    } else {
+                        return {
+                            name: ''
+                        }
+                    }
+                    }
+                ))
                 setSelectedTags({
                     category: dummyData.foodTypes,
                     time: dummyData.cookingTime,
                     level: dummyData.difficulty,
                 })
             })
-    }, [recipeId])
-    
+    }, [])
+
     // 썸네일 업로드
     const dragOverHandle = (e) => {
         e.preventDefault();
@@ -108,7 +116,7 @@ export default function UpdateRecipe() {
         if (file) {
             if (file.type === 'image/png' || file.type === 'image/jpeg') {
                 const imageUrl = URL.createObjectURL(file);
-                setThumbnail(imageUrl)
+                setMainImageUrl(imageUrl)
             } else {
                 setShowModal(true)
             }
@@ -119,14 +127,14 @@ export default function UpdateRecipe() {
         if (file) {
             if (file.type === 'image/png' || file.type === 'image/jpeg') {
                 const imageUrl = URL.createObjectURL(file);
-                setThumbnail(imageUrl)
+                setMainImageUrl(imageUrl)
             } else {
                 setShowModal(true)
             }   
         }
     }
-    const resetThumbnail = () => {
-        setThumbnail('')
+    const resetMainImageUrl = () => {
+        setMainImageUrl('')
     }
 
     // 카테고리 선택
@@ -146,10 +154,6 @@ export default function UpdateRecipe() {
             ...prevSelectedTags,
             [type]: value,
         }))
-        console.log("선택된 카테고리:", value);
-        console.log("선택된 카테고리:", selectedTags.category);
-        console.log("선택된 시간:", selectedTags.time);
-        console.log("선택된 레벨:", selectedTags.level);
     }
 
     // 재료
@@ -206,7 +210,6 @@ export default function UpdateRecipe() {
             ...recipeContents,
             [field]: e.target.value,
         })
-        console.log(`${field} : ${e.target.value}`)
     }
     // 레시피 내용 변경
     const handleStepChange = (e, idx) => {
@@ -249,18 +252,17 @@ export default function UpdateRecipe() {
             }
         })
     };
-    
 
     // 등록버튼
     const isSubmitEnabled = 
-        selectedTags.category && 
-        selectedTags.time && 
-        selectedTags.level &&
-        recipeContents.title.trim() !== "" &&
-        recipeContents.description.trim() !== "" &&
-        thumbnail !== "" &&
-        recipeContents.steps.length > 1 &&
-        ingredientList.length > 0;
+            selectedTags.category !== null && 
+            selectedTags.time !== null && 
+            selectedTags.level !== null &&
+            recipeContents.title.trim() !== "" &&
+            recipeContents.description.trim() !== "" &&
+            mainImageUrl !== "" &&
+            recipeContents.steps.every((step) => step.stepContent.trim() !== "") &&
+            ingredientList.length > 0
 
     const handleUpdatePost = async (e) => {
         e.preventDefault();
@@ -269,7 +271,7 @@ export default function UpdateRecipe() {
             "foodType": selectedTags.category,
             "difficulty": selectedTags.level,
             "recipeName": recipeContents.title,
-            "mainImageUrl": thumbnail,
+            "mainImageUrl": mainImageUrl,
             "recipeDescription": recipeContents.description,
             "cookingTime": selectedTags.time,
             "ingredients": ingredientList.map((ingredient) => (
@@ -280,41 +282,40 @@ export default function UpdateRecipe() {
                 "stepContent": step.stepContent,
             }))
         };
-        console.log(requestData);
+        if (!isSubmitEnabled) {
+            alert('입력을 모두 해주세요')
+            return
+        } 
         try {
-            if (isSubmitEnabled) {
-                const header = {
-                    Headers: {
-                        Authorization: `Bearer {Token}`
-                    }
+            const header = {
+                Headers: {
+                    Authorization: `Bearer {Token}`
                 }
-                const response = await axios.patch(`/recipes/${recipeId}`, requestData, header)
-                if (response.status === 200) {
-                    setUpdateModal(true)
-                }
+            }
+            const response = await axios.patch(`/recipes/${recipeId}`, requestData, header)
+            if (response.status === 200) {
+                setUpdateModal(true)
             }
         } catch (err) {
             console.error("레시피 등록 요청 실패:", err);
             //
-            console.log(requestData)
             setUpdateModal(true)
         }
     }
-    console.log(recipeData);
-    
+
     return (
         <BodyContiner>
             {showModal && <Modal type='Badextension' func={() => setShowModal(false)} />}
-            {createModal && <Modal type='Update' func={() => setUpdateModal(false)} recipe_id={recipeId}/>}
+            {updateModal && <Modal type='Update' func={() => setUpdateModal(false)} recipe_id={recipeId}/>}
             <MainContainer>
                 <h1>Edit your recipe !</h1>
                 <FormContainer onSubmit={handleUpdatePost}>
                     <Thumbnail>
-                        <div>
-                            {thumbnail ?
-                                <img src={thumbnail} alt='thumbnail' onDrop={dropHandle} onDragOver={dragOverHandle} />
+                        <div onDrop={dropHandle} onDragOver={dragOverHandle}>
+                            {mainImageUrl ?
+                                <img src={mainImageUrl} alt='thumbnail' />
                                 :
-                                <div id='fileinput' onDrop={dropHandle} onDragOver={dragOverHandle}>
+                                <div id='fileinput'>
                                     <div>썸네일 이미지를 드래그 앤 드롭 해보세요.</div>
                                     <div>썸네일 이미지는 jpg/png 확장자만 지원합니다.</div>
                                 </div>}
@@ -324,9 +325,9 @@ export default function UpdateRecipe() {
                                 파일선택
                                 <input type='file' onChange={(e) => inputBtnhandle(e)} />
                             </CreateButton>
-                            <CreateButton onClick={resetThumbnail} >
+                            {/* <CreateButton onClick={resetMainImageUrl} >
                                 초기화
-                            </CreateButton>
+                            </CreateButton> */}
                         </ButtonContainer>
                     </Thumbnail>
 
@@ -421,7 +422,7 @@ export default function UpdateRecipe() {
                         </div>
                     </TagContainer>
                     <div className='button-container'>
-                        <CreateButton onClick={(e) => handleUpdatePost(e)} disabled={!isSubmitEnabled} boxColor="orange" size="big">레시피 수정</CreateButton>
+                        <CreateButton onClick={(e) => handleUpdatePost(e)} boxColor="orange" size="big">레시피 수정</CreateButton>
                     </div>
                 </FormContainer>
             </MainContainer>
