@@ -16,6 +16,7 @@ const SearchResult = () => {
             if(res.status === 200){
                 setSearchList(res.data.recipes)
                 setCurrentPage(res.data.recipes.slice(0,25))
+                console.log('성공')
             }
         }).catch((res)=>{
             setSearchList(dummy)

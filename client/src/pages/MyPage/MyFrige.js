@@ -139,10 +139,10 @@ const MyFrige = () => {
       const userId = sessionStorage.getItem('memberId')
       const header = {
         Headers : {
-            Authorization: 'Bearer'+' '+`${access_token}`
+            Authorization:`Bearer ${access_token}`
         }
     }
-    axios.get(`/mypage/refrigerator/${userId}`,'', header).then((res)=>{
+    axios.get(`/mypage/refrigerator/${userId}`, header).then((res)=>{
         setLike(res.data.preferredIngredients)
         setDisLike(res.data.dislikedIngredients)
         setAllergy(res.data.allergyIngredients)
