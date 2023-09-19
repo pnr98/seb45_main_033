@@ -69,7 +69,7 @@
 
 <details>
 <summary><strong>Figma 화면설계서</strong></summary>
-  
+  https://www.figma.com/file/HIezpiAglIOLwRzHxDzQtQ/33%EC%96%91%ED%98%B8-Main-project?type=design&node-id=0%3A1&mode=design&t=MjRAwREopbEmxYfT-1
 </details>
 
 </br>
@@ -119,9 +119,3 @@ footer(옵션) // -> 꼬리말
 | **Design** | 사용자 인터페이스 디자인 변경       |
 | **Test**   | 테스트 코드 작성 또는 수정          |
 | ... | ... |
-
-### 제목 규칙
-1. 제목의 처음은 동사 원형으로 시작합니다.
-2. 총 글자 수는 50자 이내로 작성합니다.
-3. 마지막에 특수문자는 삽입하지 않습니다. 예) 마침표(.), 느낌표(!), 물음표(?)
-4. 제목은 개조식 구문으로 작성합니다.
