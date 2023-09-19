@@ -55,7 +55,8 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST, "/auth/signup").permitAll()
-                        .antMatchers("/recipes/**").authenticated()
+                        .antMatchers(HttpMethod.GET, "/recipes/**").permitAll()  // 인증 없이 GET 요청을 허용
+                        .antMatchers("/recipes/**").authenticated()  // /recipes/로 시작하는 다른 모든 요청은 인증이 필요함
                         .anyRequest().permitAll()
                 );
         return http.build();
