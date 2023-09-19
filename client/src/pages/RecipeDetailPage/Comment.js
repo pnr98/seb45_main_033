@@ -72,7 +72,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
             });
             if (response.status === 200) {
                 const newComment = response.data
-                setComments((prevComments) => [...prevComments, newComment]);
+                setComments((prevComments) => [...prevComments, ...newComment]);
                 setCommentBody("");
             } 
         } catch (error) {

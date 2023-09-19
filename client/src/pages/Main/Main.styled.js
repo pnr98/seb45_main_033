@@ -144,26 +144,24 @@ export const FoodCategory = styled.button`
 `;
 
 export const LatestCategoryBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin-bottom: 70px;
-    padding: 5px;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; // Align items to the right side
+  margin-bottom: 70px;
+  padding: 5px;
+  width: 100%;
 `;
 
 export const LatestCategory = styled.button`
-    display: flex;
-    justify-content: flex-end;
-    padding: 5px;
+  display: flex;
 
-    div {
-      margin: 0 35px;
 
-      &:active {
+  div {
+    margin-left: 30px;
+    &:active {
       font-weight: bold;
     }
-    }
+  }
 `;
 
 export const RecipesContainer = styled.div`
