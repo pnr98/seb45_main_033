@@ -82,7 +82,6 @@ export default function RecipeDetailPage() {
           // const response = await axios.get(`/recipes/${recipe_id}`)
           const response = await axios.get(`${BASE_URL}/recipes/${recipe_id}`)
           setRecipeData(response.data)
-          console.log(response.data);
 
           // 재료
           const separatedIngredient = recipeData.ingredients.map(ingredient => {
@@ -105,7 +104,6 @@ export default function RecipeDetailPage() {
             time: response.data.cookingTime,
             level: response.data.difficulty,
           })
-          console.log(separatedIngredient)
         } catch (err) {
           console.error("레시피 요청 실패: ", err)
         }
