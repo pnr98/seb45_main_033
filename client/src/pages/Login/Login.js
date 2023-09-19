@@ -62,18 +62,17 @@ export default function Login() {
       }
       axios.post('/auth/login',data).then((res)=>{
         if(res.status===200){
-          dispatch(setAccessToken(res.data.token))
           sessionStorage.setItem('Token',res.data.token)
-          dispatch(setLoginStatus(true))
+          sessionStorage.setItem('username', res.data.username)
+          sessionStorage.setItem('memberId', res.data.memberId)
           navi('/')
         }
       }).catch((res)=>{
-        dispatch(setAccessToken('Bearer abcd'))  // 서버 열리면 수정해야할 곳
-        sessionStorage.setItem('Token', 'Bearer abcd')
-        dispatch(setLoginStatus(true))
-        navi('/')})
-      console.log('보냄')
-    }  //로그인 버튼 클릭시 요청 보내고 로그인 성공 응답일 경우 데이터를 받아서 스토어에 담음
+        if(!res.status!==401){
+          sessionStorage.setItem('Token', 'Bearer abcd')
+          navi('/')}
+        })
+    }
   }
 
   const enterHandle = (e) => {
