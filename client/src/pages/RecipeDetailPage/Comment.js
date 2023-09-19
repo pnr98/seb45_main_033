@@ -5,6 +5,8 @@ import { Container, InputContainer, EditContainer, Button } from "./Comment.styl
 import Modal from '../../components/Modal/Modal'
 import { checkLogin } from "../../checkLogin/checkLogin";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     const comment = {
         "comments":
@@ -42,6 +44,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
         const getComments = async () => {
             try {
                 const response = await axios.get(`/${recipeId}`)
+                // const response = await axios.get(`${BASE_URL}/${recipeId}`)
                 setComments(response.data.comments)
             } catch (err) {
                 console.error(err)
@@ -63,6 +66,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
                 return;
             }
             const response = await axios.post(`/${recipeId}`, 
+            // const response = await axios.post(`${BASE_URL}/${recipeId}`, 
                 { commentBody: commentBody }, 
                 { headers: { Authorization: `Bearer ${AccessToken}`,
                 },
@@ -93,6 +97,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     const handleCommentDelete = async (commentId) => {
         try {
             const response = await axios.delete(`/comment/${recipeId}/${commentId}`, {
+            // const response = await axios.delete(`${BASE_URL}/comment/${recipeId}/${commentId}`, {
                 headers: {
                 Authorization: `Bearer {access_token}`,
             },
@@ -113,6 +118,7 @@ export default function CommentHandler({ recipeId, timeSlice, memberId }) {
     const handleCommentSave = async (commentId) => {
         try {
             const response = await axios.patch(`/comment/${recipeId}`, 
+            // const response = await axios.patch(`${BASE_URL}/comment/${recipeId}`, 
                 { commentBody: editingComment}, 
                 { headers: { 
                     Authorization: `Bearer ${AccessToken}`

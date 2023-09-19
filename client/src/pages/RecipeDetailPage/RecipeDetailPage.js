@@ -19,6 +19,7 @@ import CommentHandler from './Comment'
 import { Button } from './Comment.styled'
 import Modal from '../../components/Modal/Modal'
 
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function RecipeDetailPage() {
     const data = {
@@ -72,6 +73,7 @@ export default function RecipeDetailPage() {
       const getRecipeData = async () => {
         try { 
           const response = await axios.get(`/recipes/${recipeId}`)
+          // const response = await axios.get(`${BASE_URL}/recipes/${recipeId}`)
           setRecipeData(response.data)
           console.log(response.data);
 

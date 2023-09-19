@@ -4,6 +4,8 @@ import { useState } from 'react'
 import Modal from '../../components/Modal/Modal'
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 export default function CreateRecipe() {
     const [showModal, setShowModal] = useState(false);
     const [createModal, setCreateModal] = useState(false)
@@ -232,6 +234,7 @@ export default function CreateRecipe() {
                     }
                 }
                 const response = await axios.post(`/recipes`, requestData, header)
+                // const response = await axios.post(`${BASE_URL}/recipes`, requestData, header)
                 if (response.status === 201) {
                     setRecipeId(response.data.recipeId)
                     setCreateModal(true)

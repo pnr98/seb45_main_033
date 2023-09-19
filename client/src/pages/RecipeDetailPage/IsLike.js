@@ -6,6 +6,8 @@ import axios from "axios";
 import Modal from '../../components/Modal/Modal'
 import { checkLogin } from "../../checkLogin/checkLogin";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 export default function LikeButton({recipeId, likes, onLikeChange}) {
     const AccessToken = `ACCESS_TOKEN`
     const [ isLiked, setIsLiked ] = useState(false)
@@ -22,6 +24,7 @@ export default function LikeButton({recipeId, likes, onLikeChange}) {
         
         if (isLiked) { // 이미 좋아요를 누른 경우
             axios.post(`/like/${recipeId}`, null, {
+            // axios.post(`${BASE_URL}/like/${recipeId}`, null, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`
                 },
@@ -42,6 +45,7 @@ export default function LikeButton({recipeId, likes, onLikeChange}) {
             })
         } else { // POST 요청을 통해 좋아요 추가                
             axios.post(`/like/${recipeId}`, null, {
+            // axios.post(`${BASE_URL}/like/${recipeId}`, null, {
                 headers: {
                     Authorization: `Bearer ${AccessToken}`
                 }
