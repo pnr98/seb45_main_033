@@ -15,24 +15,24 @@
 ## ✨ Preview
 <table style="padding: 20px;">
   <tr>
-    <td>
-      메인페이지<br>· 비 로그인 시 화면<br>· 로그인 시 화면<br>· Top 버튼
+    <td width="18%">
+      <strong>메인페이지</strong><br>· 비 로그인 시 화면<br>· 로그인 시 화면<br>· Top 버튼
     </td>
-    <td>
+    <td >
      <img alt="Main page before login" style="width: 300px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/89c3e77f-ed21-420a-a65d-1f246d4b3083">
     </td>
-    <td>
+    <td >
       <img alt="Main page after login" style="width: 300px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/10fea0d4-e0cb-4201-b7f7-1d47709c1436">
     </td>
   </tr>
-  <tr>
-    <td>메인페이지<br>무한 스크롤</td> 
+  <tr >
+    <td><strong>메인페이지</strong><br>· 무한 스크롤</td> 
     <td>
       <img alt="Click to top button" style="width: 300px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/18c26e67-0856-4284-9abd-10f01272f121">
     </td>
   </tr>
   <tr>
-    <td>· 로그인<br>· 회원가입</td>
+    <td><strong>로그인페이지</strong><br><strong>회원가입페이지</strong></td>
     <td>
       <img alt="Login" style="height: 300px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/94d6d470-38ba-470f-ae97-efc194d5225d">
     </td>
@@ -42,7 +42,7 @@
   </tr>
   <tr>
     <td>
-      마이페이지<br>유저 정보
+      <strong>마이페이지</strong><br>· 유저 정보 수정
     </td>
     <td>
       <img alt="User info tab in mypage" style="width: 600px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/ad7ae10e-297d-4f05-93f5-6ab66a108295">
@@ -50,35 +50,25 @@
   </tr>
   <tr>
     <td>
-      마이페이지<br>나만의 냉장고
+      <strong>마이페이지</strong><br>· 나만의 냉장고
     </td>
     <td>
       <img alt="My refrigerator tab in mypage" style="width: 600px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/dc026b94-1536-40e7-845f-590f3c4251f6">
     </td>
   </tr>
   <tr>
-    <td>마이페이지<br>로그아웃</td>
+    <td><strong>마이페이지</strong><br>· 로그아웃<br>· 회원탈퇴</td>
     <td>
       <img alt="Logout tab in mypage" style="width: 600px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/d824ffcd-c066-46f1-aafe-66779bcee0bf">
     </td>
     <td>
-      <img alt="Logout tab in mypage" style="width: 300px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/c3fd53ab-cd74-451d-a734-354ee5338723">
-    </td>
-  </tr>
-  <tr>
-    <td>마이페이지<br>회원탈퇴</td>
-    <td>
       <img alt="Sign out tab in mypage" style="width: 600px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/14c6a927-6403-4043-9752-ca1674361d68">
     </td>
-    <td>
-      <img alt="Sign out tab in mypage" style="width: 300px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/c1d15471-eec4-4050-90e2-6a602297f80d">
-    </td>
   </tr>
   <tr>
-    <td>레시피 상세 페이지
-      <br>좋아요 기능
-      <br>· 로그인 시
-      <br>· 비 로그인 시
+    <td><strong>레시피 상세 페이지</strong>
+      <br>· 좋아요 기능
+      <br> (로그인필요)
     </td>
     <td>
       <img alt="Like button after login" style="width: 500px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/a092903a-cd34-4cd8-ad84-7b9be21da0e8">
@@ -88,26 +78,26 @@
     </td>
   </tr>
   <tr>
-    <td>레시피 상세 페이지<br>글 삭제 기능</td>
+    <td><strong>레시피 상세 페이지</strong><br>· 글 삭제 기능</td>
     <td>
       <img alt="Delete button in recipe detail page" style="width: 500px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/c61010a7-7749-4d3f-a976-254b2f738366">
     </td>
   </tr>
   <tr>
-    <td>레시피 상세 페이지<br>관련 레시피 조회</td>
+    <td><strong>레시피 상세 페이지</strong><br>· 관련 레시피 조회<br> (가로 스크롤)</td>
     <td>
       <img alt="Related recipes in recipe detail page" style="width: 600px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/9dadbf89-e475-4f5d-8672-2244597cf190">
     </td>
   </tr>
   </tr>
   <tr>
-    <td>레시피 상세 페이지<br>(댓글 CRUD)</td>
+    <td><strong>레시피 상세 페이지</strong><br>· 댓글 조회, 생성, 삭제, 수정</td>
     <td>
       <img alt="Comment in recipe detail page" style="width: 600px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/2326e541-7e00-43fe-99d8-8d314dc96e86">
     </td>
   </tr>
   <tr>
-    <td>레시피 수정 페이지</td>
+    <td><strong>레시피 수정 페이지</strong></td>
     <td>
       <img alt="Content edit in recipe detail edit page" style="width: 600px;" src="https://github.com/codestates-seb/seb45_main_033/assets/32677165/6a6fb5fe-63b4-4aa5-8676-e09780a5aec4">
     </td>
@@ -143,9 +133,9 @@
 
 ### 🖥️ Front-end
 
-| HTML5  | CSS3 | Java Script | React | Redux |  styled-components |  React-quill |
-| :---: | :---:  | :---: | :---: | :----------------------------------------------------------: | :---: | :----------------------------------------------------------: |
-| <div style="display: flex; align-items: flex-start;"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/800px-HTML5_logo_and_wordmark.svg.png" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/js-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img alt="prettier logo" src="https://ko.redux.js.org/img/redux.svg" width="65" height="65" > | <img alt="styled-components logo" src="https://www.styled-components.com/atom.png" width="65" height="65" ></div> | <img alt="eslint logo" src="https://png.pngtree.com/templates/sm/20180621/sm_5b2bb635f22a3.jpg" height="50" width="50"></div> |
+| HTML5  | CSS3 | Java Script | React |  styled-components |
+| :---: | :---:  | :---: | :---: | :---: |
+| <div style="display: flex; align-items: flex-start;"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/800px-HTML5_logo_and_wordmark.svg.png" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/js-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" /></div> | <img alt="styled-components logo" src="https://www.styled-components.com/atom.png" width="65" height="65" ></div> 
 
 </br>
 
