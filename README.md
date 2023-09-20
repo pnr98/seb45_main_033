@@ -1,4 +1,4 @@
-![사용자 요구사항 정의서_2](https://github.com/codestates-seb/seb45_main_033/assets/129926357/3707c49e-6bc0-4730-97a3-4757fdd71348)<img src="https://capsule-render.vercel.app/api?type=Waving&color=auto&height=250&section=header&text=Main%20Project&fontSize=60" />
+<img src="https://capsule-render.vercel.app/api?type=Waving&color=auto&height=250&section=header&text=Main%20Project&fontSize=60" />
 
 ## 📃 Introduction
 🔸 **팀명** : 🪖33양호 (33조)
