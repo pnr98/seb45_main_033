@@ -13,7 +13,37 @@
 </br>
 
 ## ✨ Preview
-
+메인페이지
+![ezgif com-video-to-gif (8)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/28f79c49-2179-477d-a8e1-b33b946cb47d)
+![ezgif com-video-to-gif (9)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/47796ee0-68ad-4260-b451-33e6f1dc871a)
+![20230920_0143020628_edit_0](https://github.com/codestates-seb/seb45_main_033/assets/32677165/b1408a62-55c1-4836-a390-f0e6f5bb71d2)
+로그인
+![20230920_0147250258_edit_0](https://github.com/codestates-seb/seb45_main_033/assets/32677165/94d6d470-38ba-470f-ae97-efc194d5225d)
+회원가입
+![ezgif com-crop (10)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/ccf9250f-f491-41e9-8480-d35694acbab9)
+마이페이지 (유저 정보)
+![ezgif com-video-to-gif](https://github.com/codestates-seb/seb45_main_033/assets/32677165/1f6d396e-7a76-4a0a-af5e-91485c8afc76)
+마이페이지 (나만의 냉장고)
+![20230920_0221570746_edit_0](https://github.com/codestates-seb/seb45_main_033/assets/32677165/dc026b94-1536-40e7-845f-590f3c4251f6)
+![ezgif com-video-to-gif (3)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/23e81f2f-05f9-42bf-9ed3-cde8f25f5937)
+![ezgif com-video-to-gif (2)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/51498b20-8eec-4987-8bc4-0ca9585ad968)
+![ezgif com-video-to-gif (1)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/83b52813-a5d6-45bf-a80b-3ab5b9a25679)
+마이페이지 (로그아웃)
+![ezgif com-video-to-gif (4)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/d824ffcd-c066-46f1-aafe-66779bcee0bf)
+![ezgif com-video-to-gif (6)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/c3fd53ab-cd74-451d-a734-354ee5338723)
+마이페이지 (회원탈퇴)
+![ezgif com-video-to-gif (5)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/14c6a927-6403-4043-9752-ca1674361d68)
+![ezgif com-video-to-gif (7)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/c1d15471-eec4-4050-90e2-6a602297f80d)
+레시피 상세 페이지 - 좋아요 기능 / 관련 레시피 조회 / 글 삭제 기능
+![ezgif com-crop (3)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/a092903a-cd34-4cd8-ad84-7b9be21da0e8)
+![ezgif com-crop (4)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/9dadbf89-e475-4f5d-8672-2244597cf190)
+![ezgif com-crop (6)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/c61010a7-7749-4d3f-a976-254b2f738366)
+![ezgif com-crop (7)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/83adc28a-2954-42b4-908f-23d61bb4ab61)
+레시피 상세 페이지 (댓글 CRUD)
+![ezgif com-crop (5)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/ae862e8b-4ac6-405a-8967-bf6227bcd4eb)
+![ezgif com-crop (9)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/2326e541-7e00-43fe-99d8-8d314dc96e86)
+레시피 수정 페이지
+![ezgif com-crop (8)](https://github.com/codestates-seb/seb45_main_033/assets/32677165/05eb5e2b-1d03-4b88-b4ae-6b9d8647753e)
 </br>
 
 ## 🧑‍💻 Member
