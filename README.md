@@ -124,13 +124,13 @@
 
 | [김제경](https://github.com/ehdals0405)(BE 팀장) | [김태형](https://github.com/spirit998) | [노시형](https://github.com/RohSiHyung) |
 | :---: | :---: | :---: |
-| <div style="display: flex; align-items: flex-start;"></div> | <div style="display: flex; align-items: flex-start;"></div> | <div style="display: flex; align-items: flex-start;"></div> |
+| <div style="display: flex; align-items: flex-start;">- 로그인/회원가입/회원관리<br/>- 데이터 크롤링<br/>- 나만의 냉장고 등록<br/>- 댓글 및 좋아요</div> | <div style="display: flex; align-items: flex-start;">- 공통 DTO/예외/응답 <br/>- 엔티티 구축<br/>- 레시피 CRUD</div> | <div style="display: flex; align-items: flex-start;">- 서버 구축<br/>- 데이터베이스<br/>- 배포</div> |
 
 
 ### 🖥️ Front-End
 | [전용호](https://github.com/JYH54)(FE 부팀장) | [김한샘](https://github.com/haaansaaaem) | [박나래](https://github.com/pnr98) | [윤선문](https://github.com/ysm990926) |
 | :---: | :---: | :---: | :---: |
-| <div style="display: flex; align-items: flex-start;"></div> | <div style="display: flex; align-items: flex-start;"></div> | <div style="display: flex; align-items: flex-start;"></div> |
+| <div style="display: flex; align-items: flex-start;">- 검색 결과 페이지</div> | <div style="display: flex; align-items: flex-start;">- 헤더/푸터<br/>- 레시피 컴포넌트 카드<br/>- 메인 페이지<br/>- 레시피 검색 페이지</div> | <div style="display: flex; align-items: flex-start;">- 레시피 상세/<br/>수정 페이지 (레시피 CRUD)<br/>- 댓글 CRUD<br/>- 레시피 목록 가로스크롤</div> | <div style="display: flex; align-items: flex-start;">- FE 개발환경구축<br/>- 로그인/회원가입<br/>- 마이페이지</div> |
 
 </br>
 
