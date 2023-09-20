@@ -23,38 +23,36 @@ export const HeaderWrapper = styled.div`
 
 export const LogoLink = styled(Link)`
   margin-right: 20px;
+  >img{
+    height: 40px;
+  }
 `;
 
 export const IconLink = styled(Link)`
-  font-size: 20px;
-  margin: 5px 5px 5px 0;
-  visibility: visible;
-  cursor: pointer;
-  background-image: url(${searchIcon1});
-  width: 40px;
-  height: 40px;
+  background-image: url(${searchIcon2});
   background-size: contain;
   background-repeat: no-repeat;
-
+  height: auto;
+  width: 35px;
+  visibility: visible;
+  &:hover {
+      background-image: url(${searchIcon1});
+    }
   @media (max-width: 710px) {
     visibility: visible;
     margin-left: 0px;
   }
-
-  &:hover {
-    background-image: url(${searchIcon2});
-  }
 `;
 
 export const ButtonLink = styled(Link)`
-  margin-left: 50px;
   text-decoration: none;
   visibility: visible;
   border-radius: 8px;
   display: flex;
   align-items: center;
-  color: #000;
-  
+  color: #414141;
+  font-weight: 600;
+  padding: 8px 15px;
   &:hover {
     background-color: #f1f1f1;
     color: #E2990b;
@@ -81,7 +79,16 @@ export const HamburgerBar = styled.div`
 export const DropdownMenu = styled.div`
   display: flex;
   position: static;
-
+  gap: 50px;
+  .icon-container {
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 3px 8px;
+    display: flex;
+    &:hover {
+      background-color: #f1f1f1;
+    }
+  }
   @media (max-width: 710px) {
     position: absolute;
     top: 60px;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../Modal/Modal';
-
+import logo1 from '../../common/image/logo1.png'
 import {
     HeaderWrapper,
     LogoLink,
@@ -76,10 +76,12 @@ const Header = () => {
   },[sessionStorage.getItem('Token')])
   return (
     <HeaderWrapper>
-      <LogoLink to="/" onClick={scrollToTop}>로고</LogoLink>
+      <LogoLink to="/" onClick={scrollToTop}><img src={logo1} alt='logo'></img></LogoLink>
       <HamburgerBar onClick={Hamburger}>☰</HamburgerBar>
         <DropdownMenu show={showHamburger}>
-          <IconLink to="/search" onClick={(e) => {scrollToTop(); closeDropdown();}} showHamburger={showHamburger}></IconLink>
+          <div className='icon-container'>
+            <IconLink to="/search" onClick={(e) => {scrollToTop(); closeDropdown();}} showHamburger={showHamburger}></IconLink>
+          </div>
           <ButtonLink to={isLogin ? "/create-recipe" : undefined} onClick={handleRecipeCreation} showHamburger={showHamburger}>
             레시피 작성
           </ButtonLink>

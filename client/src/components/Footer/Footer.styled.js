@@ -3,6 +3,7 @@ import footerImg from '../../common/image/footerImg.png';
 import githubIcon from '../../common/image/githubIcon.png';
 
 export const FooterWrapper = styled.div`
+
   display: flex;
   flex-direction: column;
   align-items: center;
